@@ -1,28 +1,31 @@
 package threads.templates;
 
-public class Process {
+import java.io.File;
+
+public class Process implements Comparable<Process> {
     private int id;
-    private String file;
+    private int priority;
+    private File file;
     private Type type;
     private State state;
-    private int maxLines;
+    private String terminalCode;
     private IOOutput output = null;
 
 
-    //FILE HANDLING PROCESSES
-    public Process(int id, Type type, String file) {
+    //FILE HANDLING PROCESSES - USED BY CODE FILES
+    public Process(int id, int priority, Type type, File file) {
         this.id = id;
         this.type = type;
         this.file = file;
     }
 
     //IO PROCESS BEING SENT TO READY QUEUE ONCE AT THE START
-    public Process(int id, Type type) {
+    public Process(int id, int priority, Type type, String terminalCode) {
         this.id = id;
         this.type = type;
     }
 
-    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD
+    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY CODE FILES
     public Process(int id, Type type, IOOutput output){
         this.id = id;
         this.type = type;
@@ -37,11 +40,17 @@ public class Process {
         fileHandling, commandLine
     }
 
-    public int getMaxLines() {
-        return maxLines;
+    @Override
+    public int compareTo(Process o) {
+        if(this.priority > o.priority){
+            return 1;
+        }else if(this.priority < o.priority){
+            return -1;
+        }
+        return 0;
     }
 
-    public String getFile() {
+    public File getFile() {
         return file;
     }
 
@@ -65,7 +74,4 @@ public class Process {
         return output;
     }
 
-    public void setMaxLines(int maxLines) {
-        this.maxLines = maxLines;
-    }
 }

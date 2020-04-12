@@ -1,3 +1,5 @@
+package threads.templates;
+
 import java.io.*;
 import java.lang.Process;
 
@@ -19,7 +21,6 @@ public class CommandLine {
         return outputIOResult();
 
     }
-
 
     private String changeDirectory(boolean dir) {
         File dirToChange = new File(System.getProperty("user.dir") + "C-DRIVE" + "/" + dir);

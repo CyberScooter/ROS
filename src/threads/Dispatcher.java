@@ -10,10 +10,6 @@ public class Dispatcher extends Thread {
     private final Semaphore semaphore = new Semaphore(1);
     public static ConcurrentHashMap<Process, Integer> cpuThreadInstances;
 
-    public Dispatcher() {
-        cpuThreadInstances = new ConcurrentHashMap<>();
-    }
-
     @Override
     public synchronized void run() {
 
@@ -26,13 +22,13 @@ public class Dispatcher extends Thread {
                     try {
                         semaphore.acquire();
 
-                        //FCFS - Removes head of queue
+                        //PRIORITY QUEUE - Removes head of queue
                         Process process = readyQueue.poll();
                         Thread thread = new CPU(process);
-                        cpuThreadInstances.put(process, process.getId());
                         thread.start();
 
-                        //try implement round robin, add to ready queue again if not finished within time
+                        //FCFS - Removes head of queue
+
 
                     } catch (InterruptedException e) {
                         System.out.println(e);

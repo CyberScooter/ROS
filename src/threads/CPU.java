@@ -57,7 +57,7 @@ public class CPU extends Thread {
                         //then dont run code below
                         semaphore.acquire();
 
-                        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(process.getFile())));
+                        BufferedReader bufferedReader = new BufferedReader(new FileReader(process.getFile()));
                         String line = null;
                         int count = 0;
 
@@ -115,6 +115,7 @@ public class CPU extends Thread {
             //terminal
 
 
+
         }
 
     }
@@ -140,61 +141,5 @@ public class CPU extends Thread {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    public void calculateMaxLines() throws IOException{
-        int count = 0;
-        BufferedReader bufferedReader = null;
-        try{
-            bufferedReader = new BufferedReader(new FileReader(process.getFile()));
-            String line = null;
-            while((line = bufferedReader.readLine()) != null){
-                count ++;
-            }
-
-        }catch (IOException e){
-            System.out.println(e);
-        }finally {
-            if(bufferedReader != null){
-                bufferedReader.close();
-            }
-            process.setMaxLines(count);
-        }
-    }
-
-    public String readLine(int lineNumber) throws IOException{
-        BufferedReader reader = null;
-        String line = null;
-        try {
-            reader = new BufferedReader(new FileReader(process.getFile()));
-            String lineToRead = null;
-            int count = 0;
-            while ((lineToRead = reader.readLine()) != null) {
-                count++;
-                if (count == lineNumber) {
-                    line = reader.readLine();
-                    break;
-                }
-            }
-        }catch (IOException e){
-            System.out.println(e);
-
-        }finally {
-            if(reader != null){
-                reader.close();
-            }
-            return line;
-        }
-    }
 
 }
