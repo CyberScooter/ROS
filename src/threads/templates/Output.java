@@ -8,9 +8,14 @@ public class Output implements Comparable<Output>{
     //line in which code is executed in code file
     private int line;
     private ConcurrentHashMap<String, Integer> variable;
+    private ConcurrentHashMap<String, String> arithmeticCalculation;
     private int calculation;
     private int processID;
-    private String IOOutput;
+    private IOOutput IOOutput;
+    private Type calculationType;
+    private boolean exit;
+    private boolean error;
+    private String errorMessage;
 
     //constructor for if line is variable assignment, cpu result
     public Output(int processID, int line, String type, int value) {
@@ -21,20 +26,34 @@ public class Output implements Comparable<Output>{
     }
 
     //constructor for CPU calculation results, cpu result
-    public Output(int processID, int line, int calculation) {
+    public Output(int processID, int line, String variable, String calculation, Type calculationType) {
         this.processID = processID;
         this.line = line;
-        this.calculation = calculation;
+        arithmeticCalculation = new ConcurrentHashMap<>();
+        arithmeticCalculation.put(variable, calculation);
+        this.calculationType = calculationType;
     }
-
-    //output constructor for IO results from IO thread and IO queue back to CPU
-    public Output(int processID, int line, String IOOutput){
-        this.processID = processID;
-        this.line = line;
+    //output constructor for IO results from IO thread -> IO Queue -> ReadyQueue -> CPU
+    public Output(IOOutput IOOutput){
         this.IOOutput = IOOutput;
     }
 
-    public String getIOOutput() {
+    //output constructor for exit code
+    public Output(boolean exit){
+        this.exit = exit;
+    }
+
+    //output constructor for error handling
+    public Output(boolean error, String errorMessage){
+        this.error = error;
+        this.errorMessage = errorMessage;
+    }
+
+    public static enum Type{
+        addition,multiplication,subtraction
+    }
+
+    public IOOutput getIOOutput() {
         return IOOutput;
     }
 
@@ -55,4 +74,29 @@ public class Output implements Comparable<Output>{
     public int getProcessID() {
         return processID;
     }
+
+    public ConcurrentHashMap<String, Integer> getVariable() {
+        return variable;
+    }
+
+    public ConcurrentHashMap<String, String> getArithmeticCalculation() {
+        return arithmeticCalculation;
+    }
+
+    public Type getCalculationType() {
+        return calculationType;
+    }
+
+    public boolean getExit(){
+        return this.exit;
+    }
+
+    public boolean isError() {
+        return error;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }
+

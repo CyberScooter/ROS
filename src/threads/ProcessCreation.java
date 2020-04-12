@@ -3,8 +3,6 @@ package threads;
 import threads.templates.Process;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Phaser;
 import java.util.concurrent.Semaphore;
 
 //keep thread running and will read processes from OSKernal class
@@ -21,19 +19,18 @@ public class ProcessCreation extends Thread{
     @Override
     public synchronized void run() {
         while(true) {
-            System.out.println("pc ran ...");
             try {
                 wait();
             } catch (InterruptedException e) {
-                Process process = OSKernel.getProcess();
+                Process process = Kernel.getProcess();
                 readyQueue.add(process);
 
                 //if Process came from IOQUEUE THEN TRIGGER DISPATCHER INTERRUPT
-                //as process is part of another process and does not need to wait for user input
+                //as process is part of another process and does not need to wait
                 if(process.getIOOutput() != null){
-                    OSKernel.dispatcher.interrupt();
+                    Kernel.dispatcher.interrupt();
                 }
-                System.out.println(readyQueue.size());
+
             }
         }
     }

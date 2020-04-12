@@ -1,1 +1,6 @@
-print hey
+var x = 5;
+var y = 10;
+var z = x + 4;
+var m = x + z;
+exit
+print 'm';

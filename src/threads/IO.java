@@ -18,6 +18,7 @@ public class IO extends Thread {
     int lineNumber;
     Process process;
     Process.Type processType;
+    boolean available = true;
 
     public IO(int processID, Process process, String io, int lineNumber, Process.Type processType) {
         this.io = io;
@@ -38,8 +39,6 @@ public class IO extends Thread {
 
             semaphore.acquire();
 
-            System.out.println("IM IN LMAO");
-
             ioQueue.add(new IOOutput(processID, io, lineNumber));
 
 
@@ -47,10 +46,7 @@ public class IO extends Thread {
             for(IOOutput result : ioQueue){
                 if(result.getProcessID() == this.processID && result.getLineNumber() == this.lineNumber && result.getOutput().equals(this.io)){
                     //for print variables/strings in code file
-                    if(Pattern.matches(RegexExpressions.PRINT_REGEX, result.getOutput()) && processType == Process.Type.fileHandling){
-                        System.out.println("regex matches");
-                        handlePrintIOCodeFile(result);
-                    }
+                    handlePrintIOCodeFile(result);
                     //for print data in command line
                     if(processType == Process.Type.commandLine){
 
@@ -58,21 +54,6 @@ public class IO extends Thread {
 
                 }
             }
-
-//            while(!ioQueue.isEmpty()){
-//
-//                if(ioQu)
-//
-//
-//                E element = ioQueue.firstElement();
-//
-//                //process element
-//
-//                //return String result to CPU thread
-//            }
-
-
-
 
         }catch (InterruptedException e){
             System.out.println(e);
@@ -82,18 +63,21 @@ public class IO extends Thread {
 
     }
 
-    public void handlePrintIOCodeFile(IOOutput result){
-        int itemToOutputLength = result.getOutput().substring(6).trim().length();
-        if(itemToOutputLength > 1){
+    //static makes it only run one at time
+    public synchronized void handlePrintIOCodeFile(IOOutput result){
+
+        int itemToOutputLength = result.getOutput().indexOf(" ");
+        String output = result.getOutput().substring(itemToOutputLength, result.getOutput().length() - 1).trim();
+        if(Pattern.matches(RegexExpressions.PRINT_STRING_REGEX, result.getOutput())){
             //will get added to ready queue
-            System.out.println("hey");
-            OSKernel.addProcess(new Process(processID, Process.Type.fileHandling, new IOOutput(result.getOutput(), false, result.getLineNumber(), false, process)));
-        }else if(itemToOutputLength == 1){
-            OSKernel.addProcess(new Process(processID, Process.Type.fileHandling, new IOOutput(result.getOutput(), true, result.getLineNumber(), false, process)));
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, false, result.getLineNumber(), false, process)));
+        }else if(Pattern.matches(RegexExpressions.PRINT_VARIABLE_REGEX, result.getOutput())){
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, true, result.getLineNumber(), false, process)));
         }else if(itemToOutputLength == 0){
-            OSKernel.addProcess(new Process(processID, Process.Type.fileHandling, new IOOutput(result.getOutput(), true, result.getLineNumber(), true, process)));
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, true, result.getLineNumber(), true, process)));
         }
-        OSKernel.processCreation.interrupt();
+        Kernel.processCreation.interrupt();
+
     }
 
 

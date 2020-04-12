@@ -1,10 +1,15 @@
 package threads;
 
 
+import threads.templates.*;
 import threads.templates.Process;
-import threads.templates.Output;
 
+import javax.script.Compilable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,22 +23,10 @@ import java.util.regex.Pattern;
 
 public class CPU extends Thread {
     Process process;
-    //stores process ID  and lines read for each process id, will be archived
-    //<ProcessID, numberOfLinesRead>
-    public static ConcurrentHashMap<Integer, Integer> codeLinesReadTracker;
 
     //stores number of ios that are still being handled for a specific process ID
     //<ProcessID, NumberOfIOsStillBeingHandled>
-
-
-    private static ConcurrentHashMap<Integer, Integer> ioHandlerTracker;
-
-
-    private static ConcurrentHashMap<Integer, CountDownLatch> ioHandlerTracker2;
-
-    //this is only stores values once all the processes of a given
-    //processid is fully completed and sorted in terms of line code
-    public static ConcurrentHashMap<Integer, Vector<Output>> finalResultsForGivenCodeFileProcess;
+    private static ConcurrentHashMap<Integer, CountDownLatch> ioHandlerTracker;
 
     //this vectorlist stores all the process results for every processID
     //this vector list means that after data has been processed by CPU it stores into this array
@@ -41,92 +34,72 @@ public class CPU extends Thread {
 
     private Semaphore semaphore = new Semaphore(1);
     //tracks io in progress for specific id
-    private int ioInProgress;
 
-    private Thread referenceCPUThread;
+    private Vector<Thread> ioProcesses = new Vector<>();
 
     public CPU(Process process) {
         this.process = process;
-        if(cpuResults == null){
+        if(cpuResults == null && ioHandlerTracker == null){
             cpuResults = new Vector<>();
-        }
-        if(codeLinesReadTracker == null && ioHandlerTracker == null && finalResultsForGivenCodeFileProcess == null){
-            codeLinesReadTracker = new ConcurrentHashMap<>();
             ioHandlerTracker = new ConcurrentHashMap<>();
-            finalResultsForGivenCodeFileProcess = new ConcurrentHashMap<>();
-            ioHandlerTracker2 = new ConcurrentHashMap<>();
-        }
-        if(process.getType() == Process.Type.fileHandling ){
-            try {
-                semaphore.acquire();
-                //checks if  process has just started
-                if (codeLinesReadTracker.get(process.getId()) == null) {
-                    codeLinesReadTracker.put(process.getId(), 0);
-                } else {
-                    codeLinesReadTracker.put(process.getId(), codeLinesReadTracker.get(process.getId()) + 1);
-
-                }
-            }catch (InterruptedException e){
-                System.out.println(e);
-            }finally {
-                semaphore.release();
-            }
         }
     }
 
     @Override
     public void run() {
         process.setState(Process.State.running);
-        System.out.println("Thread ID=" + process.getId() + process.getState());
 
         if(process.getType() == Process.Type.fileHandling){
 
             if(process.getIOOutput() == null){
                 try {
-                    //if the current process belongs/came from io queue -> ready queue -> this cpu thread
-                    //then dont run code below
+                        //if the current process belongs/came from io queue -> ready queue -> this cpu thread
+                        //then dont run code below
                         semaphore.acquire();
 
-                        int lineToReadForThisThread = codeLinesReadTracker.get(process.getId());
+                        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(process.getFile())));
+                        String line = null;
+                        int count = 0;
 
-                        String line = Files.readAllLines(Paths.get(process.getFile())).get(lineToReadForThisThread);
+                        while((line = bufferedReader.readLine()) != null) {
+                            count++;
 
+                            if (Pattern.matches(RegexExpressions.INTEGER_VARIABLE_REGEX, line)) {
+                                int indexAtEquals = line.indexOf("=");
+                                String variableName = line.substring(0, indexAtEquals).trim();
+                                int value = Integer.parseInt(line.substring(indexAtEquals + 1, line.length() - 1).trim());
+                                cpuResults.add(new Output(process.getId(), count, variableName, value));
 
+                            } else if (line.length() >= 5) {
+                                if(line.trim().substring(0,5).equals("print")) {
+                                    Thread ioProcess = new IO(process.getId(), process, line, count, process.getType());
+                                    ioProcesses.add(ioProcess);
+                                }
 
-                        //variables/output
-                        final String INTEGER_VARIABLE_REGEX = "int[ ][a-z][ ]=[0-9]+;";
-                        final String OUTPUT_REGEX = "print[ ][a-zA-Z0-9]+";
-
-                        if (Pattern.matches(line, INTEGER_VARIABLE_REGEX)) {
-                            String type = line.substring(0, 3);
-                            int value = Integer.parseInt(line.substring((line.indexOf("=") + 1), line.length() - 1));
-                            cpuResults.add(new Output(process.getId(), lineToReadForThisThread, type, value));
-
-                        } else if (Pattern.matches(OUTPUT_REGEX, line)) {
-                            Thread ioProcess = new IO(process.getId(), process, line, lineToReadForThisThread, process.getType());
-                            ioProcess.start();
-
-                            //keeps track of io handler in progress
-                            if(ioHandlerTracker2.get(process.getId()) == null){
-                                CountDownLatch latch = new CountDownLatch(1);
-                                ioHandlerTracker2.put(process.getId(), latch);
-                                System.out.println(ioHandlerTracker2.get(process.getId()).getCount());
+                            } else if(Pattern.matches(RegexExpressions.CALCULATION_REGEX1, line)) {
+                                int index = line.indexOf("=");
+                                String calculation = line.substring(index + 1, line.length()-1).trim();
+                                if(CodeCompiler.checkCalculationSyntax(calculation)){
+                                    cpuResults.add(new Output(process.getId(), count, line.substring(0, index).trim(), calculation, Output.Type.addition));
+                                }
+                            } else if(Pattern.matches(RegexExpressions.EXIT_REGEX, line)){
+                                cpuResults.add(new Output(true));
+                            } else{
+                                cpuResults.add(new Output(true, "Syntax error at line: " + count));
+                                break;
                             }
+                    }
 
-                            if (ioHandlerTracker.get(process.getId()) == null) {
-                                ioHandlerTracker.put(process.getId(), 1);
-                            } else {
-                                ioHandlerTracker.put(process.getId(), ioHandlerTracker.get(process.getId()) + 1);
-                            }
+                    if(ioProcesses.size() > 0){
+                        //executes IOThreads which handles the IO and sends it back to readyqueue in the ProcessCreation thread
+                        executeIOProcesses();
+                    }
 
-                        }
-
-
-                    //calculation
-                    final String CALCULATION_OUTPUT = "";
-
-                    //code to change syntax
-
+                    //executes once the io processes are done, as io processes they will use different threads
+                    if(cpuResults.size() > 0){
+                        CodeCompiler<Integer> codeCompiler = new CodeCompiler<>();
+                        codeCompiler.compile(cpuResults, CodeCompiler.Type.arithmetic);
+                    }
 
                 }catch (IOException | InterruptedException e){
                     System.out.println(e);
@@ -134,82 +107,50 @@ public class CPU extends Thread {
                     semaphore.release();
                 }
             }else{
-                //if process is from IOOUTPUT CLASS AND COMPLETE THEN DECREMENT COUNTER
-                if(ioHandlerTracker2.get(process.getId()) != null){
-//                    int numberOfIOProcessesForMatchingID = ioHandlerTracker.get(process.getId());
-//                    ioHandlerTracker.put(process.getId(), numberOfIOProcessesForMatchingID - 1);
-//                    if(ioHandlerTracker.get(process.getId()) == 0){
-//                        process.getIOOutput().processHandling.notifyAll();
-//                    }
-                    cpuResults.add(new Output(process.getId(), process.getIOOutput().getLineNumber(), process.getIOOutput().getOutput()));
-                    System.out.println("added output");
-                    ioHandlerTracker2.get(process.getId()).countDown();
-
-
-                }
-
-
-
-            }
-            //final line of code
-            //if readline is equals to maxline so if io of the same processid creates a new cpu thread
-            //then the lines its read will be greater than the maxlines so it will decrement the io resource
-            //but never run this code below
-            if(codeLinesReadTracker.get(process.getId()) == process.getMaxLines()){
-
-                if(ioHandlerTracker.get(process.getId()) != null && ioHandlerTracker.get(process.getId()) > 0){
-                    try {
-                        //once all io has not been handled then wait until it has
-                        System.out.println("Thread" + getId());
-//                        do {
-//                            wait();
-//                        } while (ioHandlerTracker.get(process.getId()) != 0);
-                        System.out.println("fe");
-
-                        System.out.println(ioHandlerTracker2.get(process.getId()).getCount() + " c");
-                        if(ioHandlerTracker2.get(process.getId()).getCount() > 0){
-                            ioHandlerTracker2.get(process.getId()).await();
-                        }
-
-                        ioHandlerTracker2.get(process.getId()).await();
-                        System.out.println("f");
-
-                    }catch (InterruptedException e) {
-                        System.out.println(e);
-                    }
-
-                    System.out.println("hey");
-
-                }
-
-                //if it has no io to be handled
-                Collections.sort(cpuResults);
-
-                Vector<Output> resultsForGivenProcessID = new Vector<>();
-
-                for(Output Output : cpuResults){
-                    if(Output.getProcessID() == process.getId()){
-                        resultsForGivenProcessID.add(Output);
-                    }
-                }
-
-                //add to a hashmap which will be used by OSKernel to run code
-                finalResultsForGivenCodeFileProcess.put(process.getId(), resultsForGivenProcessID);
-
-                //remove processID from ioHandler tracker and codeLinesReaderTracker
-                ioHandlerTracker.remove(process.getId());
-                codeLinesReadTracker.remove(process.getId());
-
+                addIOResult(process, ioHandlerTracker);
 
             }
 
         }else if(process.getType() == Process.Type.commandLine){
+            //terminal
+
 
         }
 
+    }
+
+    private void executeIOProcesses() throws InterruptedException{
+        CountDownLatch latch = new CountDownLatch(ioProcesses.size());
+        ioHandlerTracker.put(process.getId(), latch);
+        for(Thread thread : ioProcesses){
+            //synchnorise threads so they dont use same resource at the same time
+            thread.start();
+            thread.join();
+        }
+
+        ioHandlerTracker.get(process.getId()).await();
+
+    }
+
+    private void addIOResult(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
+        cpuResults.add(new Output(process.getIOOutput()));
+
+        latch.get(process.getId()).countDown();
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void calculateMaxLines() throws IOException{
         int count = 0;
@@ -256,7 +197,4 @@ public class CPU extends Thread {
         }
     }
 
-    public void setReferenceCPUThread(Thread referenceCPUThread) {
-        this.referenceCPUThread = referenceCPUThread;
-    }
 }

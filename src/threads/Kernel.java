@@ -1,11 +1,12 @@
 package threads;
 
+import threads.templates.Output;
 import threads.templates.Process;
 
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class OSKernel {
+public class Kernel {
     static ConcurrentLinkedQueue<Process> processes = new ConcurrentLinkedQueue<>();
     static ProcessCreation processCreation;
     static Dispatcher dispatcher;
@@ -36,10 +37,7 @@ public class OSKernel {
         }catch (InterruptedException e){
             System.out.println( e);
         }
-        System.out.println(CPU.codeLinesReadTracker.get(1));
 
-
-        System.out.println("FINAL RESULTS " + CPU.finalResultsForGivenCodeFileProcess.get(1).get(0).getIOOutput());
 
 
 
