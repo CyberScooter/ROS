@@ -70,11 +70,11 @@ public class IO extends Thread {
         String output = result.getOutput().substring(itemToOutputLength, result.getOutput().length() - 1).trim();
         if(Pattern.matches(RegexExpressions.PRINT_STRING_REGEX, result.getOutput())){
             //will get added to ready queue
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, false, result.getLineNumber(), false, process)));
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false, process)));
         }else if(Pattern.matches(RegexExpressions.PRINT_VARIABLE_REGEX, result.getOutput())){
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, true, result.getLineNumber(), false, process)));
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false, process)));
         }else if(itemToOutputLength == 0){
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, new IOOutput(output, true, result.getLineNumber(), true, process)));
+            Kernel.addProcess(new Process(process.getId(), Process.Type.fileHandling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true, process)));
         }
         Kernel.processCreation.interrupt();
 

@@ -34,17 +34,20 @@ public class Output implements Comparable<Output>{
         this.calculationType = calculationType;
     }
     //output constructor for IO results from IO thread -> IO Queue -> ReadyQueue -> CPU
-    public Output(IOOutput IOOutput){
+    public Output(int processID, IOOutput IOOutput){
         this.IOOutput = IOOutput;
+        this.processID = processID;
     }
 
     //output constructor for exit code
-    public Output(boolean exit){
+    public Output(int processID, boolean exit){
         this.exit = exit;
+        this.processID = processID;
     }
 
     //output constructor for error handling
-    public Output(boolean error, String errorMessage){
+    public Output(int processID, boolean error, String errorMessage){
+        this.processID = processID;
         this.error = error;
         this.errorMessage = errorMessage;
     }
@@ -94,6 +97,8 @@ public class Output implements Comparable<Output>{
     public boolean isError() {
         return error;
     }
+
+
 
     public String getErrorMessage() {
         return errorMessage;

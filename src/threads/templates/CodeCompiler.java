@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class CodeCompiler<T> {
+public class CodeCompiler {
     private HashMap<String, Integer> variables;
     private HashMap<String, Integer> calculationResults;
 
@@ -19,22 +19,17 @@ public class CodeCompiler<T> {
         calculationResults = new HashMap<>();
     }
 
-    public T compile(Vector<Output> output, Type type ){
+    public void compile(Vector<Output> output, Type type ){
         if(type == Type.arithmetic){
             for(Output output1 : output) {
                 //if arithmetic is addition
-                if(output1.getVariable() != null){
+                if(output1.getExit()){
+                    break;
+                }else if(output1.getVariable() != null){
                     Map.Entry<String,Integer> entry = output1.getVariable().entrySet().iterator().next();
                     variables.put(entry.getKey(), entry.getValue());
                 }else if(output1.getArithmeticCalculation() != null && output1.getCalculationType() == Output.Type.addition){
-                    Map.Entry<String,String> entry = output1.getArithmeticCalculation().entrySet().iterator().next();
-                    String value = entry.getValue();
-                    int indexAtEquals = value.indexOf("=");
-                    int indexAtPlus = value.indexOf("+");
-                    String firstAddend = value.substring(indexAtEquals + 1, indexAtPlus).trim();
-                    String secondAddend = value.substring(indexAtPlus+1).trim();
-                    calculateResult(entry, firstAddend, secondAddend);
-
+                    calculateResult(output1);
 
                 }else if(output1.getIOOutput() != null){
                     if(!output1.getIOOutput().isVariable()){
@@ -49,36 +44,37 @@ public class CodeCompiler<T> {
                         System.out.println("Syntax error at line: " + output1.getIOOutput().getLineNumber());
                     }
 
-                }else if(output1.getExit()){
-                    break;
                 }else if(output1.isError()){
                     System.out.println(output1.getErrorMessage());
                 }
             }
 
         }
-
-        return null;
-
     }
 
-    private void calculateResult(Map.Entry<String, String> entry, String firstValueForCalculation, String secondValueForCalculation){
-        if(checkIfInteger(firstValueForCalculation) && checkIfInteger(secondValueForCalculation)){
-            calculationResults.put(entry.getKey(), Integer.parseInt(firstValueForCalculation) + Integer.parseInt(secondValueForCalculation));
+    private void calculateResult(Output output){ ;
+        Map.Entry<String,String> entry = output.getArithmeticCalculation().entrySet().iterator().next();
+        String value = entry.getValue();
+        int indexAtEquals = value.indexOf("=");
+        int indexAtPlus = value.indexOf("+");
+        String firstAddend = value.substring(indexAtEquals + 1, indexAtPlus).trim();
+        String secondAddend = value.substring(indexAtPlus+1).trim();
+        if(checkIfInteger(firstAddend) && checkIfInteger(secondAddend)){
+            calculationResults.put(entry.getKey(), Integer.parseInt(firstAddend) + Integer.parseInt(secondAddend));
             variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
-        }else if(checkIfInteger(firstValueForCalculation) && !checkIfInteger(secondValueForCalculation)){
-            if(variables.containsKey(secondValueForCalculation)){
-                calculationResults.put(entry.getKey(), Integer.parseInt(firstValueForCalculation) + variables.get("var " + secondValueForCalculation));
+        }else if(checkIfInteger(firstAddend) && !checkIfInteger(secondAddend)){
+            if(variables.containsKey(secondAddend)){
+                calculationResults.put(entry.getKey(), Integer.parseInt(firstAddend) + variables.get("var " + secondAddend));
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }
-        }else if(!checkIfInteger(firstValueForCalculation) && checkIfInteger(secondValueForCalculation)){
-            if(variables.containsKey("var " + firstValueForCalculation)) {
-                calculationResults.put(entry.getKey(), Integer.parseInt(secondValueForCalculation) + variables.get("var " + firstValueForCalculation));
+        }else if(!checkIfInteger(firstAddend) && checkIfInteger(secondAddend)){
+            if(variables.containsKey("var " + firstAddend)) {
+                calculationResults.put(entry.getKey(), Integer.parseInt(secondAddend) + variables.get("var " + firstAddend));
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }
-        }else if(!checkIfInteger(firstValueForCalculation) && !checkIfInteger(secondValueForCalculation)){
-            if(variables.containsKey("var " + firstValueForCalculation) && variables.containsKey("var " + secondValueForCalculation)) {
-                calculationResults.put(entry.getKey(), variables.get("var " + firstValueForCalculation) + variables.get("var " + secondValueForCalculation));
+        }else if(!checkIfInteger(firstAddend) && !checkIfInteger(secondAddend)){
+            if(variables.containsKey("var " + firstAddend) && variables.containsKey("var " + secondAddend)) {
+                calculationResults.put(entry.getKey(), variables.get("var " + firstAddend) + variables.get("var " + secondAddend));
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }
         }

@@ -2,4 +2,4 @@ var x = 5;
 var y = 10;
 var z = x + 4;
 var m = x + z;
-print 'm';
+print m;

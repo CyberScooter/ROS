@@ -46,7 +46,7 @@ public class CPU extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         process.setState(Process.State.running);
 
         if(process.getType() == Process.Type.fileHandling){
@@ -70,11 +70,9 @@ public class CPU extends Thread {
                                 int value = Integer.parseInt(line.substring(indexAtEquals + 1, line.length() - 1).trim());
                                 cpuResults.add(new Output(process.getId(), count, variableName, value));
 
-                            } else if (line.length() >= 5) {
-                                if(line.trim().substring(0,5).equals("print")) {
-                                    Thread ioProcess = new IO(process.getId(), process, line, count, process.getType());
-                                    ioProcesses.add(ioProcess);
-                                }
+                            } else if (line.length() >= 5 && line.trim().substring(0,5).equals("print")) {
+                                Thread ioProcess = new IO(process.getId(), process, line, count, process.getType());
+                                ioProcesses.add(ioProcess);
 
                             } else if(Pattern.matches(RegexExpressions.CALCULATION_REGEX1, line)) {
                                 int index = line.indexOf("=");
@@ -83,11 +81,12 @@ public class CPU extends Thread {
                                     cpuResults.add(new Output(process.getId(), count, line.substring(0, index).trim(), calculation, Output.Type.addition));
                                 }
                             } else if(Pattern.matches(RegexExpressions.EXIT_REGEX, line)){
-                                cpuResults.add(new Output(true));
+                                cpuResults.add(new Output(process.getId(), true));
                             } else{
-                                cpuResults.add(new Output(true, "Syntax error at line: " + count));
+                                cpuResults.add(new Output(process.getId(), true, "Syntax error at line: " + count));
                                 break;
                             }
+
                     }
 
                     if(ioProcesses.size() > 0){
@@ -97,8 +96,15 @@ public class CPU extends Thread {
 
                     //executes once the io processes are done, as io processes they will use different threads
                     if(cpuResults.size() > 0){
-                        CodeCompiler<Integer> codeCompiler = new CodeCompiler<>();
-                        codeCompiler.compile(cpuResults, CodeCompiler.Type.arithmetic);
+                        CodeCompiler codeCompiler = new CodeCompiler();
+                        Vector<Output> cpuResultsForGivenId = new Vector<>();
+                        for(Output output : cpuResults){
+                            if(output.getProcessID() == process.getId()){
+                                cpuResultsForGivenId.add(output);
+                            }
+                        }
+
+                        codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
                     }
 
                 }catch (IOException | InterruptedException e){
@@ -134,7 +140,7 @@ public class CPU extends Thread {
     }
 
     private void addIOResult(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
-        cpuResults.add(new Output(process.getIOOutput()));
+        cpuResults.add(new Output(process.getId(), process.getIOOutput()));
 
         latch.get(process.getId()).countDown();
 

@@ -1,7 +1,9 @@
 package threads;
 
 import threads.templates.Process;
+import threads.templates.ReadyQueueComparator;
 
+import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 
@@ -9,6 +11,7 @@ import java.util.concurrent.Semaphore;
 public class ProcessCreation extends Thread{
     static ConcurrentLinkedQueue<Process> readyQueue;
     private final Semaphore semaphore = new Semaphore(1);
+    private static Process processToAdd;
 
     public ProcessCreation() {
         if(readyQueue == null){
@@ -19,29 +22,33 @@ public class ProcessCreation extends Thread{
     @Override
     public synchronized void run() {
         while(true) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                Process process = Kernel.getProcess();
-                readyQueue.add(process);
+            //this uses FCFS to manage for io processes in ready queue to CPU that came from the
+            //io queue in the io thread
 
-                //if Process came from IOQUEUE THEN TRIGGER DISPATCHER INTERRUPT
-                //as process is part of another process and does not need to wait
-                if(process.getIOOutput() != null){
+            //keep the thread running
+
+            Process processToAdd = Kernel.getProcess();
+
+            if(processToAdd != null) {
+                readyQueue.add(processToAdd);
+
+                if (processToAdd.getIOOutput() != null) {
                     Kernel.dispatcher.interrupt();
+                    //two stop two interrupts being called simultaeneously
+                    try{
+                        Thread.sleep(200);
+                    }catch (InterruptedException e){
+
+                    }
                 }
 
             }
-        }
-    }
 
+        }
+
+    }
     public static ConcurrentLinkedQueue<Process> getReadyQueue() {
         return readyQueue;
     }
-
-    public static void main(String[] args) {
-        new ProcessCreation().start();
-    }
-
 
 }

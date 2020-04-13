@@ -2,7 +2,7 @@ package threads.templates;
 
 import java.io.File;
 
-public class Process implements Comparable<Process> {
+public class Process {
     private int id;
     private int priority;
     private File file;
@@ -10,6 +10,7 @@ public class Process implements Comparable<Process> {
     private State state;
     private String terminalCode;
     private IOOutput output = null;
+    private int lineNumber;
 
 
     //FILE HANDLING PROCESSES - USED BY CODE FILES
@@ -17,6 +18,7 @@ public class Process implements Comparable<Process> {
         this.id = id;
         this.type = type;
         this.file = file;
+        this.priority = priority;
     }
 
     //IO PROCESS BEING SENT TO READY QUEUE ONCE AT THE START
@@ -26,10 +28,11 @@ public class Process implements Comparable<Process> {
     }
 
     //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY CODE FILES
-    public Process(int id, Type type, IOOutput output){
+    public Process(int id, Type type, int lineNumber, IOOutput output){
         this.id = id;
         this.type = type;
         this.output = output;
+        this.lineNumber = lineNumber;
     }
 
     public static enum State {
@@ -40,15 +43,11 @@ public class Process implements Comparable<Process> {
         fileHandling, commandLine
     }
 
-    @Override
-    public int compareTo(Process o) {
-        if(this.priority > o.priority){
-            return 1;
-        }else if(this.priority < o.priority){
-            return -1;
-        }
-        return 0;
+    public int getPriority() {
+        return priority;
     }
+
+    public int getLineNumber(){ return lineNumber; }
 
     public File getFile() {
         return file;
