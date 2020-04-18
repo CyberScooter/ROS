@@ -7,6 +7,14 @@ public class IOOutput {
     private int lineNumber;
     private boolean error;
     public Process processHandling;
+    private Process.Type processType;
+    private CommandLine terminalCode;
+
+
+    public IOOutput(int processID, CommandLine terminalCode){
+        this.processID = processID;
+        this.terminalCode = terminalCode;
+    }
 
     //for string output on its own
     public IOOutput(String output, boolean error) {
@@ -14,7 +22,7 @@ public class IOOutput {
         this.error = error;
     }
 
-    //for adding iooutput to io queue
+    //FILE-HANDLING, for adding iooutput to io queue
     public IOOutput(int processID, String output, int lineNumber) {
         this.processID = processID;
         this.output = output;
@@ -22,7 +30,7 @@ public class IOOutput {
     }
 
 
-    //for returning output
+    //FILE-HANDLING, for returning output to CPU
     public IOOutput(String output, boolean variable, int lineNumber, boolean error, Process processHandling) {
         this.output = output;
         this.variable = variable;
@@ -30,6 +38,12 @@ public class IOOutput {
         this.error = error;
         this.processHandling = processHandling;
     }
+
+
+    public IOOutput(String output){
+        this.output = output;
+    }
+    
 
     public String getOutput() {
         return output;
@@ -49,6 +63,10 @@ public class IOOutput {
 
     public boolean isError() {
         return error;
+    }
+
+    public CommandLine getTerminalCode() {
+        return terminalCode;
     }
 }
 

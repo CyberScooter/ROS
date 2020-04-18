@@ -2,24 +2,32 @@ package threads.templates;
 
 import java.io.*;
 import java.lang.Process;
+import java.util.ArrayList;
 
 public class CommandLine {
-    static String currentDir;
+    public static String currentDir;
     private String command;
     private ProcessBuilder pb;
 
     public CommandLine(String command) {
         this.command = command;
+        if(currentDir == null) currentDir = System.getProperty("user.dir");
     }
 
     public String outputResult(){
-        pb = new ProcessBuilder();
-        if (this.command.split(" ")[0].equals("cd")) {
+        if (checkIfCDCommand()) {
+            this.pb = new ProcessBuilder(new String[]{"java"});
             return changeDirectory(this.command.split(" ")[0].equals("cd"));
+        }else{
+            this.pb = new ProcessBuilder("cmd.exe", "/c", command);
         }
 
         return outputIOResult();
 
+    }
+
+    public boolean checkIfCDCommand(){
+        return this.command.split(" ")[0].equals("cd");
     }
 
     private String changeDirectory(boolean dir) {
@@ -33,11 +41,16 @@ public class CommandLine {
         return null;
     }
 
-    public String outputIOResult(){
-        Process process = null;
+    private String outputIOResult(){
+        File f = new File(currentDir);
+        if(f.exists()){
+            pb.directory(f);
+        }
+
+        Process process= null;
 
         try{
-            process = pb.start();
+            process = this.pb.start();
         }catch(IOException e){
             return "Enter valid command";
         }
@@ -63,6 +76,11 @@ public class CommandLine {
         return null;
     }
 
+    public String getCommand() {
+        return command;
+    }
 
-
+    public void setPb(ProcessBuilder pb) {
+        this.pb = pb;
+    }
 }

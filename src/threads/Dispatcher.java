@@ -18,11 +18,10 @@ public class Dispatcher extends Thread {
 
     public Dispatcher(ReadyQueueComparator.queueType type) {
         if(processPriorityDispatch == null && processFCFSDispatch == null && ioDispatch == null){
-
+            processPriorityDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.priority));
             processFCFSDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_process));
             ioDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_io));
         }
-        this.processComing = processComing;
         this.type = type;
     }
 
@@ -33,25 +32,24 @@ public class Dispatcher extends Thread {
                 wait();
             } catch (InterruptedException f) {
                 try {
+
                     semaphore.acquire();
 
                     while(!ProcessCreation.getReadyQueue().isEmpty()){
                         Process process = ProcessCreation.readyQueue.poll();
-                        if (process.getIOOutput() != null) {
+                        if (process.getIOOutput() != null || process.getType() == Process.Type.commandLine) {
                             new CPU(process).start();
                         }else if(type == ReadyQueueComparator.queueType.priority){
-                            if(processPriorityDispatch == null) processPriorityDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.priority));
                             processPriorityDispatch.add(process);
                         }else if(type == ReadyQueueComparator.queueType.FCFS_process){
-                            if(processFCFSDispatch == null) processFCFSDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_process));
                             processFCFSDispatch.add(process);
                         }
-
                     }
 
-                    if(type == ReadyQueueComparator.queueType.priority){
+
+                    if(type == ReadyQueueComparator.queueType.priority && !processPriorityDispatch.isEmpty()){
                         startCPUThreads(ReadyQueueComparator.queueType.priority);
-                    }else if(type == ReadyQueueComparator.queueType.FCFS_process){
+                    }else if(type == ReadyQueueComparator.queueType.FCFS_process && !processFCFSDispatch.isEmpty()){
                         startCPUThreads(ReadyQueueComparator.queueType.FCFS_process);
                     }
 
@@ -80,6 +78,7 @@ public class Dispatcher extends Thread {
                 new CPU(process).start();
             }
         }
+
 
     }
 }

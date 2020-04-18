@@ -4,17 +4,9 @@ package threads;
 import threads.templates.*;
 import threads.templates.Process;
 
-import javax.script.Compilable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -98,6 +90,12 @@ public class CPU extends Thread {
                     if(cpuResults.size() > 0){
                         CodeCompiler codeCompiler = new CodeCompiler();
                         Vector<Output> cpuResultsForGivenId = new Vector<>();
+                        try{
+                            Thread.sleep(100);
+                        }catch (InterruptedException e){
+
+                        }
+
                         for(Output output : cpuResults){
                             if(output.getProcessID() == process.getId()){
                                 cpuResultsForGivenId.add(output);
@@ -113,16 +111,35 @@ public class CPU extends Thread {
                     semaphore.release();
                 }
             }else{
-                addIOResult(process, ioHandlerTracker);
+                addIOToResultsList(process, ioHandlerTracker);
 
             }
 
         }else if(process.getType() == Process.Type.commandLine){
-            //terminal
+            try {
 
+                if(process.getTerminalCode() != null) {
+                    boolean cdProcess = process.getTerminalCode().checkIfCDCommand();
 
+                    if (cdProcess) {
+                        process.getTerminalCode().outputResult();
+                    } else {
+                        Thread thread = new IO(process.getId(), process, process.getTerminalCode(), Process.Type.commandLine);
+                        thread.start();
+                        thread.join();
+                    }
 
+                }else if (process.isHandledByIO()) {
+                    System.out.println(process.getIOOutput().getOutput());
+                }
+            }catch (InterruptedException e){
+                System.out.println(e);
+            }
         }
+
+    }
+
+    private void executeTerminalIOProcess(IO ioThread) throws InterruptedException{
 
     }
 
@@ -139,7 +156,7 @@ public class CPU extends Thread {
 
     }
 
-    private void addIOResult(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
+    private void addIOToResultsList(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
         cpuResults.add(new Output(process.getId(), process.getIOOutput()));
 
         latch.get(process.getId()).countDown();

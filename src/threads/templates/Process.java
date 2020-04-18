@@ -8,9 +8,10 @@ public class Process {
     private File file;
     private Type type;
     private State state;
-    private String terminalCode;
+    private CommandLine terminalCode;
     private IOOutput output = null;
     private int lineNumber;
+    private boolean handledByIO;
 
 
     //FILE HANDLING PROCESSES - USED BY CODE FILES
@@ -21,10 +22,11 @@ public class Process {
         this.priority = priority;
     }
 
-    //IO PROCESS BEING SENT TO READY QUEUE ONCE AT THE START
-    public Process(int id, int priority, Type type, String terminalCode) {
+    //COMMAND LINE PROCESSES
+    public Process(int id, Type type, CommandLine terminalCode) {
         this.id = id;
         this.type = type;
+        this.terminalCode = terminalCode;
     }
 
     //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY CODE FILES
@@ -33,6 +35,13 @@ public class Process {
         this.type = type;
         this.output = output;
         this.lineNumber = lineNumber;
+    }
+
+    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY TERMINAL CODE
+    public Process(int id, Type type, IOOutput output){
+        this.id = id;
+        this.type = type;
+        this.output = output;
     }
 
     public static enum State {
@@ -73,4 +82,15 @@ public class Process {
         return output;
     }
 
+    public CommandLine getTerminalCode() {
+        return terminalCode;
+    }
+
+    public boolean isHandledByIO() {
+        return handledByIO;
+    }
+
+    public void setHandledByIO(boolean handledByIO) {
+        this.handledByIO = handledByIO;
+    }
 }

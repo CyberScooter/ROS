@@ -32,7 +32,7 @@ public class ProcessCreation extends Thread{
             if(processToAdd != null) {
                 readyQueue.add(processToAdd);
 
-                if (processToAdd.getIOOutput() != null) {
+                if (processToAdd.getIOOutput() != null || processToAdd.getType() == Process.Type.commandLine) {
                     Kernel.dispatcher.interrupt();
                     //two stop two interrupts being called simultaeneously
                     try{
@@ -41,6 +41,13 @@ public class ProcessCreation extends Thread{
 
                     }
                 }
+
+            }
+
+            //refreshes every 200ms
+            try{
+                Thread.sleep(200);
+            }catch (InterruptedException e){
 
             }
 

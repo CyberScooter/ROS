@@ -16,6 +16,7 @@ public class Output implements Comparable<Output>{
     private boolean exit;
     private boolean error;
     private String errorMessage;
+    private CommandLine commandLine;
 
     //constructor for if line is variable assignment, cpu result
     public Output(int processID, int line, String type, int value) {

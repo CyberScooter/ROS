@@ -1,9 +1,9 @@
 package threads;
 
-import threads.templates.IOOutput;
+import threads.templates.*;
 import threads.templates.Process;
-import threads.templates.RegexExpressions;
 
+import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 import java.util.regex.Pattern;
@@ -19,6 +19,7 @@ public class IO extends Thread {
     Process process;
     Process.Type processType;
     boolean available = true;
+    CommandLine terminalCode;
 
     public IO(int processID, Process process, String io, int lineNumber, Process.Type processType) {
         this.io = io;
@@ -28,7 +29,18 @@ public class IO extends Thread {
         this.process = process;
         if(ioQueue == null){
 //            ioQueue = new Vector<>();
-            ioQueue = new ConcurrentLinkedQueue<IOOutput>();
+            ioQueue = new ConcurrentLinkedQueue<>();
+        }
+    }
+
+    public IO(int processID, Process process, CommandLine terminalCode, Process.Type processType) {
+        this.processID = processID;
+        this.processType = processType;
+        this.process = process;
+        this.terminalCode = terminalCode;
+        if(ioQueue == null){
+//            ioQueue = new Vector<>();
+            ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
@@ -39,20 +51,36 @@ public class IO extends Thread {
 
             semaphore.acquire();
 
-            ioQueue.add(new IOOutput(processID, io, lineNumber));
+            if(processType == Process.Type.fileHandling) {
+                ioQueue.add(new IOOutput(processID, io, lineNumber));
+            }else if(processType == Process.Type.commandLine){
+                ioQueue.add(new IOOutput(processID, terminalCode));
+            }
+
 
 
             //FCFS - Scheduling algorithm
-            for(IOOutput result : ioQueue){
-                if(result.getProcessID() == this.processID && result.getLineNumber() == this.lineNumber && result.getOutput().equals(this.io)){
-                    //for print variables/strings in code file
-                    handlePrintIOCodeFile(result);
-                    //for print data in command line
-                    if(processType == Process.Type.commandLine){
+//            for(IOOutput result : ioQueue){
+//                if(result.getProcessID() == this.processID && result.getLineNumber() == this.lineNumber && result.getOutput().equals(this.io)){
+//                    //for print variables/strings in code file
+//                    handlePrintIOCodeFile(result);
+//                    //for print data in command line
+//                    if(processType == Process.Type.commandLine){
+//
+//                    }
+//
+//                }
+//            }
 
-                    }
-
+            //FCFS
+            while(!ioQueue.isEmpty()){
+                IOOutput ioOutput = ioQueue.poll();
+                if(ioOutput.getOutput() != null){
+                    handlePrintIOCodeFile(ioOutput);
+                }else if(ioOutput.getTerminalCode() != null){
+                    handleTerminalCode(ioOutput);
                 }
+
             }
 
         }catch (InterruptedException e){
@@ -60,6 +88,18 @@ public class IO extends Thread {
         } finally{
             semaphore.release();
         }
+
+    }
+
+    private synchronized void handleTerminalCode(IOOutput output){
+        String data = output.getTerminalCode().outputResult();
+        IOOutput ioOutput = new IOOutput(data);
+
+        Process process = new Process(processID, Process.Type.commandLine, ioOutput);
+        process.setHandledByIO(true);
+
+        Kernel.addProcess(process);
+        Kernel.processCreation.interrupt();
 
     }
 
