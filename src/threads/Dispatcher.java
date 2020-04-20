@@ -46,7 +46,6 @@ public class Dispatcher extends Thread {
                         }
                     }
 
-
                     if(type == ReadyQueueComparator.queueType.priority && !processPriorityDispatch.isEmpty()){
                         startCPUThreads(ReadyQueueComparator.queueType.priority);
                     }else if(type == ReadyQueueComparator.queueType.FCFS_process && !processFCFSDispatch.isEmpty()){

@@ -11,8 +11,8 @@ public class Process {
     private CommandLine terminalCode;
     private IOOutput output = null;
     private int lineNumber;
+    private String toWrite;
     private boolean handledByIO;
-
 
     //FILE HANDLING PROCESSES - USED BY CODE FILES
     public Process(int id, int priority, Type type, File file) {
@@ -29,7 +29,8 @@ public class Process {
         this.terminalCode = terminalCode;
     }
 
-    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY CODE FILES
+    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED FOR COMPILING CODE FILES
+    //or reading code file to display on GUI
     public Process(int id, Type type, int lineNumber, IOOutput output){
         this.id = id;
         this.type = type;
@@ -44,12 +45,24 @@ public class Process {
         this.output = output;
     }
 
+    //FILE WRITING
+    public Process(int id, Type type, File file, String toWrite){
+        this.id = id;
+        this.type = type;
+        this.toWrite = toWrite;
+        this.file = file;
+    }
+
     public static enum State {
         ready, running, terminated
     }
 
     public static enum Type {
-        fileHandling, commandLine
+        fileCompiling, commandLine, fileReading, fileWriting
+    }
+
+    public String toWrite(){
+        return this.toWrite;
     }
 
     public int getPriority() {
@@ -92,5 +105,14 @@ public class Process {
 
     public void setHandledByIO(boolean handledByIO) {
         this.handledByIO = handledByIO;
+    }
+
+    @Override
+    public String toString() {
+        return "Process{" +
+                "id=" + id +
+                ", priority=" + priority +
+                ", type=" + type +
+                '}';
     }
 }

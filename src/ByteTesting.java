@@ -34,11 +34,11 @@ public class ByteTesting {
         //FRAME OFFSET IS 13 AND FRAME NUMBER IS 13
 
 
-        File file = new File("file.txt");
+        File file = new File("Program1.txt");
 
         byte[] fileContent = Files.readAllBytes(file.toPath());
 
-        Scanner sc = new Scanner(new File("file.txt"));
+        Scanner sc = new Scanner(new File("Program1.txt"));
 
         ArrayList<Integer> data = new ArrayList<>();
 

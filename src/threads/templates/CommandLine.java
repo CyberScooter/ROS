@@ -1,23 +1,25 @@
 package threads.templates;
 
+import javafx.scene.control.Control;
+import views.Controller;
+import views.Main;
+
 import java.io.*;
 import java.lang.Process;
 import java.util.ArrayList;
 
 public class CommandLine {
-    public static String currentDir;
+    private static String currDir = System.getProperty("user.dir");
     private String command;
     private ProcessBuilder pb;
 
     public CommandLine(String command) {
         this.command = command;
-        if(currentDir == null) currentDir = System.getProperty("user.dir");
     }
 
     public String outputResult(){
         if (checkIfCDCommand()) {
-            this.pb = new ProcessBuilder(new String[]{"java"});
-            return changeDirectory(this.command.split(" ")[0].equals("cd"));
+            this.pb = new ProcessBuilder("cmd.exe", "/c");
         }else{
             this.pb = new ProcessBuilder("cmd.exe", "/c", command);
         }
@@ -30,19 +32,9 @@ public class CommandLine {
         return this.command.split(" ")[0].equals("cd");
     }
 
-    private String changeDirectory(boolean dir) {
-        File dirToChange = new File(System.getProperty("user.dir") + "C-DRIVE" + "/" + dir);
-        if(dirToChange.isDirectory()){
-            pb.directory(new File(System.getProperty("user.dir") + "C-DRIVE" + "/" + dir));
-            currentDir = System.getProperty("user.dir") + "C-DRIVE" + "/" + dir;
-        }else{
-            return "Not a valid directory";
-        }
-        return null;
-    }
 
     private String outputIOResult(){
-        File f = new File(currentDir);
+        File f = new File(System.getProperty("user.dir"));
         if(f.exists()){
             pb.directory(f);
         }

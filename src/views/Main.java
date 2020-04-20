@@ -5,6 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import threads.Dispatcher;
+import threads.ProcessCreation;
+import threads.templates.Process;
+
+import java.util.LinkedList;
 
 public class Main extends Application {
 

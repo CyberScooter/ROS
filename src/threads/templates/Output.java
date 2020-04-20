@@ -1,5 +1,6 @@
 package threads.templates;
 
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 //each index represents order of execution for reading code from file
@@ -92,17 +93,18 @@ public class Output implements Comparable<Output>{
     }
 
     public boolean getExit(){
-        return this.exit;
+        return exit;
     }
 
     public boolean isError() {
         return error;
     }
 
-
+    public void setLine(int line) {this.line = line;}
 
     public String getErrorMessage() {
         return errorMessage;
     }
+
 }
 

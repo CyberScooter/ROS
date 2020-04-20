@@ -31,6 +31,7 @@ public class ProcessCreation extends Thread{
 
             if(processToAdd != null) {
                 readyQueue.add(processToAdd);
+                Kernel.processCreationLatch.countDown();
 
                 if (processToAdd.getIOOutput() != null || processToAdd.getType() == Process.Type.commandLine) {
                     Kernel.dispatcher.interrupt();
