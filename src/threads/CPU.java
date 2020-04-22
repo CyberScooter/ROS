@@ -152,6 +152,7 @@ public class CPU extends Thread {
 
                     if (cdProcess) {
                         process.getTerminalCode().outputResult();
+                        SimpleShell.terminalLatch.countDown();
                     } else {
                         Thread thread = new IO(process.getId(), process, process.getTerminalCode(), Process.Type.commandLine);
                         thread.start();
@@ -160,9 +161,10 @@ public class CPU extends Thread {
 
                 }else if (process.isHandledByIO()) {
                     System.out.println(process.getIOOutput().getOutput());
+                    SimpleShell.terminalLatch.countDown();
                 }
             }catch (InterruptedException e){
-                System.out.println(e);
+                System.out.println(e) ;
             }finally {
                 terminalSemaphore.release();
             }

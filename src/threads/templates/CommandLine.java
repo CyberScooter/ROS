@@ -1,6 +1,7 @@
 package threads.templates;
 
 import javafx.scene.control.Control;
+import threads.SimpleShell;
 import views.Controller;
 import views.Main;
 
@@ -9,7 +10,6 @@ import java.lang.Process;
 import java.util.ArrayList;
 
 public class CommandLine {
-    private static String currDir = System.getProperty("user.dir");
     private String command;
     private ProcessBuilder pb;
 
@@ -20,21 +20,35 @@ public class CommandLine {
     public String outputResult(){
         if (checkIfCDCommand()) {
             this.pb = new ProcessBuilder("cmd.exe", "/c");
+            changeDirectory(command.split(" ")[1]);
+            return null;
         }else{
             this.pb = new ProcessBuilder("cmd.exe", "/c", command);
+            return outputIOResult();
         }
-
-        return outputIOResult();
-
     }
 
     public boolean checkIfCDCommand(){
         return this.command.split(" ")[0].equals("cd");
     }
 
+    public void changeDirectory(String dir){
+        String currdir = null;
+        if(SimpleShell.cdir == null){
+            currdir = System.getProperty("user.dir") + "/" + dir;
+        }else{
+            currdir = SimpleShell.cdir + "/" + dir;
+        }
+        if(new File(currdir).isDirectory()){
+            pb.directory(new File(currdir));
+            SimpleShell.cdir = currdir;
+        }else {
+            System.out.println("Not a valid dir");
+        }
+    }
 
     private String outputIOResult(){
-        File f = new File(System.getProperty("user.dir"));
+        File f = new File(SimpleShell.cdir);
         if(f.exists()){
             pb.directory(f);
         }
@@ -44,7 +58,7 @@ public class CommandLine {
         try{
             process = this.pb.start();
         }catch(IOException e){
-            return "Enter valid command";
+            return "Enter a valid command";
         }
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -65,7 +79,7 @@ public class CommandLine {
             stringBuffer.append(e);
         }
 
-        return null;
+        return stringBuffer.toString();
     }
 
     public String getCommand() {

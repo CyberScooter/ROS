@@ -93,6 +93,14 @@ public class Kernel {
 
     }
 
+    public static void runTerminalProcess(Process commandLine){
+        processCreationLatch = new CountDownLatch(1);
+        addProcess(commandLine);
+
+        processCreation.interrupt();
+
+    }
+
     public static void executeProcesses(Dispatcher dispatcher){
         dispatcher.interrupt();
     }

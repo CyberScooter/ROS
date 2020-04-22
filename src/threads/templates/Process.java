@@ -22,13 +22,6 @@ public class Process {
         this.priority = priority;
     }
 
-    //COMMAND LINE PROCESSES
-    public Process(int id, Type type, CommandLine terminalCode) {
-        this.id = id;
-        this.type = type;
-        this.terminalCode = terminalCode;
-    }
-
     //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED FOR COMPILING CODE FILES
     //or reading code file to display on GUI
     public Process(int id, Type type, int lineNumber, IOOutput output){
@@ -38,19 +31,27 @@ public class Process {
         this.lineNumber = lineNumber;
     }
 
-    //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED BY TERMINAL CODE
-    public Process(int id, Type type, IOOutput output){
-        this.id = id;
-        this.type = type;
-        this.output = output;
-    }
-
     //FILE WRITING
     public Process(int id, Type type, File file, String toWrite){
         this.id = id;
         this.type = type;
         this.toWrite = toWrite;
         this.file = file;
+    }
+
+    //====================COMMAND LINE PROCESSES=====================================
+    //for code being sent to CPU to execute
+    public Process(int id, Type type, CommandLine terminalCode) {
+        this.id = id;
+        this.type = type;
+        this.terminalCode = terminalCode;
+    }
+
+    //process coming back after being processed by IO to the CPU again to be executed
+    public Process(int id, Type type, IOOutput output){
+        this.id = id;
+        this.type = type;
+        this.output = output;
     }
 
     public static enum State {

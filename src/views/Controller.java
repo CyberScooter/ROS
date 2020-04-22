@@ -75,7 +75,7 @@ public class Controller {
         setPriority.setPromptText("Set priority for process");
 
         Button addToProcessQueue = new Button("Add to process queue");
-        Button save = new Button("Save");
+        Button save = new Button("Save file");
         Button runProcessQueue = new Button("Run processes in queue");
         Button clear = new Button("Clear queue");
 
