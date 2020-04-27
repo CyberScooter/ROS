@@ -1,16 +1,10 @@
 package threads;
 
 import threads.templates.CommandLine;
-import threads.templates.Output;
 import threads.templates.Process;
 import threads.templates.ReadyQueueComparator;
-import views.Main;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 
 public class Kernel {
@@ -34,6 +28,7 @@ public class Kernel {
 
     public static void main(String[] args) {
 
+        //used for testing purposes
         //reads processes always on
         processCreation = new ProcessCreation();
         processCreation.start();
@@ -43,54 +38,33 @@ public class Kernel {
 
         LinkedList<Process> processes = new LinkedList<>();
 
-
-        Process process = new Process(1, 3, Process.Type.fileCompiling, new File("Program1.txt"));
+        Process process1 = new Process(1, 3, Process.Type.fileCompiling, new File("Program1.txt"));
         Process process2 = new Process(2, 2, Process.Type.fileCompiling, new File("Program2.txt"));
-        Process process3 = new Process(3, Process.Type.commandLine, new CommandLine("dir"));
-        process3.setHandledByIO(false);
+        Process process3 = new Process(1, 3, Process.Type.fileCompiling, new File("Program1.txt"));
+        Process process4 = new Process(2, 2, Process.Type.fileCompiling, new File("Program2.txt"));
 
-
-        processes.add(process);
-        processes.add(process2);
+        processes.add(process3);
+        processes.add(process4);
 
         compileCodeFileProcess(processes);
 
 
-
-//        runTerminalCode(process3);
-
-
-    }
-
-    public static void runTerminalCode(Process process){
-        addProcess(process);
-        processCreation.interrupt();
     }
 
     public static void compileCodeFileProcess(LinkedList<Process> processes) {
         processCreationLatch = new CountDownLatch(processes.size());
-        while(!processes.isEmpty()){
+        while (!processes.isEmpty()) {
             addProcess(processes.poll());
         }
         processCreation.interrupt();
 
-
-
-        try{
+        try {
             processCreationLatch.await();
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e);
         }
 
-
-//        try {
-//            Thread.sleep(4000);
-//        }catch (InterruptedException e){
-//            System.out.println( e);
-//        }
-
         executeProcesses(dispatcher);
-
     }
 
     public static void runTerminalProcess(Process commandLine){

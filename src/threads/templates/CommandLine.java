@@ -1,13 +1,9 @@
 package threads.templates;
 
-import javafx.scene.control.Control;
-import threads.SimpleShell;
-import views.Controller;
-import views.Main;
+import threads.Terminal;
 
 import java.io.*;
 import java.lang.Process;
-import java.util.ArrayList;
 
 public class CommandLine {
     private String command;
@@ -33,22 +29,17 @@ public class CommandLine {
     }
 
     public void changeDirectory(String dir){
-        String currdir = null;
-        if(SimpleShell.cdir == null){
-            currdir = System.getProperty("user.dir") + "/" + dir;
-        }else{
-            currdir = SimpleShell.cdir + "/" + dir;
-        }
+        String currdir = Terminal.cdir + "/" + dir;
         if(new File(currdir).isDirectory()){
             pb.directory(new File(currdir));
-            SimpleShell.cdir = currdir;
+            Terminal.cdir = currdir;
         }else {
             System.out.println("Not a valid dir");
         }
     }
 
     private String outputIOResult(){
-        File f = new File(SimpleShell.cdir);
+        File f = new File(Terminal.cdir);
         if(f.exists()){
             pb.directory(f);
         }
@@ -82,11 +73,4 @@ public class CommandLine {
         return stringBuffer.toString();
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public void setPb(ProcessBuilder pb) {
-        this.pb = pb;
-    }
 }

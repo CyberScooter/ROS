@@ -43,12 +43,11 @@ public class IOOutput {
 
 
     //FILE-HANDLING (COMPILING FILES), for returning output to CPU used for file compiling
-    public IOOutput(String output, boolean variable, int lineNumber, boolean error, Process processHandling) {
+    public IOOutput(String output, boolean variable, int lineNumber, boolean error) {
         this.output = output;
         this.variable = variable;
         this.lineNumber = lineNumber;
         this.error = error;
-        this.processHandling = processHandling;
     }
 
     //FILE-HANDING (READING FILES/WRITING FILES)

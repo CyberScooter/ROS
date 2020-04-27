@@ -1,7 +1,6 @@
 package threads;
 
 
-import javafx.scene.control.Control;
 import threads.templates.*;
 import threads.templates.Process;
 import views.Controller;
@@ -56,91 +55,80 @@ public class CPU extends Thread {
         if(process.getType() == Process.Type.fileCompiling){
             try {
                 fileCompilingSemaphore.acquire();
-            if(process.getIOOutput() == null){
+                    //if the current process belongs/came from io queue -> ready queue -> this cpu thread
+                    //then dont run code below
+                    if(process.getIOOutput() == null){
 
-                        //if the current process belongs/came from io queue -> ready queue -> this cpu thread
-                        //then dont run code below
+                        String[] data = textFileOutput.get(process.getFile().getName()).split("\n");
 
+                        for(int x = 0; x < data.length; x++){
+                            if (Pattern.matches(RegexExpressions.INTEGER_VARIABLE_REGEX, data[x])) {
+                                int indexAtEquals = data[x].indexOf("=");
+                                String variableName = data[x].substring(0, indexAtEquals).trim();
+                                int value = Integer.parseInt(data[x].substring(indexAtEquals + 1, data[x].length() - 1).trim());
+                                cpuResults.add(new Output(process.getId(), x+1, variableName, value));
 
-                        BufferedReader bufferedReader = new BufferedReader(new FileReader("resources/" + process.getFile()));
-                        String line = null;
-                        int count = 0;
-
-                        while((line = bufferedReader.readLine()) != null) {
-                            count++;
-
-                            if (Pattern.matches(RegexExpressions.INTEGER_VARIABLE_REGEX, line)) {
-                                int indexAtEquals = line.indexOf("=");
-                                String variableName = line.substring(0, indexAtEquals).trim();
-                                int value = Integer.parseInt(line.substring(indexAtEquals + 1, line.length() - 1).trim());
-                                cpuResults.add(new Output(process.getId(), count, variableName, value));
-
-                            } else if (line.length() >= 5 && line.trim().substring(0,5).equals("print")) {
-                                Thread ioProcess = new IO(process.getId(), process, line, count, process.getType());
+                            } else if (data[x].length() >= 5 && data[x].trim().substring(0,5).equals("print")) {
+                                Thread ioProcess = new IO(process, data[x], x+1);
                                 ioProcesses.add(ioProcess);
 
-                            } else if(Pattern.matches(RegexExpressions.CALCULATION_REGEX1, line)) {
-                                int index = line.indexOf("=");
-                                String calculation = line.substring(index + 1, line.length()-1).trim();
+                            } else if(Pattern.matches(RegexExpressions.CALCULATION_REGEX1, data[x])) {
+                                int index = data[x].indexOf("=");
+                                String calculation = data[x].substring(index + 1, data[x].length()-1).trim();
                                 if(CodeCompiler.checkCalculationSyntax(calculation)){
-                                    cpuResults.add(new Output(process.getId(), count, line.substring(0, index).trim(), calculation, Output.Type.addition));
+                                    cpuResults.add(new Output(process.getId(), x+1, data[x].substring(0, index).trim(), calculation, Output.Type.addition));
                                 }
-                            } else if(Pattern.matches(RegexExpressions.EXIT_REGEX, line)){
+                            } else if(Pattern.matches(RegexExpressions.EXIT_REGEX, data[x])){
                                 Output exit = new Output(process.getId(), true);
-                                exit.setLine(count);
+                                exit.setLine(x+1);
                                 cpuResults.add(exit);
                             } else{
-                                Output err = new Output(process.getId(), true, "Syntax error at line: " + count);
-                                err.setLine(count);
+                                Output err = new Output(process.getId(), true, "Syntax error at line: " + x+1);
+                                err.setLine(x+1);
                                 cpuResults.add(err);
                                 break;
                             }
-
-                    }
-
-                        bufferedReader.close();
-
-                    if(ioProcesses.size() > 0){
-                        //executes IOThreads which handles the IO and sends it back to readyqueue in the ProcessCreation thread
-                        executeIOProcesses();
-                    }
-
-                    //executes once the io processes are done, as io processes they will use different threads
-                    if(cpuResults.size() > 0){
-                        CodeCompiler codeCompiler = new CodeCompiler();
-                        Vector<Output> cpuResultsForGivenId = new Vector<>();
-                        try{
-                            Thread.sleep(100);
-                        }catch (InterruptedException e){
-
                         }
 
-                        for(Output output : cpuResults){
-                            if(output.getProcessID() == process.getId()){
-                                cpuResultsForGivenId.add(output);
+                        if(ioProcesses.size() > 0){
+                            //executes IOThreads which handles the IO and sends it back to readyqueue in the ProcessCreation thread
+                            executeIOProcesses();
+                        }
+
+                        //executes once the io processes are done, as io processes they will use different threads
+                        if(cpuResults.size() > 0){
+                            CodeCompiler codeCompiler = new CodeCompiler();
+                            Vector<Output> cpuResultsForGivenId = new Vector<>();
+                            try{
+                                Thread.sleep(100);
+                            }catch (InterruptedException e){
+
                             }
+
+                            for(Output output : cpuResults){
+                                if(output.getProcessID() == process.getId()){
+                                    cpuResultsForGivenId.add(output);
+                                }
+                            }
+
+                            Collections.sort(cpuResultsForGivenId);
+
+                            codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
+                            cpuResultsCompiled.put(process.getId(), codeCompiler.getCodeResults());
+                            Controller.fileCompiling.countDown();
+
+//                            for(String result : codeCompiler.getCodeResults()){
+//                                System.out.println(result);
+//                            }
                         }
 
-                        Collections.sort(cpuResultsForGivenId);
-
-                        codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
-                        cpuResultsCompiled.put(process.getId(), codeCompiler.getCodeResults());
-                        Controller.fileCompiling.countDown();
-
-//                        for(String result : codeCompiler.getCodeResults()){
-//                            System.out.println(result);
-//                        }
+                    }else{
+                        addIOToResultsList(process, ioHandlerTracker);
                     }
-
-
-                }else{
-
-                    addIOToResultsList(process, ioHandlerTracker);
-
-                }
-            }catch (IOException | InterruptedException e){
+            }catch (InterruptedException e){
                 System.out.println(e);
             } finally{
+                process.setState(Process.State.terminated);
                 fileCompilingSemaphore.release();
             }
 
@@ -152,28 +140,30 @@ public class CPU extends Thread {
 
                     if (cdProcess) {
                         process.getTerminalCode().outputResult();
-                        SimpleShell.terminalLatch.countDown();
+                        Terminal.terminalLatch.countDown();
                     } else {
-                        Thread thread = new IO(process.getId(), process, process.getTerminalCode(), Process.Type.commandLine);
+                        Thread thread = new IO(process, process.getTerminalCode());
                         thread.start();
                         thread.join();
                     }
 
                 }else if (process.isHandledByIO()) {
                     System.out.println(process.getIOOutput().getOutput());
-                    SimpleShell.terminalLatch.countDown();
+                    Terminal.terminalLatch.countDown();
                 }
             }catch (InterruptedException e){
                 System.out.println(e) ;
             }finally {
+                process.setState(Process.State.terminated);
                 terminalSemaphore.release();
             }
+
         }else if(process.getType() == Process.Type.fileReading){
             try {
                 fileReadingSemaphore.acquire();
                 if (process.getIOOutput() == null) {
                     try {
-                        Thread IO = new IO(process.getId(), process, process.getType());
+                        Thread IO = new IO(process);
                         IO.start();
                         IO.join();
                     } catch (InterruptedException e) {
@@ -186,30 +176,34 @@ public class CPU extends Thread {
             }catch (InterruptedException e){
                 System.out.println(e);
             }finally {
+                process.setState(Process.State.terminated);
                 fileReadingSemaphore.release();
+
             }
+
         }else if(process.getType() == Process.Type.fileWriting){
             try {
                 fileReadingSemaphore.acquire();
-                try {
-                    Thread IO = new IO(process, process.toWrite(), process.getType());
-                    IO.start();
-                    IO.join();
-                    Controller.fileWriting.countDown();
-                } catch (InterruptedException e) {
-                    System.out.println(e);
+                if(process.getIOOutput() == null) {
+                    try {
+                        Thread IO = new IO(process, process.toWrite());
+                        IO.start();
+                        IO.join();
+                        Controller.fileWriting.countDown();
+                    } catch (InterruptedException e) {
+                        System.out.println(e);
+                    }
+                }else{
+                    saveToTextFileOutput(process.getIOOutput().getFilename(), process.getIOOutput().getOutput());
                 }
 
             }catch (InterruptedException e){
                 System.out.println(e);
             }finally {
+                process.setState(Process.State.terminated);
                 fileReadingSemaphore.release();
             }
         }
-
-    }
-
-    private void executeTerminalIOProcess(IO ioThread) throws InterruptedException{
 
     }
 
@@ -221,9 +215,7 @@ public class CPU extends Thread {
             thread.start();
             thread.join();
         }
-
         ioHandlerTracker.get(process.getId()).await();
-
     }
 
     private void addIOToResultsList(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
@@ -232,12 +224,14 @@ public class CPU extends Thread {
         cpuResults.add(output);
 
         latch.get(process.getId()).countDown();
-
-
     }
 
     public static ConcurrentHashMap<String, String> getTextFileOutput() {
         return textFileOutput;
+    }
+
+    public static void saveToTextFileOutput(String filename, String data) {
+        textFileOutput.put(filename, data);
     }
 
 }

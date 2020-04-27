@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Pattern;
 
-public class SimpleShell
+public class Terminal
 {
 	public static String cdir = null;
 	static int processId = 1;

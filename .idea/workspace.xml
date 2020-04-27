@@ -2,22 +2,50 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/mmu/VirtualMemory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/PageTable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/Terminal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/ByteTesting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/mmu/PageTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/mmu/PageTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/mmu/PhysicalMemory.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/CPU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/CPU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/Dispatcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/IO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/IO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/Kernel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/Kernel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/ProcessCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/ProcessCreation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/SimpleShell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CodeCompiler$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CodeCompiler$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CodeCompiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CodeCompiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CommandLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/CommandLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process$State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/IOOutput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/IOOutput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Output$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Output$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Output.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Output.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/Process.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PageTable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator$queueType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/threads/templates/ReadyQueueComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/views/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/views/Terminal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/views/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/views/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Program1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Program1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Program2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Program2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ByteTesting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mmu/ByteTesting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mmu/PageTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mmu/PageTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mmu/PhysicalMemory.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/threads/CPU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/CPU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/Dispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/IO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/IO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/threads/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/Kernel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/ProcessCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/ProcessCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/SimpleShell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/templates/CodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/CodeCompiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/threads/templates/CommandLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/CommandLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/templates/IOOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/IOOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/templates/Output.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/Output.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/threads/templates/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/Process.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/threads/templates/ReadyQueueComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads/templates/ReadyQueueComparator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Terminal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/sample.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -159,7 +187,7 @@
       </method>
     </configuration>
     <configuration name="ByteTesting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ByteTesting" />
+      <option name="MAIN_CLASS_NAME" value="mmu.ByteTesting" />
       <module name="os-coursework" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -196,20 +224,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SimpleShell (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="threads.SimpleShell" />
-      <module name="os-coursework" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="threads.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SimpleShell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="views.SimpleShell" />
       <module name="os-coursework" />
@@ -228,6 +242,20 @@
       <option name="MAIN_CLASS_NAME" value="threads.SimpleShell" />
       <module name="os-coursework" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Terminal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="threads.Terminal" />
+      <module name="os-coursework" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="threads.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -286,7 +314,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Kernel" />
-        <item itemvalue="Application.SimpleShell (1)" />
+        <item itemvalue="Application.Terminal" />
         <item itemvalue="Application.SimpleShell" />
         <item itemvalue="Application.ByteTesting" />
         <item itemvalue="Application.Test (1)" />
@@ -345,7 +373,12 @@
       <workItem from="1587386247151" duration="18098000" />
       <workItem from="1587481916303" duration="180000" />
       <workItem from="1587557686593" duration="3392000" />
-      <workItem from="1587563739231" duration="2499000" />
+      <workItem from="1587563739231" duration="6140000" />
+      <workItem from="1587647723247" duration="3726000" />
+      <workItem from="1587656559469" duration="1338000" />
+      <workItem from="1587734910255" duration="7501000" />
+      <workItem from="1587826152990" duration="2369000" />
+      <workItem from="1587995146303" duration="2138000" />
     </task>
     <servers />
   </component>

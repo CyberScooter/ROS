@@ -1,6 +1,4 @@
 package threads.templates;
-
-import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 //each index represents order of execution for reading code from file
@@ -10,20 +8,18 @@ public class Output implements Comparable<Output>{
     private int line;
     private ConcurrentHashMap<String, Integer> variable;
     private ConcurrentHashMap<String, String> arithmeticCalculation;
-    private int calculation;
     private int processID;
     private IOOutput IOOutput;
     private Type calculationType;
     private boolean exit;
     private boolean error;
     private String errorMessage;
-    private CommandLine commandLine;
 
     //constructor for if line is variable assignment, cpu result
     public Output(int processID, int line, String type, int value) {
         this.processID = processID;
         this.line = line;
-        this.variable = new ConcurrentHashMap<String, Integer>();
+        this.variable = new ConcurrentHashMap<>();
         this.variable.put(type, value);
     }
 

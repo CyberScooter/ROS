@@ -37,17 +37,22 @@ public class CodeCompiler {
                 }else if(output1.getIOOutput() != null){
                     if(!output1.getIOOutput().isVariable()){
                         codeResults.add(output1.getIOOutput().getOutput().substring(1, output1.getIOOutput().getOutput().length() - 1));
-//                        System.out.println(output1.getIOOutput().getOutput().substring(1, output1.getIOOutput().getOutput().length() - 1));
                     }else if(output1.getIOOutput().isVariable()){
                         for (Map.Entry<String, Integer> entry : calculationResults.entrySet()) {
                             if (entry.getKey().equals("var " + output1.getIOOutput().getOutput())) {
                                 codeResults.add(String.valueOf(entry.getValue()));
-//                                System.out.println(entry.getValue());
+                            }else{
+                                for(Map.Entry<String, Integer> entry2 : variables.entrySet()){
+                                    if(entry.getKey().equals("var " + output1.getIOOutput().getOutput())){
+                                        codeResults.add(String.valueOf(entry2.getValue()));
+                                    }
+                                }
                             }
                         }
+
                     }else if(output1.getIOOutput().isError()){
                         codeResults.add("Syntax error at line: " + output1.getIOOutput().getLineNumber());
-//                        System.out.println();
+                        break;
                     }
 
                 }else if(output1.isError()){
@@ -68,7 +73,7 @@ public class CodeCompiler {
 
     }
 
-    private void calculateResult(Output output, int line){ ;
+    private boolean calculateResult(Output output, int line){ ;
         Map.Entry<String,String> entry = output.getArithmeticCalculation().entrySet().iterator().next();
         String value = entry.getValue();
         int indexAtEquals = value.indexOf("=");
@@ -84,6 +89,7 @@ public class CodeCompiler {
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }else{
                 codeResults.add("Error at line: " + line);
+                return true;
             }
         }else if(!checkIfInteger(firstAddend) && checkIfInteger(secondAddend)){
             if(variables.containsKey("var " + firstAddend)) {
@@ -91,6 +97,7 @@ public class CodeCompiler {
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }else{
                 codeResults.add("Error at line: " + line);
+                return true;
             }
         }else if(!checkIfInteger(firstAddend) && !checkIfInteger(secondAddend)){
             if(variables.containsKey("var " + firstAddend) && variables.containsKey("var " + secondAddend)) {
@@ -98,8 +105,10 @@ public class CodeCompiler {
                 variables.put(entry.getKey(), calculationResults.get(entry.getKey()));
             }else{
                 codeResults.add("Error at line: " + line);
+                return true;
             }
         }
+        return false;
     }
 
     public boolean checkIfInteger(String value){

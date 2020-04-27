@@ -23,7 +23,6 @@ public class Process {
     }
 
     //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED FOR COMPILING CODE FILES
-    //or reading code file to display on GUI
     public Process(int id, Type type, int lineNumber, IOOutput output){
         this.id = id;
         this.type = type;
@@ -39,7 +38,7 @@ public class Process {
         this.file = file;
     }
 
-    //====================COMMAND LINE PROCESSES=====================================
+    //====================COMMAND LINE AND FILE READING/WRITING PROCESSES=====================================
     //for code being sent to CPU to execute
     public Process(int id, Type type, CommandLine terminalCode) {
         this.id = id;
@@ -48,6 +47,7 @@ public class Process {
     }
 
     //process coming back after being processed by IO to the CPU again to be executed
+    //used for command line and reading/writing code files
     public Process(int id, Type type, IOOutput output){
         this.id = id;
         this.type = type;
@@ -78,10 +78,6 @@ public class Process {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public State getState() {
-        return state;
     }
 
     public Type getType() {

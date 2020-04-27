@@ -4,23 +4,18 @@ import threads.templates.Process;
 import threads.templates.ReadyQueueComparator;
 
 import java.util.PriorityQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 
 public class Dispatcher extends Thread {
     private final Semaphore semaphore = new Semaphore(1);
-    private Process processComing;
     private static PriorityQueue<Process> processPriorityDispatch;
     private static PriorityQueue<Process> processFCFSDispatch;
-    private static PriorityQueue<Process> ioDispatch;
     private ReadyQueueComparator.queueType type;
 
     public Dispatcher(ReadyQueueComparator.queueType type) {
-        if(processPriorityDispatch == null && processFCFSDispatch == null && ioDispatch == null){
+        if(processPriorityDispatch == null && processFCFSDispatch == null){
             processPriorityDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.priority));
             processFCFSDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_process));
-            ioDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_io));
         }
         this.type = type;
     }

@@ -1,17 +1,12 @@
 package threads;
 
 import threads.templates.Process;
-import threads.templates.ReadyQueueComparator;
-
-import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 
 //keep thread running and will read processes from OSKernal class
 public class ProcessCreation extends Thread{
     static ConcurrentLinkedQueue<Process> readyQueue;
-    private final Semaphore semaphore = new Semaphore(1);
-    private static Process processToAdd;
 
     public ProcessCreation() {
         if(readyQueue == null){
@@ -30,6 +25,7 @@ public class ProcessCreation extends Thread{
             Process processToAdd = Kernel.getProcess();
 
             if(processToAdd != null) {
+                processToAdd.setState(Process.State.ready);
                 readyQueue.add(processToAdd);
                 Kernel.processCreationLatch.countDown();
 
@@ -45,7 +41,7 @@ public class ProcessCreation extends Thread{
 
             }
 
-            //refreshes every 200ms
+            //stops threading every 200ms
             try{
                 Thread.sleep(200);
             }catch (InterruptedException e){

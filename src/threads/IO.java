@@ -4,64 +4,48 @@ import threads.templates.*;
 import threads.templates.Process;
 
 import java.io.*;
-import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 import java.util.regex.Pattern;
 
 public class IO extends Thread {
-    Semaphore semaphore = new Semaphore(1);
-    static ConcurrentLinkedQueue<IOOutput> ioQueue;
-//    static Vector<Result> ioQueue;
-    String result;
-    String io;
-    int processID;
-    int lineNumber;
-    Process process;
-    Process.Type processType;
-    boolean available = true;
-    CommandLine terminalCode;
-    String input;
+    private Semaphore semaphore = new Semaphore(1);
+    private static ConcurrentLinkedQueue<IOOutput> ioQueue;
+    private String io;
+    private int lineNumber;
+    private Process process;
+    private CommandLine terminalCode;
+    private String input;
 
-    public IO(int processID, Process process, String io, int lineNumber, Process.Type processType) {
+    public IO(Process process, String io, int lineNumber) {
         this.io = io;
-        this.processID = processID;
         this.lineNumber= lineNumber;
-        this.processType = processType;
         this.process = process;
         if(ioQueue == null){
-//            ioQueue = new Vector<>();
             ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
-    public IO(int processID, Process process, CommandLine terminalCode, Process.Type processType) {
-        this.processID = processID;
-        this.processType = processType;
+    public IO(Process process, CommandLine terminalCode) {
         this.process = process;
         this.terminalCode = terminalCode;
         if(ioQueue == null){
-//            ioQueue = new Vector<>();
             ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
     //reading text file to display onto GUI
-    public IO(int processID, Process process, Process.Type processType){
-        this.processID = processID;
+    public IO(Process process){
         this.process = process;
-        this.processType = processType;
         if(ioQueue == null){
-//            ioQueue = new Vector<>();
             ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
     //writing to textfile from gui
-    public IO(Process process, String input, Process.Type processType){
+    public IO(Process process, String input){
         this.process = process;
         this.input = input;
-        this.processType = processType;
     }
 
     @Override
@@ -71,14 +55,13 @@ public class IO extends Thread {
 
             semaphore.acquire();
 
-
-            if(processType == Process.Type.fileCompiling) {
-                ioQueue.add(new IOOutput(processID, io, lineNumber));
-            }else if(processType == Process.Type.commandLine){
-                ioQueue.add(new IOOutput(processID, terminalCode));
-            }else if(processType == Process.Type.fileReading){
-                ioQueue.add(new IOOutput(processID, process));
-            }else if(processType == Process.Type.fileWriting){
+            if(process.getType() == Process.Type.fileCompiling) {
+                ioQueue.add(new IOOutput(process.getId(), io, lineNumber));
+            }else if(process.getType() == Process.Type.commandLine){
+                ioQueue.add(new IOOutput(process.getId(), terminalCode));
+            }else if(process.getType() == Process.Type.fileReading){
+                ioQueue.add(new IOOutput(process.getId(), process));
+            }else if(process.getType() == Process.Type.fileWriting){
                 ioQueue.add(new IOOutput(input, process.getFile().getName()));
             }
 
@@ -107,13 +90,27 @@ public class IO extends Thread {
 
     private synchronized void handleFileWriting(IOOutput output) {
         try {
+            //updates file
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("resources/" + output.getFilename())));
             bufferedWriter.write(output.getOutput());
 
             bufferedWriter.close();
 
-        }catch (IOException e){
+            //reads updated file to update textFileOutput attribute in CPU so that updated code file can be retrieved by CPU
+            StringBuffer stringBuffer = new StringBuffer();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("resources/" + output.getFilename())));
+            String line = null;
+            while((line = bufferedReader.readLine()) != null){
+                stringBuffer.append(line).append("\n");
+            }
+            bufferedReader.close();
 
+            Kernel.addProcess(new Process(output.getProcessID(), Process.Type.fileReading, new IOOutput(stringBuffer.toString(), output.getFilename())));
+            Kernel.processCreation.interrupt();
+
+
+        }catch (IOException e){
+            System.out.println(e);
         }
     }
 
@@ -127,7 +124,7 @@ public class IO extends Thread {
             }
 
             reader.close();
-            Kernel.addProcess(new Process(output.getProcessHandling().getId(), Process.Type.fileReading, 0, new IOOutput(data.toString(), output.getProcessHandling().getFile().getName())));
+            Kernel.addProcess(new Process(output.getProcessHandling().getId(), Process.Type.fileReading, new IOOutput(data.toString(), output.getProcessHandling().getFile().getName())));
             Kernel.processCreation.interrupt();
 
         }catch (IOException e){
@@ -148,24 +145,20 @@ public class IO extends Thread {
     }
 
     //static makes it only run one at time
-    public synchronized void handlePrintIOCodeFile(IOOutput result){
+    private synchronized void handlePrintIOCodeFile(IOOutput result){
 
         int itemToOutputLength = result.getOutput().indexOf(" ");
         String output = result.getOutput().substring(itemToOutputLength, result.getOutput().length() - 1).trim();
         if(Pattern.matches(RegexExpressions.PRINT_STRING_REGEX, result.getOutput())){
             //will get added to ready queue
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false, process)));
+            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false)));
         }else if(Pattern.matches(RegexExpressions.PRINT_VARIABLE_REGEX, result.getOutput())){
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false, process)));
+            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false)));
         }else if(itemToOutputLength == 0){
-            Kernel.addProcess(new Process(process.getId(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true, process)));
+            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true)));
         }
         Kernel.processCreation.interrupt();
 
     }
 
-
-    public String getResult() {
-        return result;
-    }
 }
