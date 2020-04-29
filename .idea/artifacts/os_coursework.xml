@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="os-coursework">
+    <output-path>$PROJECT_DIR$/out/artifacts/os_coursework</output-path>
+    <root id="root">
+      <element id="archive" name="os_coursework.jar">
+        <element id="module-output" name="os-coursework" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/main/java/views/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+    </root>
+  </artifact>
+</component>
