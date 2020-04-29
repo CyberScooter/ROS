@@ -38,6 +38,7 @@ public class Dispatcher extends Thread {
                             processPriorityDispatch.add(process);
                         }else if(type == ReadyQueueComparator.queueType.FCFS_process){
                             processFCFSDispatch.add(process);
+
                         }
                     }
 
@@ -59,7 +60,7 @@ public class Dispatcher extends Thread {
 
     }
 
-
+    //starts cpu threads based on priority or fcfs basis
     public synchronized void startCPUThreads(ReadyQueueComparator.queueType type){
         if(type == ReadyQueueComparator.queueType.FCFS_process){
             while(!processFCFSDispatch.isEmpty()){

@@ -46,10 +46,10 @@ public class TestProcessScheduling extends TestCase {
     }
 
 
-    //output of the results for each file will vary in the order it reaches the program
-    //the program runs in the priority order but sometimes a process may take longer to compute
-    //than another process which may cause it to output at different times which is why there
-    //is no exact sequence I can compare the code instruction to as the processing time is constantly changing
+    //output of the results for each file will vary in order because of how long the process takes to finish
+    //the program starts running in the priority order set but sometimes a process may take longer to compute
+    //than another process which may cause the output to be displayed in a different order than how it was sent to be handled by the dispatcher
+    //there is no exact sequence I can compare the output of the code to as the processing time may constantly change
     @Test
     public void testCompileAllCodeFilesInPriorityScheduling(){
         kernel = new Kernel(ReadyQueueComparator.queueType.priority);
@@ -105,9 +105,9 @@ public class TestProcessScheduling extends TestCase {
     }
 
     //output of the results for each file will vary in the order it reaches the program
-    //the program runs in the priority order but sometimes a process may take longer to compute
-    //than another process which may cause it to output at different times which is why there
-    //is no exact sequence I can compare the code instruction to as the processing time is constantly changing
+    //the program is compiled by CPU in a FCFS order but sometimes a process may take longer to compute
+    //than another process which may cause the output to be displayed in a different order than how it was sent to be handled by the dispatcher
+    //there is no exact sequence I can compare the code instruction to as the processing time is constantly changing
     @Test
     public void testCompileAllCodeFilesInFCFSScheduling(){
         kernel = new Kernel(ReadyQueueComparator.queueType.FCFS_process);

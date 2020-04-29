@@ -6,6 +6,8 @@ public class ReadyQueueComparator implements Comparator<Process> {
     private queueType type;
 
     // algorithm comparing methods
+
+    //uses processID to execute processes in FCFS basis, the lower process ids are executed
     private int comparing_FCFS_process(Process p1, Process p2)
     {
         if (p1.getId() < p2.getId())
@@ -15,6 +17,7 @@ public class ReadyQueueComparator implements Comparator<Process> {
         return 0;
     }
 
+    //sorts so highest priority is at the start of the list
     private int comparing_priority(Process p1, Process p2)
     {
         if(p1.getPriority() < p2.getPriority())

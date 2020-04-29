@@ -146,21 +146,21 @@ public class Controller {
 
                     StringBuffer stringBuffer = new StringBuffer();
 
-                    Set<Integer> setKeys = CPU.cpuResultsCompiled.keySet();
-                    List<Integer> listKeys = new ArrayList<>(setKeys);
-                    ListIterator<Integer> iterator = listKeys.listIterator( listKeys.size() );
-                    while(iterator.hasPrevious()){
-                        Integer previousID = iterator.previous();
-                        for(String item : CPU.cpuResultsCompiled.get(previousID)){
-                            stringBuffer.append(processBelongingToProgram.get(previousID) + " RESULT : ").append(item).append("\n");
-                        }
-                    }
-
-//                    for(Map.Entry<Integer, LinkedList<String>> compiledResult : CPU.cpuResultsCompiled.entrySet()){
-//                        for(String item : compiledResult.getValue()){
-//                            stringBuffer.append(processBelongingToProgram.get(compiledResult.getKey()) + " RESULT : ").append(item).append("\n");
+//                    Set<Integer> setKeys = CPU.cpuResultsCompiled.keySet();
+//                    List<Integer> listKeys = new ArrayList<>(setKeys);
+//                    ListIterator<Integer> iterator = listKeys.listIterator( listKeys.size() );
+//                    while(iterator.hasPrevious()){
+//                        Integer previousID = iterator.previous();
+//                        for(String item : CPU.cpuResultsCompiled.get(previousID)){
+//                            stringBuffer.append(processBelongingToProgram.get(previousID) + " RESULT : ").append(item).append("\n");
 //                        }
 //                    }
+
+                    for(Map.Entry<Integer, LinkedList<String>> compiledResult : CPU.cpuResultsCompiled.entrySet()){
+                        for(String item : compiledResult.getValue()){
+                            stringBuffer.append(processBelongingToProgram.get(compiledResult.getKey()) + " RESULT : ").append(item).append("\n");
+                        }
+                    }
 
                     archivedResults.add(stringBuffer.toString());
                     output.setText(stringBuffer.toString());
