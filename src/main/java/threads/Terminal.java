@@ -31,6 +31,8 @@ public class Terminal
 			if (commandLine.equals("")) 
 				continue;
 
+			if(commandLine.equals("exit")) break;
+
 
 			if(cdir == null) cdir = System.getProperty("user.dir");
 

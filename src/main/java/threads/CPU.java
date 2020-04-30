@@ -39,6 +39,9 @@ public class CPU extends Thread {
 
     private static ConcurrentHashMap<String, String> textFileOutput;
 
+    //used to store result of command from terminal to be tested in junit test
+    public static String junitTestOutput;
+
     public CPU(Process process) {
         this.process = process;
         if(cpuResults == null && ioHandlerTracker == null && textFileOutput == null && cpuResultsCompiled == null){
@@ -151,6 +154,9 @@ public class CPU extends Thread {
 
                 }else if (process.isHandledByIO()) {
                     System.out.println(process.getIOOutput().getOutput());
+                    //This is used to store output data for terminal code so that it can be
+                    //tested in junit test class
+                    junitTestOutput = process.getIOOutput().getOutput();
                     Terminal.terminalLatch.countDown();
                 }
             }catch (InterruptedException e){
