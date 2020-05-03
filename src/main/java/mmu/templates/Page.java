@@ -1,11 +1,19 @@
 package main.java.mmu.templates;
 
 public class Page {
-    private int number;
-    private byte[] offset;
+    private byte[] data;
+    private String tagName;
 
-    public Page(int number, byte[] offset){
-        this.number = number;
-        this.offset = offset;
+    public Page(byte[] data, String tagName){
+        this.data = data;
+        this.tagName = tagName;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public String getTagName() {
+        return tagName;
     }
 }

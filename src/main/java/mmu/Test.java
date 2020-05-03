@@ -16,5 +16,27 @@ public class Test {
         int p_num = addr / 256;
         System.out.println(p_num);
 
+    //test========================================
+
+        int vaddr = 48855;
+        int page_no = vaddr / 256;
+        int f_num = 0;
+        int v_offset = (vaddr  & 0x000000ff);
+
+        //15 bit representation
+        int phys_add = (f_num << 8) + v_offset;
+
+
+
+        int f_num_derived = (phys_add & 0x0000ff00) >> 8;
+        int lel = (f_num << 8);
+
+        System.out.println(" physical address " + phys_add);
+        System.out.println("page number " + page_no);
+        System.out.println("offset: " + 48855);
+
+
+
+
     }
 }
