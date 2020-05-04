@@ -36,6 +36,10 @@ public class Test {
         System.out.println("offset: " + 48855);
 
 
+        System.out.println("515: " + (515 / 256) + " 16916: " + (16916/256) + " 62493: " + (62493/256) + " 30198: " + (30198/256));
+        System.out.println(18145 /256);
+
+
 
 
     }

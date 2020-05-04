@@ -6,6 +6,9 @@ public class Frame {
 
     public Frame() {
         frameValue = new byte[FRAME_SIZE];
+        for(int x = 0; x < FRAME_SIZE; x++){
+            frameValue[x] = -1;
+        }
     }
 
     public void setFrame(byte[] bytes) {
@@ -20,8 +23,5 @@ public class Frame {
         return frameValue[offset];
     }
 
-    public String getFrameValue(){
-        return new String(frameValue);
-    }
 
 }

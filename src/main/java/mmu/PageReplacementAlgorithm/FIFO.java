@@ -1,4 +1,4 @@
-package main.java.mmu.LRU;
+package main.java.mmu.PageReplacementAlgorithm;
 
 /**
  * This class implements the FIFO page-replacement strategy.
@@ -35,15 +35,11 @@ public class FIFO extends ReplacementAlgorithm
 		}
 	}
 
-	//finds frame number in list
+	//finds frame number in pageFrameList in FIFOList
+	//to save frame number to physical disk when inserting
 	public int findFrameNumber(int pageNumber){
-		return 1;
+		return frameList.findFrameNumber(pageNumber);
 	}
-
-	public void remove(int pageNumber){
-
-	}
-
 
 	class FIFOList
 	{
@@ -94,6 +90,17 @@ public class FIFO extends ReplacementAlgorithm
 				}
 			}
 			return returnVal;
+		}
+
+		int findFrameNumber(int pageNumber) {
+			boolean returnVal = false;
+
+			for (int i = 0; i < pageFrameList.length; i++) {
+				if (pageNumber == pageFrameList[i]) {
+					return i;
+				}
+			}
+			return -1;
 		}
 	}
 }

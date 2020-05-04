@@ -1,4 +1,4 @@
-package main.java.mmu.LRU;
+package main.java.mmu.PageReplacementAlgorithm;
 
 /**
  * ReplacementAlgorithm.java 
@@ -36,13 +36,15 @@ public abstract class ReplacementAlgorithm
 	public int getPageFaultCount() {
 		return pageFaultCount;
 	}
+
+	public int getPageFrameCount() {
+		return pageFrameCount;
+	}
 	
 	/**
 	 * @param int pageNumber - the page number to be inserted
 	 */
 	public abstract void insert(int pageNumber);
-
-	public abstract void remove(int pageNumber);
 
 	public abstract int findFrameNumber(int pageNumber);
 }

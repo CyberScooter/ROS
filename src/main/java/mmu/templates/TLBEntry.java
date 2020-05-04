@@ -3,10 +3,9 @@ package main.java.mmu.templates;
 
 public class TLBEntry
 {
-    private int pageNumber;		// the virtual page number
-    private int frameNumber;	// the physical frame number
-    private boolean isValid;	// flag that indicates if the mapping
-    // is valid.
+    private int pageNumber;
+    private int frameNumber;
+    private boolean isValid;
 
     public TLBEntry() {
         pageNumber = -1;
@@ -31,5 +30,9 @@ public class TLBEntry
 
     public int getFrameNumber() {
         return frameNumber;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
     }
 }

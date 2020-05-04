@@ -1,4 +1,4 @@
-package main.java.mmu.LRU;
+package main.java.mmu.PageReplacementAlgorithm;
 
 /**
  * This class implements the LRU page-replacement strategy.
@@ -33,11 +33,8 @@ public class LRU extends ReplacementAlgorithm
 		}
 	}
 
-	public void remove(int pageNumber){
-
-	}
-
-	//finds frame number in list
+	//finds frame number in pageFrameList in LRUList
+	//to save frame number to physical disk when inserting
 	public int findFrameNumber(int pageNumber){
 		return frameList.search(pageNumber);
 	}
