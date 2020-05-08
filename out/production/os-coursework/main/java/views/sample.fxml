@@ -11,6 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Options">
             <items>
+                <MenuItem mnemonicParsing="false" fx:id="mmuMenuItem" text="MMU" />
                 <MenuItem mnemonicParsing="false" fx:id="program1" text="Open Program1" />
                 <MenuItem mnemonicParsing="false" fx:id="program2" text="Open Program2" />
                 <MenuItem mnemonicParsing="false" fx:id="program3" text="Open Program3" />

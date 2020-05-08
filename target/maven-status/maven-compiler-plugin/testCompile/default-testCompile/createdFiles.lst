@@ -1,2 +1,2 @@
-test\java\mmu\MMUTests.class
-test\java\threads\TestProcessScheduling.class
+test\java\mmu\TestMMU.class
+test\java\process_scheduler\threads\TestProcessScheduling.class

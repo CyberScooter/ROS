@@ -1,30 +1,30 @@
 package main.java.views;
 
 
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.java.threads.CPU;
-import main.java.threads.Kernel;
-import main.java.threads.templates.Process;
-import main.java.threads.templates.ReadyQueueComparator;
+import javafx.stage.WindowEvent;
+import main.java.mmu.PageReplacementAlgorithm.LRU;
+import main.java.process_scheduler.threads.CPU;
+import main.java.process_scheduler.threads.Kernel;
+import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
 public class Controller {
-    private Kernel kernel;
+    private Kernel pss;
+    private Kernel MMU;
     public static CountDownLatch fileReading;
     public static CountDownLatch fileWriting;
     public static CountDownLatch fileCompiling;
@@ -35,9 +35,11 @@ public class Controller {
     private static ArrayList<String> archivedResults;
 
     public Controller(){
-        if(kernel == null){
-            kernel = new Kernel(ReadyQueueComparator.queueType.priority);
-        }
+        //BOOTING OS, INITIALISING SUBMODULES IN KERNEL
+        //sets up process scheduling simulator with a chosen scheduling algorithm
+        if(pss == null) pss = new Kernel(ReadyQueueComparator.queueType.priority);
+        //sets up mmu with the chosen physical page count
+        if(MMU == null) MMU = new Kernel(new LRU(128));
         processesToExecute = new LinkedList<>();
         processBelongingToProgram = new HashMap<>();
         archivedResults = new ArrayList<>();
@@ -52,10 +54,15 @@ public class Controller {
     @FXML
     private MenuItem program3;
 
+    @FXML
+    private MenuItem mmuMenuItem;
+
     public void initialize() {
         program1.setOnAction(e -> openTextFile("Program1"));
         program2.setOnAction(e -> openTextFile("Program2"));
         program3.setOnAction(e -> openTextFile("Program3"));
+        mmuMenuItem.setOnAction(e -> openMMU());
+
     }
 
     protected void openTextFile(String fileName){
@@ -116,9 +123,9 @@ public class Controller {
             }
             if (!found) {
                 int id = this.getProcessID();
-                if (this.kernel.getQueueType() == ReadyQueueComparator.queueType.FCFS_process) {
+                if (this.pss.getQueueType() == ReadyQueueComparator.queueType.FCFS_process) {
                     process = new Process(id, 1, Process.Type.fileCompiling, new File(fileName + ".txt"));
-                } else if (this.kernel.getQueueType() == ReadyQueueComparator.queueType.priority) {
+                } else if (this.pss.getQueueType() == ReadyQueueComparator.queueType.priority) {
                     process = new Process(id, Integer.parseInt(setPriority.getText()), Process.Type.fileCompiling, new File(fileName + ".txt"));
                 }
                 processesToExecute.add(process);
@@ -146,16 +153,6 @@ public class Controller {
 
                     StringBuffer stringBuffer = new StringBuffer();
 
-//                    Set<Integer> setKeys = CPU.cpuResultsCompiled.keySet();
-//                    List<Integer> listKeys = new ArrayList<>(setKeys);
-//                    ListIterator<Integer> iterator = listKeys.listIterator( listKeys.size() );
-//                    while(iterator.hasPrevious()){
-//                        Integer previousID = iterator.previous();
-//                        for(String item : CPU.cpuResultsCompiled.get(previousID)){
-//                            stringBuffer.append(processBelongingToProgram.get(previousID) + " RESULT : ").append(item).append("\n");
-//                        }
-//                    }
-
                     for(Map.Entry<Integer, LinkedList<String>> compiledResult : CPU.cpuResultsCompiled.entrySet()){
                         for(String item : compiledResult.getValue()){
                             stringBuffer.append(processBelongingToProgram.get(compiledResult.getKey()) + " RESULT : ").append(item).append("\n");
@@ -174,10 +171,7 @@ public class Controller {
                 }
 
             });
-
-
         });
-
 
         fileReading = new CountDownLatch(1);
         Process process = new Process(1, 99, Process.Type.fileReading, new File(fileName + ".txt"));
@@ -191,36 +185,101 @@ public class Controller {
             fileData.setText(CPU.getTextFileOutput().get(fileName+ ".txt"));
         }
 
-
-
-
         stage.setTitle(fileName);
         stage.setScene(scene);
         stage.show();
     }
 
+    protected Integer getProcessID(){
+        return processID++;
+    }
 
-    protected void compile(ActionEvent e) throws IOException {
+    public void openMMU(){
         Stage stage = new Stage();
         VBox root = new VBox();
-        Scene scene = new Scene(root, 600, 600);
+        VBox textVBox = new VBox();
+        HBox firstRow = new HBox();
+        HBox secondRow = new HBox();
+        Scene scene = new Scene(root, 500, 500);
+
+        Text text = new Text("Using RandomAccessFile populated with bytes as hard disk");
+        Text text2 = new Text("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory");
+        TextField filename = new TextField();
+        filename.setMinWidth(200);
+        filename.setPromptText("Enter virtual addresses file name");
+        TextField virtualAddress = new TextField();
+        virtualAddress.setMinWidth(200);
+        virtualAddress.setPromptText("Enter virtual address to add");
+        Button addToMemoryFileInput = new Button("Add to memory");
+        Button addToMemoryTextInput = new Button("Add to memory");
+        TextArea output = new TextArea();
+        TextArea realTimeStatistics = new TextArea();
+        realTimeStatistics.setEditable(false);
+        realTimeStatistics.setText("Real time statistics of results");
+        output.setEditable(false);
+        output.setText("Real time results");
+        output.setMinHeight(200);
+        output.selectEnd();
+
+        textVBox.getChildren().addAll(text, text2);
+        firstRow.getChildren().addAll(filename, addToMemoryFileInput);
+        secondRow.getChildren().addAll(virtualAddress, addToMemoryTextInput);
+        root.getChildren().addAll(textVBox, firstRow, secondRow, output, realTimeStatistics);
+
+        textVBox.setSpacing(10);
+        root.setPadding(new Insets(10,10,10,10));
+        firstRow.setSpacing(10);
+        firstRow.setPadding(new Insets(10,10,0,10));
+        secondRow.setSpacing(10);
+        secondRow.setPadding(new Insets(0,10,10,10));
+        root.setSpacing(10);
+
+        addToMemoryFileInput.setOnAction(e -> {
+            try {
+                if(MMU.getMmu().allocateMemory(new File(filename.getText()))){
+                    output.setText(MMU.getMmu().getResults());
+                    realTimeStatistics.setText(MMU.getMmu().getStatistics());
+                    MMU.getMmu().clearResults();
+                }
+            }catch (IOException f){
+                System.out.println(f);
+            }
+        });
+
+        addToMemoryTextInput.setOnAction(e -> {
+            try {
+                MMU.getMmu().allocateMemory(Integer.parseInt(virtualAddress.getText()));
+                output.setText(MMU.getMmu().getResults());
+                realTimeStatistics.setText(MMU.getMmu().getStatistics());
+                MMU.getMmu().clearResults();
+            }catch (IOException f){
+                System.out.println(f);
+            }
+        });
 
 
-        Button button = new Button();
 
 
-//        Process process = new Process(1, 2, Process.Type.fileHandling, new File("Program1.txt"));
-//        Process process2 = new Process(2, 3, Process.Type.fileHandling, new File("Program2.txt"));
-//
-//        Kernel.compileCodeFileProcess(process, process2);
-
-        stage.setTitle("Terminal");
+        stage.setTitle("MMU");
         stage.setScene(scene);
         stage.show();
 
     }
 
-    protected Integer getProcessID(){
-        return processID++;
+    public static void closeConfirmation(Stage stage){
+        stage.setOnCloseRequest((WindowEvent we) ->
+        {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Confirmation");
+            a.setHeaderText("Do you want to power off system?");
+            Optional<ButtonType> closeResponse = a.showAndWait();
+            if (stage.getTitle().equals("hu00034 OS") && closeResponse.get() == ButtonType.OK){
+                Platform.exit();
+                System.exit(0);
+            }
+            else{
+                we.consume();
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="test.java.threads.TestProcessScheduling" time="8.314" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="test.java.process_scheduler.threads.TestProcessScheduling" time="8.314" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_231\jre\bin"/>
@@ -65,10 +65,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testCompileCodeFilesFCFSExecutionOrder" time="2.404"/>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testTerminalProcess" time="0.491"/>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testCompileCodeFilesPriorityOutput" time="1.719"/>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testCompileCodeFilesPriorityExecutionOrder" time="1.747"/>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testCodeFileReadProcess" time="0.204"/>
-  <testcase classname="test.java.threads.TestProcessScheduling" name="testCompileAllCodeFilesInFCFSOutput" time="1.749"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testCompileCodeFilesFCFSExecutionOrder" time="2.404"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testTerminalProcess" time="0.491"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testCompileCodeFilesPriorityOutput" time="1.719"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testCompileCodeFilesPriorityExecutionOrder" time="1.747"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testCodeFileReadProcess" time="0.204"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessScheduling" name="testCompileAllCodeFilesInFCFSOutput" time="1.749"/>
 </testsuite>

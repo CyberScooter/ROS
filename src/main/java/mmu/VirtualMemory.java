@@ -114,10 +114,6 @@ public class VirtualMemory
 		nextTLBEntry = (nextTLBEntry + 1) % TLB_SIZE;
 	}
 
-
-	/**
-	 * Determine the physical address of a given virtual address
-	 */
 	public int getPhysicalAddress(int virtualAddress) throws IOException {
 		// determine the page number
 		pageNumber = getPageNumber(virtualAddress);
@@ -134,7 +130,6 @@ public class VirtualMemory
 				//so that when the physical memory is full, it will understand how to replace the old page with the new page through LRU scheduling
 				replacementAlgorithm.insert(pageNumber);
 			} else {    /** Page Fault **/
-
 
 				disk.seek(pageNumber * PAGE_SIZE);
 				disk.readFully(buffer);
@@ -180,13 +175,18 @@ public class VirtualMemory
 	/**
 	 * Generate statistics.
 	 */
-	public void generateStatistics() {
-		System.out.println("Number of Translated Addresses = " + numberOfAddresses);
-		System.out.println("Page Faults = " + replacementAlgorithm.getPageFaultCount());
-		System.out.println("Page Fault Rate = " + ( (float) replacementAlgorithm.getPageFaultCount()) / numberOfAddresses);
-		System.out.println("TLB Hits = " + TLBHits);
-		System.out.println("TLB Hit Rate = " + ( (float) TLBHits) / numberOfAddresses);
+	public String generateStatistics() {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("Number of Translated Addresses = " + numberOfAddresses).append("\n");
+		stringBuffer.append("Page Faults = " + replacementAlgorithm.getPageFaultCount()).append("\n");
+		stringBuffer.append("Page Fault Rate = " + ((float) replacementAlgorithm.getPageFaultCount()) / numberOfAddresses).append("\n");
+		stringBuffer.append("TLB Hits = " + TLBHits).append("\n");
+		stringBuffer.append("TLB Hit Rate = " + ((float) TLBHits) / numberOfAddresses).append("\n");
 
+		return stringBuffer.toString();
+	}
+
+	public void testing() {
 		//testing
 		System.out.println("Frame in which virtual address 515 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(515)));
 		System.out.println("Frame in which virtual address 16916 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(16916)));
@@ -202,14 +202,26 @@ public class VirtualMemory
 
 		//output 0 for LRU
 		//output -1 for FIFO
-		System.out.println("515 in PT: " + pageTable[515/256].getFrameNumber());
+		System.out.println("515 in PT: " + pageTable[515 / 256].getFrameNumber());
 		//output 1 for LRU
 		//output -1 for FIFO
-		System.out.println("16916 in PT: " + pageTable[16916/256].getFrameNumber());
-
-
-
-
+		System.out.println("16916 in PT: " + pageTable[16916 / 256].getFrameNumber());
 	}
 
+
+	public PageTableEntry[] getPageTable() {
+		return pageTable;
+	}
+
+	public TLBEntry[] getTLB() {
+		return TLB;
+	}
+
+	public static int getNumberOfFrames() {
+		return NUMBER_OF_FRAMES;
+	}
+
+	public ReplacementAlgorithm getReplacementAlgorithm() {
+		return replacementAlgorithm;
+	}
 }

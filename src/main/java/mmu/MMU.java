@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class MMU {
     private VirtualMemory virtualMemory;
     private RandomAccessFile disk;
-    private ArrayList<String> results;
+    private String results;
 
+    //for test case
     public MMU(ReplacementAlgorithm algorithm) {
         if(!new File("resources/BACKING_STORE").exists()) {
             try{
@@ -26,10 +27,8 @@ public class MMU {
         }catch (IOException e){
             System.out.println(e);
         }
-        results=new ArrayList<>();
 
     }
-
 
     public static void main(String[] args) throws IOException{
         MMU mmu = new MMU(new LRU(4));
@@ -38,11 +37,13 @@ public class MMU {
 
 
     //multiple virtual addresses
-    public void allocateMemory(File file) throws IOException{
+    public boolean allocateMemory(File file) throws IOException{
         BufferedReader reader = null;
         try {
+            if(!new File("resources/" + file.getName()).exists()) return false;
             reader = new BufferedReader(new FileReader("resources/" + file.getName()));
             String address;
+            StringBuffer stringBuffer = new StringBuffer();
             while ( (address = reader.readLine()) != null) {
 
                 // read in the virtual address
@@ -54,19 +55,18 @@ public class MMU {
 
                 int value = virtualMemory.getValue(physicalAddress);
 
-                results.add("Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value);
+                stringBuffer.append("Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value).append("\n");
 
             }
-            for(String item: results){
-                System.out.println(item);
-            }
+            results = stringBuffer.toString();
 
-            virtualMemory.generateStatistics();
         }catch (IOException e){
             System.out.println(e);
         }finally {
             reader.close();
         }
+
+        return true;
 
     }
 
@@ -76,10 +76,35 @@ public class MMU {
 
         virtualMemory.numberOfAddresses++;
 
-        int value = virtualMemory.getValue(physicalAddress);
+        try {
+            int value = virtualMemory.getValue(physicalAddress);
+            results = "Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value;
+        }catch (ArrayIndexOutOfBoundsException e){
+            results = e.getMessage();
+        }
 
-        System.out.println("Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value);
 
-        virtualMemory.generateStatistics();
     }
+
+    public String getStatistics(){
+        return virtualMemory.generateStatistics();
+    }
+
+    public int getNumberOfFramesInMemory(){
+        return VirtualMemory.getNumberOfFrames();
+    }
+
+    public void clearResults() {
+        results = "";
+    }
+
+    public String getResults() {
+        return results;
+    }
+
+    public VirtualMemory getVirtualMemory() {
+        return virtualMemory;
+    }
+
+
 }
