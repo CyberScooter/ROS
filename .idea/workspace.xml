@@ -2,98 +2,81 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="os-coursework" />
+      <artifact name="ros" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/mmu/TestMMU.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/ros.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/os_coursework.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/os_coursework/os_coursework.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/os_coursework/os_coursework.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/MMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/MMU.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/VirtualMemory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/VirtualMemory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/CPU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/Dispatcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/IO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/Kernel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/ProcessCreation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/Terminal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/CodeCompiler$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/CodeCompiler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/CommandLine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/IOOutput.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/Output$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/Output.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/Process$State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/Process$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/Process.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/ReadyQueueComparator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/threads/templates/RegexExpressions.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/test/java/mmu/MMUTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/test/java/threads/TestProcessScheduling.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/InputFile256.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/InputFile128.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/InputFile4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/InputFile4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/VirtualMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/VirtualMemory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/CPU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/CPU.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Dispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/IO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/IO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Kernel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/ProcessCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/ProcessCreation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/CodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/CodeCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/CommandLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/CommandLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/IOOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/IOOutput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/Output.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/Output.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/Process.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/ReadyQueueComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/ReadyQueueComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/threads/templates/RegexExpressions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/RegexExpressions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons-io-2.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os-coursework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ros.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/os_coursework/os_coursework.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/os_coursework/resources/Program1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/os_coursework/resources/Program2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/os_coursework/resources/Program3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/Kernel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/ByteTesting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/MMU.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/MakeBACKING_STORE.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/PageReplacementAlgorithm/FIFO$FIFOList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/PageReplacementAlgorithm/FIFO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/PageReplacementAlgorithm/LRU$LRUList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/PageReplacementAlgorithm/LRU.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/VirtualMemory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/templates/Frame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/templates/PageTableEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/mmu/templates/TLBEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/CPU.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/Dispatcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/IO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/Kernel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/ProcessCreation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/Terminal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/CodeCompiler$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/CodeCompiler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/CommandLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/IOOutput.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/Output$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/Output.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/Process$State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/Process$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/Process.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/ReadyQueueComparator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/process_scheduler/threads/templates/RegexExpressions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/main/java/views/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/test/java/mmu/TestMMU.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/os-coursework/test/java/process_scheduler/threads/TestProcessScheduling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/views/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/views/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/views/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/views/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/mmu/MMUTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/threads/TestProcessScheduling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/process_scheduler/threads/TestProcessScheduling.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/VirtualMemory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/VirtualMemory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/templates/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/templates/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/templates/Page.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/templates/TLBEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/templates/TLBEntry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/CPU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/Dispatcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/IO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/Kernel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/ProcessCreation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/Terminal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/CodeCompiler$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/CodeCompiler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/CommandLine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/IOOutput.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/Output$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/Output.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/Process$State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/Process$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/Process.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/ReadyQueueComparator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/threads/templates/RegexExpressions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/views/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/ROS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/views/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/ros-gui.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/views/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/Main.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.AppTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.AppTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.TestProcessScheduling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.TestProcessScheduling.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.AppTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.AppTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.TestProcessScheduling.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.TestProcessScheduling.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/test/java/mmu/MMUTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/test/java/threads/TestProcessScheduling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessScheduling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessScheduling.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.AppTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.threads.TestProcessScheduling.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessScheduling.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessScheduling.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.AppTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.threads.TestProcessScheduling.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -184,9 +167,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -198,8 +181,12 @@
       <recent name="main.java.threads" />
       <recent name="threads" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hrith\Desktop\os-coursework\resources" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src\threads\templates" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
@@ -211,12 +198,8 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hrith\Desktop\os-coursework\resources" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src\threads\templates" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -231,7 +214,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestMMU.testPagingLRUAlgorithm">
+  <component name="RunManager" selected="Application.ROS">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -252,7 +235,7 @@
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="views.Main" />
-      <module name="os-coursework" />
+      <module name="ros" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -266,13 +249,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Terminal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.java.process_scheduler.threads.Terminal" />
-      <module name="os-coursework" />
+    <configuration name="ROS" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.java.views.ROS" />
+      <module name="ros" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.java.process_scheduler.threads.*" />
+          <option name="PATTERN" value="main.java.views.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -282,7 +265,7 @@
     </configuration>
     <configuration name="VM2" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.mmu.VM2" />
-      <module name="os-coursework" />
+      <module name="ros" />
       <option name="PROGRAM_PARAMETERS" value="InputFile.txt" />
       <extension name="coverage">
         <pattern>
@@ -296,7 +279,7 @@
     </configuration>
     <configuration name="VirtualMemory" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.mmu.VirtualMemory" />
-      <module name="os-coursework" />
+      <module name="ros" />
       <option name="PROGRAM_PARAMETERS" value="InputFile.txt" />
       <extension name="coverage">
         <pattern>
@@ -314,8 +297,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestMMU.testPageTableEntryFill" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="os-coursework" />
+    <configuration name="TestMMU" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ros" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.java.mmu.*" />
@@ -324,8 +307,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.java.mmu" />
       <option name="MAIN_CLASS_NAME" value="test.java.mmu.TestMMU" />
-      <option name="METHOD_NAME" value="testPageTableEntryFill" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="moduleWithDependencies" />
@@ -335,7 +317,7 @@
       </method>
     </configuration>
     <configuration name="TestMMU.testPagingLRUAlgorithm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="os-coursework" />
+      <module name="ros" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.java.mmu.*" />
@@ -355,7 +337,7 @@
       </method>
     </configuration>
     <configuration name="TestMMU.testVirtualAddressTranslation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="os-coursework" />
+      <module name="ros" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.java.mmu.*" />
@@ -375,7 +357,7 @@
       </method>
     </configuration>
     <configuration name="TestProcessScheduling" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="os-coursework" />
+      <module name="ros" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.java.process_scheduler.threads.*" />
@@ -428,19 +410,19 @@
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.VirtualMemory" />
       <item itemvalue="Application.VM2" />
-      <item itemvalue="Application.Terminal" />
-      <item itemvalue="JUnit.TestMMU.testPageTableEntryFill" />
       <item itemvalue="JUnit.TestProcessScheduling" />
       <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
       <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
+      <item itemvalue="JUnit.TestMMU" />
+      <item itemvalue="Application.ROS" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ROS" />
+        <item itemvalue="JUnit.TestMMU" />
         <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
         <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
         <item itemvalue="JUnit.TestProcessScheduling" />
-        <item itemvalue="Application.Terminal" />
-        <item itemvalue="JUnit.TestMMU.testPageTableEntryFill" />
       </list>
     </recent_temporary>
   </component>
@@ -524,6 +506,8 @@
       <workItem from="1588597520109" duration="1798000" />
       <workItem from="1588766955668" duration="10795000" />
       <workItem from="1588944776503" duration="2737000" />
+      <workItem from="1589985297290" duration="558000" />
+      <workItem from="1589986163973" duration="1951000" />
     </task>
     <servers />
   </component>

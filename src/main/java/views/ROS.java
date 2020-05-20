@@ -6,12 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class ROS extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("hu00034 OS");
+        Parent root = FXMLLoader.load(getClass().getResource("ros-gui.fxml"));
+        primaryStage.setTitle("ROS");
         primaryStage.setScene(new Scene(root));
         Controller.closeConfirmation(primaryStage);
         primaryStage.show();

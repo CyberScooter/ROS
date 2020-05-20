@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/os-coursework.iml" filepath="$PROJECT_DIR$/os-coursework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ros.iml" filepath="$PROJECT_DIR$/ros.iml" />
     </modules>
   </component>
 </project>

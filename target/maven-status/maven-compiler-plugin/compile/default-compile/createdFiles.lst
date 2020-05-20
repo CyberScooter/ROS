@@ -2,7 +2,6 @@ main\java\mmu\PageReplacementAlgorithm\ReplacementAlgorithm.class
 main\java\process_scheduler\threads\templates\Output.class
 main\java\process_scheduler\threads\CPU.class
 main\java\process_scheduler\threads\templates\CodeCompiler.class
-main\java\views\Main.class
 main\java\mmu\templates\Frame.class
 main\java\process_scheduler\threads\Dispatcher.class
 main\java\mmu\templates\TLBEntry.class
@@ -16,6 +15,7 @@ main\java\process_scheduler\threads\Terminal.class
 main\java\process_scheduler\threads\templates\ReadyQueueComparator.class
 main\java\mmu\ByteTesting.class
 main\java\mmu\PageReplacementAlgorithm\LRU.class
+main\java\views\ROS.class
 main\java\process_scheduler\threads\templates\Output$Type.class
 main\java\mmu\MMU.class
 main\java\process_scheduler\threads\Kernel.class
@@ -28,6 +28,7 @@ main\java\process_scheduler\threads\templates\RegexExpressions.class
 main\java\mmu\Test.class
 main\java\process_scheduler\threads\templates\CodeCompiler$Type.class
 main\java\process_scheduler\threads\templates\Process$State.class
+main\java\Kernel.class
 main\java\mmu\PageReplacementAlgorithm\FIFO.class
 main\java\process_scheduler\threads\templates\ReadyQueueComparator$1.class
 main\java\process_scheduler\threads\IO.class

@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="ros">
+    <output-path>$PROJECT_DIR$/out/artifacts/ros</output-path>
+    <root id="root">
+      <element id="archive" name="ros.jar">
+        <element id="module-output" name="ros" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+    </root>
+  </artifact>
+</component>

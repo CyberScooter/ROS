@@ -315,7 +315,7 @@ public class Controller {
             a.setTitle("Confirmation");
             a.setHeaderText("Do you want to power off system?");
             Optional<ButtonType> closeResponse = a.showAndWait();
-            if (stage.getTitle().equals("hu00034 OS") && closeResponse.get() == ButtonType.OK){
+            if (stage.getTitle().equals("ROS") && closeResponse.get() == ButtonType.OK){
                 Platform.exit();
                 System.exit(0);
             }
