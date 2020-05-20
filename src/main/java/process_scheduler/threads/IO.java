@@ -1,5 +1,6 @@
 package main.java.process_scheduler.threads;
 
+import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.CommandLine;
 import main.java.process_scheduler.threads.templates.IOOutput;
 import main.java.process_scheduler.threads.templates.Process;
@@ -156,7 +157,7 @@ public class IO extends Thread {
             Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false)));
         }else if(Pattern.matches(RegexExpressions.PRINT_VARIABLE_REGEX, result.getOutput())){
             Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false)));
-        }else if(itemToOutputLength == 0){
+        }else {
             Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true)));
         }
         Kernel.processCreation.interrupt();

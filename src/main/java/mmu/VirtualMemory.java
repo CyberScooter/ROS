@@ -22,6 +22,7 @@ public class VirtualMemory
 	private int pageNumber;
 	private int frameNumber;
 	private int offset;
+	private int pageFault;
 
 	private int nextTLBEntry;
 
@@ -148,6 +149,8 @@ public class VirtualMemory
 				// of the frame in the page table
 				pageTable[pageNumber].setFrameMapping(frameNumber);
 
+				pageFault ++;
+
 			}
 
 			// lastly, update the TLB
@@ -219,6 +222,10 @@ public class VirtualMemory
 
 	public static int getNumberOfFrames() {
 		return NUMBER_OF_FRAMES;
+	}
+
+	public int getPageFault() {
+		return pageFault;
 	}
 
 	public ReplacementAlgorithm getReplacementAlgorithm() {

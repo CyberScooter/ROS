@@ -184,7 +184,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15234375" />
@@ -231,7 +231,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestMMU.testVirtualAddressTranslation">
+  <component name="RunManager" selected="JUnit.TestMMU.testPagingLRUAlgorithm">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -334,7 +334,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestMMU.testPagingFIFOAlgorithm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestMMU.testPagingLRUAlgorithm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="os-coursework" />
       <extension name="coverage">
         <pattern>
@@ -344,7 +344,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.java.mmu" />
       <option name="MAIN_CLASS_NAME" value="test.java.mmu.TestMMU" />
-      <option name="METHOD_NAME" value="testPagingFIFOAlgorithm" />
+      <option name="METHOD_NAME" value="testPagingLRUAlgorithm" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -430,17 +430,17 @@
       <item itemvalue="Application.VM2" />
       <item itemvalue="Application.Terminal" />
       <item itemvalue="JUnit.TestMMU.testPageTableEntryFill" />
-      <item itemvalue="JUnit.TestMMU.testPagingFIFOAlgorithm" />
       <item itemvalue="JUnit.TestProcessScheduling" />
       <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
+      <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
         <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
         <item itemvalue="JUnit.TestProcessScheduling" />
         <item itemvalue="Application.Terminal" />
         <item itemvalue="JUnit.TestMMU.testPageTableEntryFill" />
-        <item itemvalue="JUnit.TestMMU.testPagingFIFOAlgorithm" />
       </list>
     </recent_temporary>
   </component>

@@ -11,9 +11,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.java.mmu.PageReplacementAlgorithm.FIFO;
 import main.java.mmu.PageReplacementAlgorithm.LRU;
 import main.java.process_scheduler.threads.CPU;
-import main.java.process_scheduler.threads.Kernel;
+import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.Process;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
@@ -69,13 +70,14 @@ public class Controller {
         Stage stage = new Stage();
         VBox root = new VBox();
         HBox toolbar = new HBox();
+        HBox schedulingToolbar = new HBox();
         HBox secondToolbar = new HBox();
-        Scene scene = new Scene(root, 400, 400);
+        Scene scene = new Scene(root, 400, 550);
 
         TextArea fileData = new TextArea();
         TextArea output = new TextArea();
         output.setEditable(false);
-        output.setText("Output for results shown here");
+        output.setText("Output for results shown here\nScheduling algorithm set to Priority");
         fileData.setMinHeight(200);
 
         TextField setPriority = new TextField();
@@ -83,18 +85,35 @@ public class Controller {
 
         Button addToProcessQueue = new Button("Add to process list");
         Button save = new Button("Save file");
-        Button runProcessQueue = new Button("Run processes in list");
+        Button runProcessList = new Button("Run processes in list");
         Button clear = new Button("Clear list");
+        Button FIFO = new Button("FIFO");
+        Button priorityScheduling = new Button("Priority");
 
+        schedulingToolbar.getChildren().addAll(FIFO, priorityScheduling);
         toolbar.getChildren().addAll(save, setPriority);
-        secondToolbar.getChildren().addAll(addToProcessQueue, runProcessQueue, clear);
+        secondToolbar.getChildren().addAll(addToProcessQueue, runProcessList, clear);
         secondToolbar.setPadding(new Insets(0, 10, 10, 10));
         secondToolbar.setSpacing(10);
         toolbar.setPadding(new Insets(10, 10, 10, 10));
         toolbar.setSpacing(10);
-        root.getChildren().addAll(toolbar, secondToolbar, fileData, output);
+        schedulingToolbar.setPadding(new Insets(10, 10, 0, 10));
+        schedulingToolbar.setSpacing(10);
+        root.getChildren().addAll(schedulingToolbar, toolbar, secondToolbar, fileData, output);
         root.setPadding(new Insets(10,10,10,10));
         root.setSpacing(10);
+
+        FIFO.setOnAction(e -> {
+            processesToExecute.clear();
+            pss.setQueueType(ReadyQueueComparator.queueType.FCFS_process);
+            output.setText("Scheduling algorithm set to FIFO\nList is cleared!");
+        });
+
+        priorityScheduling.setOnAction(e -> {
+            processesToExecute.clear();
+            pss.setQueueType(ReadyQueueComparator.queueType.priority);
+            output.setText("Scheduling algorithm set to Priority\nList is cleared!");
+        });
 
         save.setOnAction(f -> {
             fileWriting = new CountDownLatch(1);
@@ -131,17 +150,17 @@ public class Controller {
                 processesToExecute.add(process);
                 processBelongingToProgram.put(id, fileName);
 
-                StringBuffer processes = new StringBuffer("Processes in queue:").append("\n");
+                StringBuffer processes = new StringBuffer("Processes in list:").append("\n");
                 for (Process process1 : processesToExecute) {
                     processes.append(process1).append("\n");
                 }
 
                 output.setText(processes.toString());
             } else {
-                output.setText("PROCESS ALREADY IN QUEUE");
+                output.setText("PROCESS ALREADY IN list");
             }
 
-            runProcessQueue.setOnAction(e -> {
+            runProcessList.setOnAction(e -> {
                 if (!processesToExecute.isEmpty()) {
                     fileCompiling = new CountDownLatch(processesToExecute.size());
                     Kernel.runCodeFileProcesses(processesToExecute);
@@ -167,7 +186,7 @@ public class Controller {
 
 
                 } else {
-                    output.setText("NO PROCESSES IN QUEUE");
+                    output.setText("NO PROCESSES IN LIST");
                 }
 
             });
@@ -200,10 +219,14 @@ public class Controller {
         VBox textVBox = new VBox();
         HBox firstRow = new HBox();
         HBox secondRow = new HBox();
+        HBox thirdRow = new HBox();
         Scene scene = new Scene(root, 500, 500);
 
         Text text = new Text("Using RandomAccessFile populated with bytes as hard disk");
-        Text text2 = new Text("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory");
+        Text text2 = new Text("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory using LRU");
+        TextField setFramesInMemory = new TextField();
+        setFramesInMemory.setMinWidth(200);
+        setFramesInMemory.setPromptText("Enter number of frames in memory");
         TextField filename = new TextField();
         filename.setMinWidth(200);
         filename.setPromptText("Enter virtual addresses file name");
@@ -212,6 +235,8 @@ public class Controller {
         virtualAddress.setPromptText("Enter virtual address to add");
         Button addToMemoryFileInput = new Button("Add to memory");
         Button addToMemoryTextInput = new Button("Add to memory");
+        Button initialiseLru = new Button("Initialise LRU");
+        Button initialiseFifo = new Button("Initialise FIFO");
         TextArea output = new TextArea();
         TextArea realTimeStatistics = new TextArea();
         realTimeStatistics.setEditable(false);
@@ -222,17 +247,34 @@ public class Controller {
         output.selectEnd();
 
         textVBox.getChildren().addAll(text, text2);
-        firstRow.getChildren().addAll(filename, addToMemoryFileInput);
-        secondRow.getChildren().addAll(virtualAddress, addToMemoryTextInput);
-        root.getChildren().addAll(textVBox, firstRow, secondRow, output, realTimeStatistics);
+        firstRow.getChildren().addAll(setFramesInMemory, initialiseLru,initialiseFifo);
+        secondRow.getChildren().addAll(filename, addToMemoryFileInput);
+        thirdRow.getChildren().addAll(virtualAddress, addToMemoryTextInput);
+        root.getChildren().addAll(textVBox, firstRow, secondRow, thirdRow, output, realTimeStatistics);
 
         textVBox.setSpacing(10);
         root.setPadding(new Insets(10,10,10,10));
         firstRow.setSpacing(10);
-        firstRow.setPadding(new Insets(10,10,0,10));
+        firstRow.setPadding(new Insets(0,10,10,10));
         secondRow.setSpacing(10);
         secondRow.setPadding(new Insets(0,10,10,10));
+        thirdRow.setSpacing(10);
+        thirdRow.setPadding(new Insets(0,10,10,10));
         root.setSpacing(10);
+
+        initialiseLru.setOnAction(e -> {
+            MMU = new Kernel(new LRU(Integer.parseInt(setFramesInMemory.getText())));
+            output.setText(setFramesInMemory.getText() + " frames in memory initialised with LRU page replacement algorithm");
+            text2.setText("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory using LRU");
+            realTimeStatistics.setText(null);
+        });
+
+        initialiseFifo.setOnAction(e -> {
+            MMU = new Kernel(new FIFO(Integer.parseInt(setFramesInMemory.getText())));
+            output.setText(setFramesInMemory.getText() + " frames in memory initialised with FIFO page replacement algorithm");
+            text2.setText("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory using FIFO");
+            realTimeStatistics.setText(null);
+        });
 
         addToMemoryFileInput.setOnAction(e -> {
             try {

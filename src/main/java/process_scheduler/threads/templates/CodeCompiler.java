@@ -10,6 +10,7 @@ public class CodeCompiler {
     private HashMap<String, Integer> variables;
     private HashMap<String, Integer> calculationResults;
     private boolean exitFound;
+    private boolean syntaxError;
     private LinkedList<String> codeResults;
     private boolean calculationError;
     private int calculationErrorLine;
@@ -19,6 +20,7 @@ public class CodeCompiler {
         variables = new HashMap<>();
         calculationResults = new HashMap<>();
         exitFound = false;
+        syntaxError = false;
         calculationError = false;
         codeResults = new LinkedList<>();
     }
@@ -43,8 +45,13 @@ public class CodeCompiler {
                     }
 
                 }else if(output1.getIOOutput() != null){
-                    if(!output1.getIOOutput().isVariable()){
-                        if(output1.getIOOutput().getOutput().indexOf("'") != -1){
+                    if(output1.getIOOutput().isError()){
+                        codeResults.add("Syntax error at line: " + output1.getIOOutput().getLineNumber());
+                        syntaxError = true;
+                        break;
+                    }else if(!output1.getIOOutput().isVariable()){
+//                        output1.getIOOutput().getOutput().indexOf("'") != -1)
+                        if(output1.getIOOutput().getOutput().matches(RegexExpressions.STRING_REGEX)){
                             codeResults.add(output1.getIOOutput().getOutput().substring(1, output1.getIOOutput().getOutput().length() - 1));
                         }else{
                             codeResults.add(output1.getIOOutput().getOutput());
@@ -67,13 +74,12 @@ public class CodeCompiler {
                             }
                         }
 
-                    }else if(output1.getIOOutput().isError()){
-                        codeResults.add("Syntax error at line: " + output1.getIOOutput().getLineNumber());
-                        break;
                     }
 
-                }else if(output1.isError()){
-                    System.out.println(output1.getErrorMessage());
+                }if(output1.isError()){
+                    codeResults.add("Syntax error at line: " + output1.getLine());
+                    syntaxError = true;
+                    break;
                 }
 
 
@@ -87,7 +93,7 @@ public class CodeCompiler {
                 codeResults.add("Calculation error at line: " + calculationErrorLine);
             }
 
-            if(!exitFound && !calculationError){
+            if(!exitFound && !calculationError && !syntaxError){
                 variables.clear();
                 calculationResults.clear();
                 codeResults.clear();

@@ -1,5 +1,6 @@
 package main.java.process_scheduler.threads;
 
+import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.CommandLine;
 import main.java.process_scheduler.threads.templates.Process;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;

@@ -1,5 +1,6 @@
 package main.java.process_scheduler.threads;
 
+import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.Process;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -15,6 +16,7 @@ public class ProcessCreation extends Thread{
 
     @Override
     public synchronized void run() {
+        //keeps thread running
         while(true) {
             //this uses FCFS to manage for io processes in ready queue to CPU that came from the
             //io queue in the io thread
@@ -40,7 +42,7 @@ public class ProcessCreation extends Thread{
 
             }
 
-            //stops threading every 200ms
+            //stops thread every 200ms
             try{
                 Thread.sleep(200);
             }catch (InterruptedException e){

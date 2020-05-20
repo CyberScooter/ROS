@@ -4,13 +4,11 @@ import main.java.mmu.MMU;
 import main.java.mmu.PageReplacementAlgorithm.FIFO;
 import main.java.mmu.PageReplacementAlgorithm.LRU;
 import main.java.mmu.templates.PageTableEntry;
-import main.java.process_scheduler.threads.Kernel;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 //These Tests do not test functionality of GUI, this can only be tested by the end user itself by opening the JAR file in out folder
 //these test cases test the functionality of the MMU code directly
@@ -18,11 +16,10 @@ public class TestMMU {
     //used MMU class directly to make it easier to test
     private MMU mmu;
 
-
     //this tests whether the virtual address translation produces results
     @Test
     public void testVirtualAddressTranslation(){
-        mmu = new MMU(new LRU(2));
+        mmu = new MMU(new LRU(128));
 
 
         try {
@@ -37,6 +34,19 @@ public class TestMMU {
         //value at offset in physical address is dependent on the backing store data
         Assert.assertNotNull(mmu.getResults());
 
+    }
+
+    @Test
+    public void testPageFault(){
+        mmu = new MMU(new LRU(128));
+
+        try{
+            mmu.allocateMemory(new File("InputFile128.txt"));
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
+        Assert.assertEquals(128, mmu.getVirtualMemory().getPageFault());
     }
 
 
@@ -62,10 +72,10 @@ public class TestMMU {
         Assert.assertEquals(128, pageTableEntries );
     }
 
-    //for this test I will have 4 frames in main memory, fill the page table completely
+    //for this test I will have 4 frames in main memory and will fill up the main memory completely
     //two virtual addresses will be added after with the same page number as two of the 4 pages added previously
     //then two other virtual addresses will be added with completely different page numbers to any of the virtual address sand it should replace the frames
-    // in memory that were not recently accessed
+    // in memory that were the least recently accessed
     // this will test the deallocation and allocation of frames in memory via the LRU algorithm
     @Test
     public void testPagingLRUAlgorithm(){
@@ -100,7 +110,7 @@ public class TestMMU {
         // so according to LRU algorithm they will be untouched from main memory
         // however the virtual addresses in lines 3 and 4 from the file were not recently used so those frames will be replaced in main memory
         // to prove this I will extract the page number and frame number data from the LRU class
-        // this class ONLY stores the mapping of which page goes into which frame in main memory, this information is fed into the physical memory attribute in the virtual memory class
+        // this class ONLY stores the mapping of which page goes into which frame in main memory, this information is fed directly to the main memory
         // LRU will be used to display the mapping for this test
 
         String[] actual = new String[2];
@@ -153,7 +163,7 @@ public class TestMMU {
         // THE physical memory only stores up to 4 FRAMES in this case
         // according to FIFO algorithm the first two frames added to memory will be removed and replaced by the two virtual addresses that caused the page fault
         // to prove this I will extract the page number and frame number data from the FIFO class
-        // this class ONLY stores the mapping of which page goes into which frame in main memory, this information is fed into the physical memory attribute in the virtual memory class
+        // this class ONLY stores the mapping of which page goes into which frame in main memory, this information is fed directly to the main memory
         // FIFO will be used to display the mapping for this test
 
         String[] actual = new String[2];
