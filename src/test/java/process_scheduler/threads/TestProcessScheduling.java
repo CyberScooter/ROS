@@ -50,11 +50,6 @@ public class TestProcessScheduling {
 
     //THE TWO METHODS BELOW TEST THE EXECUTION ORDER OF THE FCFS AND PRIORITY SCHEDULING ALGORITHMS
     //=====================================================================================================================
-    //To test the execution order of the processes, a linked list is added to the dispatcher thread that adds a new
-    //process just before it is being sent to the CPU in order to be executed. This way it will show whether
-    //the priority scheduling works
-    //The output from the CPU result does not prove whether the priority scheduling works because the processing time
-    //is a huge factor that affects it.
     @Test
     public void testCompileCodeFilesPriorityExecutionOrder(){
         kernel = new Kernel(ReadyQueueComparator.queueType.priority);
@@ -275,11 +270,6 @@ public class TestProcessScheduling {
     }
 
 
-    //This method tests a single command entered in terminal
-    //To test this properly run the Terminal class in the threads package
-    //==================================================================================
-    //This test will fail if it is not run on a windows 10 os because it uses windows cmd commands
-    //run it on linux will fail
     @Test
     public void testTerminalProcess(){
         //in theory a single task operation is FCFS
