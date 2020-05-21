@@ -1,5 +1,6 @@
 var x = 5;
+var m = 4;
 var z = x + 4;
-var m = y + z;
-print x;
+var m = m + 3;
+print m;
 exit;

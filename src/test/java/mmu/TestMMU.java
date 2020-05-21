@@ -72,11 +72,6 @@ public class TestMMU {
         Assert.assertEquals(128, pageTableEntries );
     }
 
-    //for this test I will have 4 frames in main memory and will fill up the main memory completely
-    //two virtual addresses will be added after with the same page number as two of the 4 pages added previously
-    //then two other virtual addresses will be added with completely different page numbers to any of the virtual address sand it should replace the frames
-    // in memory that were the least recently accessed
-    // this will test the deallocation and allocation of frames in memory via the LRU algorithm
     @Test
     public void testPagingLRUAlgorithm(){
         //4 frames in main memory, this LRU argument is passed onto physical memory size as well in virtual memory class
