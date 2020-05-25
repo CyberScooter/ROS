@@ -3,6 +3,8 @@ package main.java.mmu.PageReplacementAlgorithm;
 /**
  * This class implements the FIFO page-replacement strategy.
  *
+ * Code adapted and modified from:
+ *
  * @author Gagne, Galvin, Silberschatz
  * Operating System Concepts with Java - Eighth Edition
  * Copyright John Wiley & Sons - 2010.

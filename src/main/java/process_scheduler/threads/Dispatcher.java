@@ -1,6 +1,6 @@
 package main.java.process_scheduler.threads;
 
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
 import java.util.LinkedList;
@@ -9,18 +9,18 @@ import java.util.concurrent.Semaphore;
 
 public class Dispatcher extends Thread {
     private final Semaphore semaphore = new Semaphore(1);
-    private static PriorityQueue<Process> processPriorityDispatch;
-    private static PriorityQueue<Process> processFCFSDispatch;
+    private static PriorityQueue<PCB> priorityDispatcher;
+    private static PriorityQueue<PCB> fcfsDispatcher;
     private ReadyQueueComparator.queueType type;
 
     //used for process scheduling junit test cases to determine order in which process id dispatched
-    public static LinkedList<Process> processOrderOfExecutionTest;
+    public static LinkedList<PCB> orderOfExecutionTest;
 
     public Dispatcher(ReadyQueueComparator.queueType type) {
-        if(processPriorityDispatch == null && processFCFSDispatch == null && processOrderOfExecutionTest == null){
-            processPriorityDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.priority));
-            processFCFSDispatch = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_process));
-            processOrderOfExecutionTest = new LinkedList<>();
+        if(priorityDispatcher == null && fcfsDispatcher == null && orderOfExecutionTest == null){
+            priorityDispatcher = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.priority));
+            fcfsDispatcher = new PriorityQueue<>(50, new ReadyQueueComparator(ReadyQueueComparator.queueType.FCFS_process));
+            orderOfExecutionTest = new LinkedList<>();
         }
         this.type = type;
     }
@@ -36,20 +36,20 @@ public class Dispatcher extends Thread {
                     semaphore.acquire();
 
                     while(!ProcessCreation.getReadyQueue().isEmpty()){
-                        Process process = ProcessCreation.readyQueue.poll();
-                        if (process.getIOOutput() != null || process.getType() == Process.Type.commandLine) {
-                            new CPU(process).start();
+                        PCB pcb = ProcessCreation.readyQueue.poll();
+                        if (pcb.getIOOutput() != null || pcb.getType() == PCB.Type.commandLine) {
+                            new CPU(pcb).start();
                         }else if(type == ReadyQueueComparator.queueType.priority){
-                            processPriorityDispatch.add(process);
+                            priorityDispatcher.add(pcb);
                         }else if(type == ReadyQueueComparator.queueType.FCFS_process){
-                            processFCFSDispatch.add(process);
+                            fcfsDispatcher.add(pcb);
 
                         }
                     }
 
-                    if(type == ReadyQueueComparator.queueType.priority && !processPriorityDispatch.isEmpty()){
+                    if(type == ReadyQueueComparator.queueType.priority && !priorityDispatcher.isEmpty()){
                         startCPUThreads(ReadyQueueComparator.queueType.priority);
-                    }else if(type == ReadyQueueComparator.queueType.FCFS_process && !processFCFSDispatch.isEmpty()){
+                    }else if(type == ReadyQueueComparator.queueType.FCFS_process && !fcfsDispatcher.isEmpty()){
                         startCPUThreads(ReadyQueueComparator.queueType.FCFS_process);
                     }
 
@@ -68,18 +68,18 @@ public class Dispatcher extends Thread {
     //starts cpu threads based on priority or fcfs basis
     public synchronized void startCPUThreads(ReadyQueueComparator.queueType type){
         if(type == ReadyQueueComparator.queueType.FCFS_process){
-            while(!processFCFSDispatch.isEmpty()){
-                Process process = processFCFSDispatch.remove();
+            while(!fcfsDispatcher.isEmpty()){
+                PCB pcb = fcfsDispatcher.remove();
                 //added to list that is used in junit test, shows the order in which process is sent to CPU for execution
-                processOrderOfExecutionTest.add(process);
-                new CPU(process).start();
+                orderOfExecutionTest.add(pcb);
+                new CPU(pcb).start();
             }
         } else if(type == ReadyQueueComparator.queueType.priority){
-            while(!processPriorityDispatch.isEmpty()){
-                Process process = processPriorityDispatch.remove();
+            while(!priorityDispatcher.isEmpty()){
+                PCB pcb = priorityDispatcher.remove();
                 //added to list that is used in junit test, shows the order in which process is sent to CPU for execution
-                processOrderOfExecutionTest.add(process);
-                new CPU(process).start();
+                orderOfExecutionTest.add(pcb);
+                new CPU(pcb).start();
             }
         }
 

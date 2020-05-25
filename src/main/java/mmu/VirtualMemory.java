@@ -1,4 +1,20 @@
 package main.java.mmu;
+/**
+ * VirtualMemory.java
+ *
+ * Virtual Memory address translation.
+ *
+ * Given an input parameter, this program extracts
+ * the page number and offset. Then reading the byte in
+ * the file BACKING_STORE residing at that position.
+ *
+ * Code adapted and modified from:
+ *
+ * @author Gagne, Galvin, Silberschatz
+ * Operating System Concepts with Java - Eighth Edition
+ * Copyright John Wiley & Sons - 2010.
+ */
+
 
 import main.java.mmu.PageReplacementAlgorithm.ReplacementAlgorithm;
 import main.java.mmu.templates.Frame;
@@ -124,7 +140,7 @@ public class VirtualMemory
 
 		if ( (frameNumber = checkTLB(pageNumber)) == -1 ) {
 			// Check the page table
-			if (pageTable[pageNumber].getValid() == true) {
+			if (pageTable[pageNumber].getValid()) {
 				/** Page Table Hit **/
 				frameNumber = pageTable[pageNumber].getFrameNumber();
 				//insert in LRU is used in case it already exists, the LRU scheduler takes in the pagenumber to calculate the LRU calculation
@@ -180,11 +196,11 @@ public class VirtualMemory
 	 */
 	public String generateStatistics() {
 		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("Number of Translated Addresses = " + numberOfAddresses).append("\n");
-		stringBuffer.append("Page Faults = " + replacementAlgorithm.getPageFaultCount()).append("\n");
-		stringBuffer.append("Page Fault Rate = " + ((float) replacementAlgorithm.getPageFaultCount()) / numberOfAddresses).append("\n");
-		stringBuffer.append("TLB Hits = " + TLBHits).append("\n");
-		stringBuffer.append("TLB Hit Rate = " + ((float) TLBHits) / numberOfAddresses).append("\n");
+		stringBuffer.append("Total Number of Translated Addresses = " + numberOfAddresses).append("\n");
+		stringBuffer.append("Total Page Faults = " + replacementAlgorithm.getPageFaultCount()).append("\n");
+		stringBuffer.append("Total Page Fault Rate = " + ((float) replacementAlgorithm.getPageFaultCount()) / numberOfAddresses).append("\n");
+		stringBuffer.append("Total TLB Hits = " + TLBHits).append("\n");
+		stringBuffer.append("Total TLB Hit Rate = " + ((float) TLBHits) / numberOfAddresses).append("\n");
 
 		return stringBuffer.toString();
 	}

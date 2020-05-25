@@ -1,7 +1,7 @@
 package main.java.process_scheduler.threads;
 
 import main.java.process_scheduler.threads.templates.*;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.views.Controller;
 
 import java.util.Collections;
@@ -14,7 +14,9 @@ import java.util.concurrent.Semaphore;
 import java.util.regex.Pattern;
 
 public class CPU extends Thread {
-    Process process;
+    private PCB pcb;
+
+    private static int processCounter;
 
     //stores number of ios that are still being handled for a specific process ID
     //<ProcessID, NumberOfIOsStillBeingHandled>
@@ -38,8 +40,9 @@ public class CPU extends Thread {
     //used to store result of command from terminal to be tested in junit test
     public static String junitTestOutput;
 
-    public CPU(Process process) {
-        this.process = process;
+    public CPU(PCB pcb) {
+        this.pcb = pcb;
+        processCounter++;
         if(cpuResults == null && ioHandlerTracker == null && textFileOutput == null && cpuResultsCompiled == null){
             cpuResults = new Vector<>();
             textFileOutput = new ConcurrentHashMap<>();
@@ -50,40 +53,40 @@ public class CPU extends Thread {
 
     @Override
     public void run() {
-        process.setState(Process.State.running);
+        pcb.setState(PCB.State.running);
 
-        if(process.getType() == Process.Type.fileCompiling){
+        if(pcb.getType() == PCB.Type.fileCompiling){
             try {
                 fileCompilingSemaphore.acquire();
                     //if the current process belongs/came from io queue -> ready queue -> this cpu thread
                     //then dont run code below
-                    if(process.getIOOutput() == null){
+                    if(pcb.getIOOutput() == null){
 
-                        String[] data = textFileOutput.get(process.getFile().getName()).split("\n");
+                        String[] data = textFileOutput.get(pcb.getFile().getName()).split("\n");
 
                         for(int x = 0; x < data.length; x++){
                             if (Pattern.matches(RegexExpressions.INTEGER_VARIABLE_REGEX, data[x])) {
                                 int indexAtEquals = data[x].indexOf("=");
                                 String variableName = data[x].substring(0, indexAtEquals).trim();
                                 int value = Integer.parseInt(data[x].substring(indexAtEquals + 1, data[x].length() - 1).trim());
-                                cpuResults.add(new Output(process.getId(), x+1, variableName, value));
+                                cpuResults.add(new Output(pcb.getId(), x+1, variableName, value));
 
                             } else if (data[x].length() >= 5 && data[x].trim().substring(0,5).equals("print")) {
-                                Thread ioProcess = new IO(process, data[x], x+1);
+                                Thread ioProcess = new IO(pcb, data[x], x+1);
                                 ioProcesses.add(ioProcess);
 
                             } else if(Pattern.matches(RegexExpressions.CALCULATION_REGEX1, data[x])) {
                                 int index = data[x].indexOf("=");
                                 String calculation = data[x].substring(index + 1, data[x].length()-1).trim();
                                 if(CodeCompiler.checkCalculationSyntax(calculation)){
-                                    cpuResults.add(new Output(process.getId(), x+1, data[x].substring(0, index).trim(), calculation, Output.Type.addition));
+                                    cpuResults.add(new Output(pcb.getId(), x+1, data[x].substring(0, index).trim(), calculation, Output.Type.addition));
                                 }
                             } else if(Pattern.matches(RegexExpressions.EXIT_REGEX, data[x])){
-                                Output exit = new Output(process.getId(), true);
+                                Output exit = new Output(pcb.getId(), true);
                                 exit.setLine(x+1);
                                 cpuResults.add(exit);
                             } else{
-                                Output err = new Output(process.getId(), true, "Syntax error at line: " + x+1);
+                                Output err = new Output(pcb.getId(), true, "Syntax error at line: " + x+1);
                                 err.setLine(x+1);
                                 cpuResults.add(err);
                                 break;
@@ -106,7 +109,7 @@ public class CPU extends Thread {
                             }
 
                             for(Output output : cpuResults){
-                                if(output.getProcessID() == process.getId()){
+                                if(output.getProcessID() == pcb.getId()){
                                     cpuResultsForGivenId.add(output);
                                 }
                             }
@@ -115,82 +118,79 @@ public class CPU extends Thread {
 
                             codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
 
-                            cpuResultsCompiled.put(process.getId(), codeCompiler.getCodeResults());
+                            cpuResultsCompiled.put(pcb.getId(), codeCompiler.getCodeResults());
                             Controller.fileCompiling.countDown();
 
-//                            for(String result : codeCompiler.getCodeResults()){
-//                                System.out.println(result);
-//                            }
                         }
 
                     }else{
-                        addIOToResultsList(process, ioHandlerTracker);
+                        addIOToResultsList(pcb, ioHandlerTracker);
                     }
             }catch (InterruptedException e){
                 System.out.println(e);
             } finally{
-                process.setState(Process.State.terminated);
+                pcb.setState(PCB.State.terminated);
                 fileCompilingSemaphore.release();
             }
 
-        }else if(process.getType() == Process.Type.commandLine){
+        }else if(pcb.getType() == PCB.Type.commandLine){
             try {
                 terminalSemaphore.acquire();
-                if(process.getTerminalCode() != null) {
-                    boolean cdProcess = process.getTerminalCode().checkIfCDCommand();
+                if(pcb.getTerminalCode() != null) {
+                    boolean cdProcess = pcb.getTerminalCode().checkIfCDCommand();
 
                     if (cdProcess) {
-                        process.getTerminalCode().outputResult();
+                        pcb.getTerminalCode().outputResult();
                         Terminal.terminalLatch.countDown();
                     } else {
-                        Thread thread = new IO(process, process.getTerminalCode());
+                        Thread thread = new IO(pcb, pcb.getTerminalCode());
                         thread.start();
                         thread.join();
                     }
 
-                }else if (process.isHandledByIO()) {
-                    Terminal.commandResult = process.getIOOutput().getOutput();
+                }else if (pcb.isHandledByIO()) {
+                    Terminal.commandResult = pcb.getIOOutput().getOutput();
                     //This is used to store output data for terminal code so that it can be
                     //tested in junit test class
-                    junitTestOutput = process.getIOOutput().getOutput();
+                    junitTestOutput = pcb.getIOOutput().getOutput();
                     Terminal.terminalLatch.countDown();
                 }
             }catch (InterruptedException e){
                 System.out.println(e) ;
             }finally {
-                process.setState(Process.State.terminated);
+                pcb.setState(PCB.State.terminated);
                 terminalSemaphore.release();
             }
 
-        }else if(process.getType() == Process.Type.fileReading){
+        }else if(pcb.getType() == PCB.Type.fileReading){
             try {
                 fileReadingSemaphore.acquire();
-                if (process.getIOOutput() == null) {
+                if (pcb.getIOOutput() == null) {
                     try {
-                        Thread IO = new IO(process);
+                        Thread IO = new IO(pcb);
                         IO.start();
                         IO.join();
                     } catch (InterruptedException e) {
                         System.out.println(e);
                     }
                 } else {
-                    textFileOutput.put(process.getIOOutput().getFilename(), process.getIOOutput().getOutput());
+                    textFileOutput.put(pcb.getIOOutput().getFilename(), pcb.getIOOutput().getOutput());
                     Controller.fileReading.countDown();
                 }
             }catch (InterruptedException e){
                 System.out.println(e);
             }finally {
-                process.setState(Process.State.terminated);
+                pcb.setState(PCB.State.terminated);
                 fileReadingSemaphore.release();
 
             }
 
-        }else if(process.getType() == Process.Type.fileWriting){
+        }else if(pcb.getType() == PCB.Type.fileWriting){
             try {
                 fileReadingSemaphore.acquire();
-                if(process.getIOOutput() == null) {
+                if(pcb.getIOOutput() == null) {
                     try {
-                        Thread IO = new IO(process, process.toWrite());
+                        Thread IO = new IO(pcb, pcb.toWrite());
                         IO.start();
                         IO.join();
                         Controller.fileWriting.countDown();
@@ -198,13 +198,13 @@ public class CPU extends Thread {
                         System.out.println(e);
                     }
                 }else{
-                    saveToTextFileOutput(process.getIOOutput().getFilename(), process.getIOOutput().getOutput());
+                    saveToTextFileOutput(pcb.getIOOutput().getFilename(), pcb.getIOOutput().getOutput());
                 }
 
             }catch (InterruptedException e){
                 System.out.println(e);
             }finally {
-                process.setState(Process.State.terminated);
+                pcb.setState(PCB.State.terminated);
                 fileReadingSemaphore.release();
             }
         }
@@ -213,21 +213,22 @@ public class CPU extends Thread {
 
     private void executeIOProcesses() throws InterruptedException{
         CountDownLatch latch = new CountDownLatch(ioProcesses.size());
-        ioHandlerTracker.put(process.getId(), latch);
+        ioHandlerTracker.put(pcb.getId(), latch);
         for(Thread thread : ioProcesses){
             //synchnorise threads so they dont use same resource at the same time
             thread.start();
             thread.join();
         }
-        ioHandlerTracker.get(process.getId()).await();
+        //waits for all io processes to be completed
+        ioHandlerTracker.get(pcb.getId()).await();
     }
 
-    private void addIOToResultsList(Process process, ConcurrentHashMap<Integer, CountDownLatch> latch){
-        Output output = new Output(process.getId(), process.getIOOutput());
-        output.setLine(process.getLineNumber());
+    private void addIOToResultsList(PCB PCB, ConcurrentHashMap<Integer, CountDownLatch> latch){
+        Output output = new Output(PCB.getId(), PCB.getIOOutput());
+        output.setLine(PCB.getLineNumber());
         cpuResults.add(output);
 
-        latch.get(process.getId()).countDown();
+        latch.get(PCB.getId()).countDown();
     }
 
     public static ConcurrentHashMap<String, String> getTextFileOutput() {

@@ -80,7 +80,7 @@ public class TestMMU {
 
         try {
             //this will add the first 4 virtual addresses via paging (into pagetables, tlb and main memory)
-            mmu.allocateMemory(new File("InputFile4.txt"));
+            mmu.allocateMemory(new File("JUnitTestInputFile4.txt"));
 
             //this virtual address has the same page number as '515' in the 'InputFile4.txt', so there will be a page hit
             mmu.allocateMemory(585);
@@ -135,7 +135,7 @@ public class TestMMU {
 
         try {
             //this will add the first 4 virtual addresses via paging (into pagetables, tlb and main memory)
-            mmu.allocateMemory(new File("InputFile4.txt"));
+            mmu.allocateMemory(new File("JUnitTestInputFile4.txt"));
 
             //this virtual address has the same page number as '515' in the 'InputFile4.txt', so there will be a page hit
             mmu.allocateMemory(585);

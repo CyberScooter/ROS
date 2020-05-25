@@ -6,8 +6,8 @@ public class IOOutput {
     private boolean variable;
     private int lineNumber;
     private boolean error;
-    public Process processHandling;
-    private Process.Type processType;
+    public PCB processHandling;
+    private PCB.Type processType;
     private CommandLine terminalCode;
     private String filename;
 
@@ -15,7 +15,7 @@ public class IOOutput {
     public IOOutput(int processID, CommandLine terminalCode){
         this.processID = processID;
         this.terminalCode = terminalCode;
-        this.processType = Process.Type.commandLine;
+        this.processType = PCB.Type.commandLine;
     }
 
     //for string output on its own
@@ -29,14 +29,14 @@ public class IOOutput {
         this.processID = processID;
         this.output = output;
         this.lineNumber = lineNumber;
-        this.processType = Process.Type.fileCompiling;
+        this.processType = PCB.Type.fileCompiling;
     }
 
     //FILE-HANDLING, READING CODE FILE takes id only
-    public IOOutput(int processID, Process process) {
+    public IOOutput(int processID, PCB pcb) {
         this.processID = processID;
-        this.processHandling = process;
-        this.processType = Process.Type.fileReading;
+        this.processHandling = pcb;
+        this.processType = PCB.Type.fileReading;
     }
 
 
@@ -52,7 +52,8 @@ public class IOOutput {
     public IOOutput(String output, String filename){
         this.output = output;
         this.filename = filename;
-        this.processType = Process.Type.fileWriting;
+        //set to file write but can be used for file reading when saving data in CPU attribute
+        this.processType = PCB.Type.fileWriting;
     }
 
     public IOOutput(String output){
@@ -87,11 +88,11 @@ public class IOOutput {
         return terminalCode;
     }
 
-    public Process.Type getProcessType() {
+    public PCB.Type getProcessType() {
         return processType;
     }
 
-    public Process getProcessHandling() {
+    public PCB getProcessHandling() {
         return processHandling;
     }
 }

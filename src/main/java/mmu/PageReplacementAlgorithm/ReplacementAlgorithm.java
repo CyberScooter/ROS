@@ -3,6 +3,8 @@ package main.java.mmu.PageReplacementAlgorithm;
 /**
  * ReplacementAlgorithm.java 
  *
+ * Code adapted and modified from:
+ *
  * Figure 9.32
  *
  * @author Gagne, Galvin, Silberschatz

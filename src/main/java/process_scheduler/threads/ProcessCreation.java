@@ -1,12 +1,12 @@
 package main.java.process_scheduler.threads;
 
 import main.java.Kernel;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 //keep thread running and will read processes from OSKernal class
 public class ProcessCreation extends Thread{
-    static ConcurrentLinkedQueue<Process> readyQueue;
+    static ConcurrentLinkedQueue<PCB> readyQueue;
 
     public ProcessCreation() {
         if(readyQueue == null){
@@ -23,14 +23,14 @@ public class ProcessCreation extends Thread{
 
             //keep the thread running
 
-            Process processToAdd = Kernel.getProcess();
+            PCB processesToAdd = Kernel.getProcess();
 
-            if(processToAdd != null) {
-                processToAdd.setState(Process.State.ready);
-                readyQueue.add(processToAdd);
+            if(processesToAdd != null) {
+                processesToAdd.setState(PCB.State.ready);
+                readyQueue.add(processesToAdd);
                 Kernel.processCreationLatch.countDown();
 
-                if (processToAdd.getIOOutput() != null || processToAdd.getType() == Process.Type.commandLine) {
+                if (processesToAdd.getIOOutput() != null || processesToAdd.getType() == PCB.Type.commandLine) {
                     Kernel.dispatcher.interrupt();
                     //two stop two interrupts being called simultaeneously
                     try{
@@ -52,7 +52,7 @@ public class ProcessCreation extends Thread{
         }
 
     }
-    public static ConcurrentLinkedQueue<Process> getReadyQueue() {
+    public static ConcurrentLinkedQueue<PCB> getReadyQueue() {
         return readyQueue;
     }
 

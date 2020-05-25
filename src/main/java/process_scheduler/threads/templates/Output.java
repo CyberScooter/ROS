@@ -51,7 +51,7 @@ public class Output implements Comparable<Output>{
     }
 
     public static enum Type{
-        addition,multiplication,subtraction
+        addition
     }
 
     public IOOutput getIOOutput() {

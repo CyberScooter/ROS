@@ -1,4 +1,4 @@
-package main.java.mmu;
+package main.java.mmu.templates;
 
 /**
  * MakeBACKING_STORE.java

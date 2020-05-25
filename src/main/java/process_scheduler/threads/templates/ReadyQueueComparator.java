@@ -1,14 +1,24 @@
 package main.java.process_scheduler.threads.templates;
+/**
+ *
+ * Comparator used for sorting queues
+ *
+ * Code adapted from:
+ * @author Mohammed Mayla, https://github.com/MMayla:
+ *
+ * https://github.com/MMayla/Process-Scheduling-Simulator/blob/master/mini_pack/ReadyQueueComparator.java
+ */
+
 
 import java.util.Comparator;
 
-public class ReadyQueueComparator implements Comparator<Process> {
+public class ReadyQueueComparator implements Comparator<PCB> {
     private queueType type;
 
     // algorithm comparing methods
 
     //uses processID to execute processes in FCFS basis, the lower process ids are executed
-    private int comparing_FCFS_process(Process p1, Process p2)
+    private int comparing_FCFS_process(PCB p1, PCB p2)
     {
         if (p1.getId() < p2.getId())
             return -1;
@@ -18,7 +28,7 @@ public class ReadyQueueComparator implements Comparator<Process> {
     }
 
     //sorts so highest priority is at the start of the list
-    private int comparing_priority(Process p1, Process p2)
+    private int comparing_priority(PCB p1, PCB p2)
     {
         if(p1.getPriority() < p2.getPriority())
             return 1;
@@ -44,7 +54,7 @@ public class ReadyQueueComparator implements Comparator<Process> {
     }
 
     @Override
-    public int compare(Process p1, Process p2)
+    public int compare(PCB p1, PCB p2)
     {
         switch (type)
         {

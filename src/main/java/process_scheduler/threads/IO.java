@@ -3,7 +3,7 @@ package main.java.process_scheduler.threads;
 import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.CommandLine;
 import main.java.process_scheduler.threads.templates.IOOutput;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.RegexExpressions;
 
 import java.io.*;
@@ -16,21 +16,21 @@ public class IO extends Thread {
     private static ConcurrentLinkedQueue<IOOutput> ioQueue;
     private String io;
     private int lineNumber;
-    private Process process;
+    private PCB pcb;
     private CommandLine terminalCode;
     private String input;
 
-    public IO(Process process, String io, int lineNumber) {
+    public IO(PCB PCB, String io, int lineNumber) {
         this.io = io;
         this.lineNumber= lineNumber;
-        this.process = process;
+        this.pcb = PCB;
         if(ioQueue == null){
             ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
-    public IO(Process process, CommandLine terminalCode) {
-        this.process = process;
+    public IO(PCB PCB, CommandLine terminalCode) {
+        this.pcb = PCB;
         this.terminalCode = terminalCode;
         if(ioQueue == null){
             ioQueue = new ConcurrentLinkedQueue<>();
@@ -38,16 +38,16 @@ public class IO extends Thread {
     }
 
     //reading text file to display onto GUI
-    public IO(Process process){
-        this.process = process;
+    public IO(PCB PCB){
+        this.pcb = PCB;
         if(ioQueue == null){
             ioQueue = new ConcurrentLinkedQueue<>();
         }
     }
 
     //writing to textfile from gui
-    public IO(Process process, String input){
-        this.process = process;
+    public IO(PCB pcb, String input){
+        this.pcb = pcb;
         this.input = input;
     }
 
@@ -58,26 +58,26 @@ public class IO extends Thread {
 
             semaphore.acquire();
 
-            if(process.getType() == Process.Type.fileCompiling) {
-                ioQueue.add(new IOOutput(process.getId(), io, lineNumber));
-            }else if(process.getType() == Process.Type.commandLine){
-                ioQueue.add(new IOOutput(process.getId(), terminalCode));
-            }else if(process.getType() == Process.Type.fileReading){
-                ioQueue.add(new IOOutput(process.getId(), process));
-            }else if(process.getType() == Process.Type.fileWriting){
-                ioQueue.add(new IOOutput(input, process.getFile().getName()));
+            if(pcb.getType() == PCB.Type.fileCompiling) {
+                ioQueue.add(new IOOutput(pcb.getId(), io, lineNumber));
+            }else if(pcb.getType() == PCB.Type.commandLine){
+                ioQueue.add(new IOOutput(pcb.getId(), terminalCode));
+            }else if(pcb.getType() == PCB.Type.fileReading){
+                ioQueue.add(new IOOutput(pcb.getId(), pcb));
+            }else if(pcb.getType() == PCB.Type.fileWriting){
+                ioQueue.add(new IOOutput(input, pcb.getFile().getName()));
             }
 
             //FCFS
             while(!ioQueue.isEmpty()){
                 IOOutput ioOutput = ioQueue.poll();
-                if(ioOutput.getProcessType() == Process.Type.fileCompiling){
+                if(ioOutput.getProcessType() == PCB.Type.fileCompiling){
                     handlePrintIOCodeFile(ioOutput);
-                }else if(ioOutput.getProcessType() == Process.Type.commandLine){
+                }else if(ioOutput.getProcessType() == PCB.Type.commandLine){
                     handleTerminalCode(ioOutput);
-                }else if(ioOutput.getProcessType() == Process.Type.fileReading){
+                }else if(ioOutput.getProcessType() == PCB.Type.fileReading){
                     handleFileReading(ioOutput);
-                }else if(ioOutput.getProcessType() == Process.Type.fileWriting){
+                }else if(ioOutput.getProcessType() == PCB.Type.fileWriting){
                     handleFileWriting(ioOutput);
                 }
 
@@ -108,7 +108,7 @@ public class IO extends Thread {
             }
             bufferedReader.close();
 
-            Kernel.addProcess(new Process(output.getProcessID(), Process.Type.fileReading, new IOOutput(stringBuffer.toString(), output.getFilename())));
+            Kernel.addProcess(new PCB(output.getProcessID(), PCB.Type.fileReading, new IOOutput(stringBuffer.toString(), output.getFilename())));
             Kernel.processCreation.interrupt();
 
 
@@ -127,7 +127,7 @@ public class IO extends Thread {
             }
 
             reader.close();
-            Kernel.addProcess(new Process(output.getProcessHandling().getId(), Process.Type.fileReading, new IOOutput(data.toString(), output.getProcessHandling().getFile().getName())));
+            Kernel.addProcess(new PCB(output.getProcessHandling().getId(), PCB.Type.fileReading, new IOOutput(data.toString(), output.getProcessHandling().getFile().getName())));
             Kernel.processCreation.interrupt();
 
         }catch (IOException e){
@@ -139,10 +139,10 @@ public class IO extends Thread {
         String data = output.getTerminalCode().outputResult();
         IOOutput ioOutput = new IOOutput(data);
 
-        Process process = new Process(output.getProcessID(), Process.Type.commandLine, ioOutput);
-        process.setHandledByIO(true);
+        PCB pcb = new PCB(output.getProcessID(), PCB.Type.commandLine, ioOutput);
+        pcb.setHandledByIO(true);
 
-        Kernel.addProcess(process);
+        Kernel.addProcess(pcb);
         Kernel.processCreation.interrupt();
 
     }
@@ -154,11 +154,11 @@ public class IO extends Thread {
         String output = result.getOutput().substring(itemToOutputLength, result.getOutput().length() - 1).trim();
         if(Pattern.matches(RegexExpressions.PRINT_STRING_REGEX, result.getOutput()) || Pattern.matches(RegexExpressions.PRINT_NUMBER_REGEX, result.getOutput())){
             //will get added to ready queue
-            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false)));
+            Kernel.addProcess(new PCB(result.getProcessID(), PCB.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, false, result.getLineNumber(), false)));
         }else if(Pattern.matches(RegexExpressions.PRINT_VARIABLE_REGEX, result.getOutput())){
-            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false)));
+            Kernel.addProcess(new PCB(result.getProcessID(), PCB.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), false)));
         }else {
-            Kernel.addProcess(new Process(result.getProcessID(), Process.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true)));
+            Kernel.addProcess(new PCB(result.getProcessID(), PCB.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true)));
         }
         Kernel.processCreation.interrupt();
 

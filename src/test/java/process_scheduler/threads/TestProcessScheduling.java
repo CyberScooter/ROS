@@ -5,13 +5,16 @@ import main.java.process_scheduler.threads.Dispatcher;
 import main.java.Kernel;
 import main.java.process_scheduler.threads.Terminal;
 import main.java.process_scheduler.threads.templates.CommandLine;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 import main.java.views.Controller;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
@@ -20,10 +23,8 @@ import java.util.concurrent.CountDownLatch;
 public class TestProcessScheduling {
 
     private Kernel kernel;
-    private LinkedList<Process> processesToExecute;
+    private LinkedList<PCB> processesToExecute;
 
-    //This reads the codefile and updates the CPU textFileOutput variable with the process ID and the code belonging to it
-    //which is read from the files
     @Test
     public void testCodeFileReadProcess(){
         kernel = new Kernel(ReadyQueueComparator.queueType.FCFS_process);
@@ -32,8 +33,8 @@ public class TestProcessScheduling {
         Vector<String> results = new Vector<>();
         //file read is meant to be sequential as a GUI can only be able to open
         //one code file at a time due to restrictions in interacting with the UI
-        Process process = new Process(1, 99, Process.Type.fileReading, new File("JUnitTestProgram1.txt"));
-        processesToExecute.add(process);
+        PCB pcb = new PCB(1, 99, PCB.Type.fileReading, new File("JUnitTestProgram1.txt"));
+        processesToExecute.add(pcb);
         Kernel.runCodeFileProcesses(processesToExecute);
         try {
             Controller.fileReading.await();
@@ -47,7 +48,6 @@ public class TestProcessScheduling {
         Assert.assertEquals("var x = 5;\nvar z = x + 4;\nvar m = 5 + z;\nprint x;\nexit;\n", results.get(0));
 
     }
-
     //THE TWO METHODS BELOW TEST THE EXECUTION ORDER OF THE FCFS AND PRIORITY SCHEDULING ALGORITHMS
     //=====================================================================================================================
     @Test
@@ -57,9 +57,9 @@ public class TestProcessScheduling {
         //file are meant to be read sequentially
         //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
         for(int x = 0; x < 3; x++){
-            Process process = new Process(x+1, 99, Process.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
+            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
             Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(process);
+            processesToExecute.add(pcb);
             Kernel.runCodeFileProcesses(processesToExecute);
             try {
                 Controller.fileReading.await();
@@ -69,15 +69,15 @@ public class TestProcessScheduling {
             processesToExecute.clear();
         }
 
-        Dispatcher.processOrderOfExecutionTest.clear();
+        Dispatcher.orderOfExecutionTest.clear();
 
         Vector<String> results = new Vector<>();
-        Process process = new Process(4, 7, Process.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        Process process2 = new Process(5, 2, Process.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        Process process3 = new Process(6, 5, Process.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(process);
-        processesToExecute.add(process2);
-        processesToExecute.add(process3);
+        PCB pcb = new PCB(4, 7, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
+        PCB pcb2 = new PCB(5, 2, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
+        PCB pcb3 = new PCB(6, 5, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
+        processesToExecute.add(pcb);
+        processesToExecute.add(pcb2);
+        processesToExecute.add(pcb3);
 
         Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
         Kernel.runCodeFileProcesses(processesToExecute);
@@ -93,8 +93,8 @@ public class TestProcessScheduling {
         //the first element added to the 'processOrderOfExecutionTest' list is the first one
         //removed from this list and added to the string
         int count = 1;
-        while(!Dispatcher.processOrderOfExecutionTest.isEmpty()){
-            stringBuffer.append(count + ") PROCESS OF ID: " + + Dispatcher.processOrderOfExecutionTest.poll().getId()).append(" RAN").append("\n");
+        while(!Dispatcher.orderOfExecutionTest.isEmpty()){
+            stringBuffer.append(count + ") PROCESS OF ID: " + + Dispatcher.orderOfExecutionTest.poll().getId()).append(" RAN").append("\n");
             count++;
         }
 
@@ -112,9 +112,9 @@ public class TestProcessScheduling {
         //file are meant to be read sequentially
         //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
         for(int x = 0; x < 3; x++){
-            Process process = new Process(x+1, 99, Process.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
+            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
             Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(process);
+            processesToExecute.add(pcb);
             Kernel.runCodeFileProcesses(processesToExecute);
             try {
                 Controller.fileReading.await();
@@ -124,15 +124,15 @@ public class TestProcessScheduling {
             processesToExecute.clear();
         }
 
-        Dispatcher.processOrderOfExecutionTest.clear();
+        Dispatcher.orderOfExecutionTest.clear();
 
         Vector<String> results = new Vector<>();
-        Process process = new Process(4, 1, Process.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        Process process2 = new Process(5, 1, Process.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        Process process3 = new Process(6, 1, Process.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(process);
-        processesToExecute.add(process2);
-        processesToExecute.add(process3);
+        PCB pcb = new PCB(4, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
+        PCB pcb2 = new PCB(5, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
+        PCB pcb3 = new PCB(6, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
+        processesToExecute.add(pcb);
+        processesToExecute.add(pcb2);
+        processesToExecute.add(pcb3);
 
         Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
         Kernel.runCodeFileProcesses(processesToExecute);
@@ -148,8 +148,8 @@ public class TestProcessScheduling {
         //the first element added to the 'processOrderOfExecutionTest' list is the first one
         //removed from this list and added to the string
         int count = 1;
-        while(!Dispatcher.processOrderOfExecutionTest.isEmpty()){
-            stringBuffer.append(count + ") PROCESS OF ID: " + + Dispatcher.processOrderOfExecutionTest.poll().getId()).append(" RAN").append("\n");
+        while(!Dispatcher.orderOfExecutionTest.isEmpty()){
+            stringBuffer.append(count + ") PROCESS OF ID: " + + Dispatcher.orderOfExecutionTest.poll().getId()).append(" RAN").append("\n");
             count++;
         }
 
@@ -171,9 +171,9 @@ public class TestProcessScheduling {
         //file are meant to be read sequentially
         //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
         for(int x = 0; x < 3; x++){
-            Process process = new Process(x+1, 99, Process.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
+            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
             Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(process);
+            processesToExecute.add(pcb);
             Kernel.runCodeFileProcesses(processesToExecute);
             try {
                 Controller.fileReading.await();
@@ -184,12 +184,12 @@ public class TestProcessScheduling {
         }
 
         Vector<String> results = new Vector<>();
-        Process process = new Process(4, 7, Process.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        Process process2 = new Process(5, 2, Process.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        Process process3 = new Process(6, 5, Process.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(process);
-        processesToExecute.add(process2);
-        processesToExecute.add(process3);
+        PCB pcb = new PCB(4, 7, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
+        PCB pcb2 = new PCB(5, 2, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
+        PCB pcb3 = new PCB(6, 5, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
+        processesToExecute.add(pcb);
+        processesToExecute.add(pcb2);
+        processesToExecute.add(pcb3);
 
         Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
         Kernel.runCodeFileProcesses(processesToExecute);
@@ -225,9 +225,9 @@ public class TestProcessScheduling {
         //file are meant to be read sequentially
         //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
         for(int x = 0; x < 3; x++){
-            Process process = new Process(x+1, 99, Process.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
+            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
             Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(process);
+            processesToExecute.add(pcb);
             Kernel.runCodeFileProcesses(processesToExecute);
             try {
                 Controller.fileReading.await();
@@ -237,12 +237,12 @@ public class TestProcessScheduling {
             processesToExecute.clear();
         }
 
-        Process process = new Process(4, 1, Process.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        Process process2 = new Process(5, 1, Process.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        Process process3 = new Process(6, 1, Process.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(process);
-        processesToExecute.add(process2);
-        processesToExecute.add(process3);
+        PCB pcb = new PCB(4, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
+        PCB pcb2 = new PCB(5, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
+        PCB pcb3 = new PCB(6, 1, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
+        processesToExecute.add(pcb);
+        processesToExecute.add(pcb2);
+        processesToExecute.add(pcb3);
 
         Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
         Kernel.runCodeFileProcesses(processesToExecute);
@@ -276,7 +276,7 @@ public class TestProcessScheduling {
         kernel = new Kernel(ReadyQueueComparator.queueType.FCFS_process);
         if(Terminal.cdir == null) Terminal.cdir = System.getProperty("user.dir");
         Terminal.terminalLatch = new CountDownLatch(1);
-        Kernel.runTerminalProcess(new Process(1, Process.Type.commandLine, new CommandLine("dir")));
+        Kernel.runTerminalProcess(new PCB(1, PCB.Type.commandLine, new CommandLine("dir")));
 
         try{
             Terminal.terminalLatch.await();

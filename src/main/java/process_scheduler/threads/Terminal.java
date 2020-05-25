@@ -2,7 +2,7 @@ package main.java.process_scheduler.threads;
 
 import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.CommandLine;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
 import java.io.*;
@@ -35,7 +35,7 @@ public class Terminal
 			if(cdir == null) cdir = System.getProperty("user.dir");
 
 			terminalLatch = new CountDownLatch(1);
-			Kernel.runTerminalProcess(new Process(processId++, Process.Type.commandLine, new CommandLine(commandLine)));
+			Kernel.runTerminalProcess(new PCB(processId++, PCB.Type.commandLine, new CommandLine(commandLine)));
 
 			try{
 				terminalLatch.await();

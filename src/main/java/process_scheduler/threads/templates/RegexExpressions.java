@@ -1,7 +1,6 @@
 package main.java.process_scheduler.threads.templates;
 
 public class RegexExpressions {
-    public final static String PRINT_REGEX = "print[ ][a-zA-Z0-9]+;";
     public final static String PRINT_STRING_REGEX = "print[ ]'[A-Za-z0-9]+';";
     public final static String PRINT_NUMBER_REGEX = "print[ ][0-9]+;";
     public final static String PRINT_VARIABLE_REGEX = "print[ ][A-Za-z0-9]+;";

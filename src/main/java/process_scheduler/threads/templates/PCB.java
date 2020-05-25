@@ -2,7 +2,7 @@ package main.java.process_scheduler.threads.templates;
 
 import java.io.File;
 
-public class Process {
+public class PCB {
     private int id;
     private int priority;
     private File file;
@@ -15,7 +15,7 @@ public class Process {
     private boolean handledByIO;
 
     //FILE HANDLING PROCESSES - USED BY CODE FILES
-    public Process(int id, int priority, Type type, File file) {
+    public PCB(int id, int priority, Type type, File file) {
         this.id = id;
         this.type = type;
         this.file = file;
@@ -23,7 +23,7 @@ public class Process {
     }
 
     //IO PROCESSES COMING BACK TO READY QUEUE FROM IO THREAD - USED FOR COMPILING CODE FILES
-    public Process(int id, Type type, int lineNumber, IOOutput output){
+    public PCB(int id, Type type, int lineNumber, IOOutput output){
         this.id = id;
         this.type = type;
         this.output = output;
@@ -31,7 +31,7 @@ public class Process {
     }
 
     //FILE WRITING
-    public Process(int id, Type type, File file, String toWrite){
+    public PCB(int id, Type type, File file, String toWrite){
         this.id = id;
         this.type = type;
         this.toWrite = toWrite;
@@ -40,7 +40,7 @@ public class Process {
 
     //====================COMMAND LINE AND FILE READING/WRITING PROCESSES=====================================
     //for code being sent to CPU to execute
-    public Process(int id, Type type, CommandLine terminalCode) {
+    public PCB(int id, Type type, CommandLine terminalCode) {
         this.id = id;
         this.type = type;
         this.terminalCode = terminalCode;
@@ -48,7 +48,7 @@ public class Process {
 
     //process coming back after being processed by IO to the CPU again to be executed
     //used for command line and reading/writing code files
-    public Process(int id, Type type, IOOutput output){
+    public PCB(int id, Type type, IOOutput output){
         this.id = id;
         this.type = type;
         this.output = output;

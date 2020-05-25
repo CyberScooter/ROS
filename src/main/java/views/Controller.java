@@ -15,7 +15,7 @@ import main.java.mmu.PageReplacementAlgorithm.FIFO;
 import main.java.mmu.PageReplacementAlgorithm.LRU;
 import main.java.process_scheduler.threads.CPU;
 import main.java.Kernel;
-import main.java.process_scheduler.threads.templates.Process;
+import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class Controller {
     public static CountDownLatch fileCompiling;
 
     private int processID = 1;
-    private LinkedList<Process> processesToExecute;
+    private LinkedList<PCB> processesToExecute;
     private HashMap<Integer, String> processBelongingToProgram;
     private static ArrayList<String> archivedResults;
 
@@ -117,8 +117,8 @@ public class Controller {
 
         save.setOnAction(f -> {
             fileWriting = new CountDownLatch(1);
-            Process process = new Process(2, Process.Type.fileWriting, new File(fileName + ".txt"), fileData.getText());
-            processesToExecute.add(process);
+            PCB pcb = new PCB(getProcessID(), PCB.Type.fileWriting, new File(fileName + ".txt"), fileData.getText());
+            processesToExecute.add(pcb);
             Kernel.runCodeFileProcesses(processesToExecute);
             try {
                 fileWriting.await();
@@ -136,23 +136,23 @@ public class Controller {
         addToProcessQueue.setOnAction(g -> {
             output.clear();
             boolean found = false;
-            Process process = null;
-            for (Process processes : processesToExecute) {
+            PCB pcb = null;
+            for (PCB processes : processesToExecute) {
                 if (processes.getFile().equals(new File(fileName + ".txt"))) found = true;
             }
             if (!found) {
                 int id = this.getProcessID();
                 if (this.pss.getQueueType() == ReadyQueueComparator.queueType.FCFS_process) {
-                    process = new Process(id, 1, Process.Type.fileCompiling, new File(fileName + ".txt"));
+                    pcb = new PCB(id, 1, PCB.Type.fileCompiling, new File(fileName + ".txt"));
                 } else if (this.pss.getQueueType() == ReadyQueueComparator.queueType.priority) {
-                    process = new Process(id, Integer.parseInt(setPriority.getText()), Process.Type.fileCompiling, new File(fileName + ".txt"));
+                    pcb = new PCB(id, Integer.parseInt(setPriority.getText()), PCB.Type.fileCompiling, new File(fileName + ".txt"));
                 }
-                processesToExecute.add(process);
+                processesToExecute.add(pcb);
                 processBelongingToProgram.put(id, fileName);
 
                 StringBuffer processes = new StringBuffer("Processes in list:").append("\n");
-                for (Process process1 : processesToExecute) {
-                    processes.append(process1).append("\n");
+                for (PCB PCB1 : processesToExecute) {
+                    processes.append(PCB1).append("\n");
                 }
 
                 output.setText(processes.toString());
@@ -193,8 +193,8 @@ public class Controller {
         });
 
         fileReading = new CountDownLatch(1);
-        Process process = new Process(1, 99, Process.Type.fileReading, new File(fileName + ".txt"));
-        processesToExecute.add(process);
+        PCB pcb = new PCB(1, 99, PCB.Type.fileReading, new File(fileName + ".txt"));
+        processesToExecute.add(pcb);
         Kernel.runCodeFileProcesses(processesToExecute);
         try {
             fileReading.await();
@@ -220,7 +220,7 @@ public class Controller {
         HBox firstRow = new HBox();
         HBox secondRow = new HBox();
         HBox thirdRow = new HBox();
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 560, 525);
 
         Text text = new Text("Using RandomAccessFile populated with bytes as hard disk");
         Text text2 = new Text("Runs a simulation of paging with " + MMU.getMmu().getNumberOfFramesInMemory() + " frames in main memory using LRU");
@@ -244,7 +244,6 @@ public class Controller {
         output.setEditable(false);
         output.setText("Real time results");
         output.setMinHeight(200);
-        output.selectEnd();
 
         textVBox.getChildren().addAll(text, text2);
         firstRow.getChildren().addAll(setFramesInMemory, initialiseLru,initialiseFifo);

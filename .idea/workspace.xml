@@ -7,9 +7,106 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/ros.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/ros.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/Program1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ros/resources/Program1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/InputFile4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ros/resources/InputFile4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/JUnitTestProgram1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/JUnitTestProgram2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/JUnitTestProgram3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/Program2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ros/resources/Program2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/resources/Program3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ros/resources/Program3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ros/ros.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ros/ros.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/Kernel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/Kernel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/ByteTesting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/MMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/MMU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/MakeBACKING_STORE.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/FIFO$FIFOList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/FIFO$FIFOList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/FIFO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/FIFO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/LRU$LRUList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/LRU$LRUList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/LRU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/LRU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/mmu/VirtualMemory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/mmu/VirtualMemory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/CPU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/CPU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/Dispatcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/IO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/IO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/Kernel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/ProcessCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/ProcessCreation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/Terminal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/Terminal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/IOOutput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/IOOutput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/Output$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/Output$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/Process$State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/Process$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/Process.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator$queueType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/ReadyQueueComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/RegexExpressions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/process_scheduler/threads/templates/RegexExpressions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/main/java/views/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/mmu/TestMMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/test/java/mmu/TestMMU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestProcessScheduling.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestProcessScheduling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/InputFile4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/InputFile4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Program1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Program1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Program2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Program2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Program3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Program3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Kernel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/ByteTesting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/MakeBACKING_STORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/templates/MakeBACKING_STORE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/FIFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/FIFO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/LRU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/LRU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/VirtualMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/VirtualMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/CPU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/CPU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Dispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/IO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/IO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Kernel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/ProcessCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/ProcessCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/IOOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/IOOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/Output.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/Output.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/PCB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/ReadyQueueComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/ReadyQueueComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/RegexExpressions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/RegexExpressions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/views/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/mmu/TestMMU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mmu/TestMMU.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/process_scheduler/threads/TestProcessScheduling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/process_scheduler/threads/TestProcessScheduling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/Kernel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/Kernel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/ByteTesting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/MakeBACKING_STORE.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/FIFO$FIFOList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/FIFO$FIFOList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/FIFO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/FIFO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/LRU$LRUList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/LRU$LRUList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/LRU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/LRU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/PageReplacementAlgorithm/ReplacementAlgorithm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/VirtualMemory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/VirtualMemory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/CPU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/CPU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Dispatcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/IO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/IO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Kernel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/ProcessCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/ProcessCreation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Terminal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Terminal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/IOOutput.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/IOOutput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/Process$State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/Process$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/Process.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator$queueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator$queueType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/ReadyQueueComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/RegexExpressions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/RegexExpressions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessScheduling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessScheduling.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessScheduling.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessScheduling.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire/surefirebooter7824568053612453519.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/test/java/mmu/TestMMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/test/java/mmu/TestMMU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/test/java/process_scheduler/threads/TestProcessScheduling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/test/java/process_scheduler/threads/TestProcessScheduling.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,19 +204,15 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="main.java.threads" />
       <recent name="threads" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hrith\Desktop\os-coursework\resources" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src" />
-      <recent name="C:\Users\hrith\Desktop\os-coursework\src\threads\templates" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
@@ -131,8 +224,12 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hrith\Desktop\os-coursework\resources" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src\main\java\mmu" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src" />
+      <recent name="C:\Users\hrith\Desktop\os-coursework\src\threads\templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -202,7 +299,7 @@
       <option name="PROGRAM_PARAMETERS" value="InputFile.txt" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.java.mmu.*" />
+          <option name="PATTERN" value="main.java.mmu.templates.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -216,7 +313,7 @@
       <option name="PROGRAM_PARAMETERS" value="InputFile.txt" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.java.mmu.*" />
+          <option name="PATTERN" value="main.java.mmu.templates.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -269,26 +366,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestMMU.testVirtualAddressTranslation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ros" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.mmu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.mmu" />
-      <option name="MAIN_CLASS_NAME" value="test.java.mmu.TestMMU" />
-      <option name="METHOD_NAME" value="testVirtualAddressTranslation" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestProcessScheduling" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ros" />
       <extension name="coverage">
@@ -300,6 +377,46 @@
       <option name="PACKAGE_NAME" value="test.java.process_scheduler.threads" />
       <option name="MAIN_CLASS_NAME" value="test.java.process_scheduler.threads.TestProcessScheduling" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestProcessScheduling.testCodeFileReadProcess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ros" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.process_scheduler.threads.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.process_scheduler.threads" />
+      <option name="MAIN_CLASS_NAME" value="test.java.process_scheduler.threads.TestProcessScheduling" />
+      <option name="METHOD_NAME" value="testCodeFileReadProcess" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestProcessScheduling.testCodeFileWriteProcess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ros" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.process_scheduler.threads.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.process_scheduler.threads" />
+      <option name="MAIN_CLASS_NAME" value="test.java.process_scheduler.threads.TestProcessScheduling" />
+      <option name="METHOD_NAME" value="testCodeFileWriteProcess" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="moduleWithDependencies" />
@@ -344,17 +461,19 @@
       <item itemvalue="Application.VirtualMemory" />
       <item itemvalue="Application.VM2" />
       <item itemvalue="Application.ROS" />
-      <item itemvalue="JUnit.TestProcessScheduling" />
-      <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
       <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
+      <item itemvalue="JUnit.TestProcessScheduling.testCodeFileWriteProcess" />
+      <item itemvalue="JUnit.TestProcessScheduling" />
+      <item itemvalue="JUnit.TestProcessScheduling.testCodeFileReadProcess" />
       <item itemvalue="JUnit.TestMMU" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.TestMMU" />
-        <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
-        <item itemvalue="JUnit.TestMMU.testVirtualAddressTranslation" />
         <item itemvalue="JUnit.TestProcessScheduling" />
+        <item itemvalue="JUnit.TestProcessScheduling.testCodeFileWriteProcess" />
+        <item itemvalue="JUnit.TestProcessScheduling.testCodeFileReadProcess" />
+        <item itemvalue="JUnit.TestMMU.testPagingLRUAlgorithm" />
       </list>
     </recent_temporary>
   </component>
@@ -442,6 +561,15 @@
       <workItem from="1589986163973" duration="2092000" />
       <workItem from="1590018434423" duration="362000" />
       <workItem from="1590064296253" duration="5869000" />
+      <workItem from="1590086205847" duration="9000" />
+      <workItem from="1590092180673" duration="9000" />
+      <workItem from="1590098570356" duration="61000" />
+      <workItem from="1590247721368" duration="598000" />
+      <workItem from="1590253863721" duration="7920000" />
+      <workItem from="1590273245778" duration="636000" />
+      <workItem from="1590338556973" duration="8068000" />
+      <workItem from="1590411988704" duration="2686000" />
+      <workItem from="1590414722070" duration="7560000" />
     </task>
     <servers />
   </component>

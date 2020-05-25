@@ -1,11 +1,10 @@
 package main.java.mmu;
 
-import main.java.mmu.PageReplacementAlgorithm.FIFO;
 import main.java.mmu.PageReplacementAlgorithm.LRU;
 import main.java.mmu.PageReplacementAlgorithm.ReplacementAlgorithm;
+import main.java.mmu.templates.MakeBACKING_STORE;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class MMU {
     private VirtualMemory virtualMemory;
@@ -45,6 +44,7 @@ public class MMU {
             String address;
             StringBuffer stringBuffer = new StringBuffer();
             while ( (address = reader.readLine()) != null) {
+                int currentPageFault = virtualMemory.getPageFault();
 
                 // read in the virtual address
                 int virtualAddress = Integer.parseInt(address);
@@ -55,7 +55,17 @@ public class MMU {
 
                 int value = virtualMemory.getValue(physicalAddress);
 
-                stringBuffer.append("Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value).append("\n");
+                stringBuffer.append("Virtual address: " + virtualAddress)
+                        .append(", Physical address: " + physicalAddress)
+                        .append( ", Page Number: " + virtualAddress/256);
+
+                if(currentPageFault != virtualMemory.getPageFault()){
+                    stringBuffer.append(", Value: " + value)
+                            .append(", Page Fault: true").append("\n");
+                }else {
+                    stringBuffer.append(", Page Fault: false").append("\n");
+                }
+
 
             }
             results = stringBuffer.toString();
@@ -72,13 +82,20 @@ public class MMU {
 
     //single virtual address
     public void allocateMemory(int virtualAddress) throws IOException{
+        int currentPageFault = virtualMemory.getPageFault();
         int physicalAddress = virtualMemory.getPhysicalAddress(virtualAddress);
 
         virtualMemory.numberOfAddresses++;
 
         try {
             int value = virtualMemory.getValue(physicalAddress);
-            results = "Virtual address: " + virtualAddress + " Physical address: " + physicalAddress + " Value: " + value;
+            if(currentPageFault != virtualMemory.getPageFault()){
+                results = "Virtual address: " + virtualAddress + ", Physical address: " + physicalAddress + ", Page Number: " + virtualAddress/256 + ", Value: " + value + ", Page Fault: true";
+            }else {
+                results = "Virtual address: " + virtualAddress + ", Physical address: " + physicalAddress + ", Page Fault: false";
+            }
+
+
         }catch (ArrayIndexOutOfBoundsException e){
             results = e.getMessage();
         }
