@@ -6,15 +6,16 @@ import main.java.process_scheduler.threads.Dispatcher;
 import main.java.process_scheduler.threads.ProcessCreation;
 import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
-import java.io.File;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 
 public class Kernel {
-    static LinkedList<PCB> processes = new LinkedList<>();
+    private static ConcurrentLinkedQueue<PCB> processes = new ConcurrentLinkedQueue<>();
     public static ProcessCreation processCreation;
     public static Dispatcher dispatcher;
     public static CountDownLatch processCreationLatch;
+    private static CountDownLatch addingProcessesLatch;
     ReadyQueueComparator.queueType queueType;
     private MMU mmu;
 
@@ -37,9 +38,9 @@ public class Kernel {
     public static void runCodeFileProcesses(LinkedList<PCB> processesToAdd) {
         processCreationLatch = new CountDownLatch(processesToAdd.size());
         while (!processesToAdd.isEmpty()) {
-            addProcess(processesToAdd.poll());
+            processes.add(processesToAdd.poll());
         }
-        processCreation.interrupt();
+
 
         try {
             processCreationLatch.await();
@@ -54,7 +55,6 @@ public class Kernel {
         processCreationLatch = new CountDownLatch(1);
         addProcess(commandLine);
 
-        processCreation.interrupt();
 
     }
 
@@ -80,7 +80,15 @@ public class Kernel {
         return mmu;
     }
 
+    public static ProcessCreation getProcessCreation(){
+        return processCreation;
+    }
+
     public void setQueueType(ReadyQueueComparator.queueType queueType) {
         this.queueType = queueType;
+    }
+
+    public static ConcurrentLinkedQueue<PCB> getProcesses() {
+        return processes;
     }
 }

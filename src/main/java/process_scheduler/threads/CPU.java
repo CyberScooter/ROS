@@ -19,25 +19,30 @@ public class CPU extends Thread {
     private static int processCounter;
 
     //stores number of ios that are still being handled for a specific process ID
-    //<ProcessID, NumberOfIOsStillBeingHandled>
+    //maps processID: Integer --> numberOfIOProcessesInProgress: CountDownLatch
     private static ConcurrentHashMap<Integer, CountDownLatch> ioHandlerTracker;
 
-    //this vectorlist stores all the process results for every processID
-    //this vector list means that after data has been processed by CPU it stores into this array
+    //maps all the lines in every code file into an object and stores it in this list
     private static Vector<Output> cpuResults;
 
+    //actual results of the the objects from the CPU results BUT sorted for a given ID
+    //this is what is used to output the final result of a code file onto the GUI
+    //maps processID: int --> results: LinkedList<String
     public static LinkedHashMap<Integer, LinkedList<String> > cpuResultsCompiled;
 
+    //restricts access to 1 thread worker at a time
     private Semaphore fileCompilingSemaphore = new Semaphore(1);
     private Semaphore terminalSemaphore = new Semaphore(1);
     private Semaphore fileReadingSemaphore = new Semaphore(1);
-    //tracks io in progress for specific id
 
+    //contains io threads need to be run for a given process
     private Vector<Thread> ioProcesses = new Vector<>();
 
+    //after reading the code file when  opening the Program in the GUI
+    //it is stored in this variable that maps filename: String --> code: String
     private static ConcurrentHashMap<String, String> textFileOutput;
 
-    //used to store result of command from terminal to be tested in junit test
+    //used to store result of a command from terminal to be tested in junit test case
     public static String junitTestOutput;
 
     public CPU(PCB pcb) {
@@ -58,12 +63,13 @@ public class CPU extends Thread {
         if(pcb.getType() == PCB.Type.fileCompiling){
             try {
                 fileCompilingSemaphore.acquire();
-                    //if the current process belongs/came from io queue -> ready queue -> this cpu thread
-                    //then dont run code below
+                //if the current process came from: io thread --> ready queue
+                //then run the else condition of this statement
                     if(pcb.getIOOutput() == null){
 
                         String[] data = textFileOutput.get(pcb.getFile().getName()).split("\n");
 
+                        //convert each line to an Output object and store in cpuResults
                         for(int x = 0; x < data.length; x++){
                             if (Pattern.matches(RegexExpressions.INTEGER_VARIABLE_REGEX, data[x])) {
                                 int indexAtEquals = data[x].indexOf("=");
@@ -94,34 +100,32 @@ public class CPU extends Thread {
                         }
 
                         if(ioProcesses.size() > 0){
-                            //executes IOThreads which handles the IO and sends it back to readyqueue in the ProcessCreation thread
+                            //executes IO processes, method has an await() call that blocks  the thread from continuing
                             executeIOProcesses();
                         }
 
-                        //executes once the io processes are done, as io processes they will use different threads
-                        if(cpuResults.size() > 0){
-                            CodeCompiler codeCompiler = new CodeCompiler();
-                            Vector<Output> cpuResultsForGivenId = new Vector<>();
-                            try{
-                                Thread.sleep(100);
-                            }catch (InterruptedException e){
-
-                            }
-
-                            for(Output output : cpuResults){
-                                if(output.getProcessID() == pcb.getId()){
-                                    cpuResultsForGivenId.add(output);
-                                }
-                            }
-
-                            Collections.sort(cpuResultsForGivenId);
-
-                            codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
-
-                            cpuResultsCompiled.put(pcb.getId(), codeCompiler.getCodeResults());
-                            Controller.fileCompiling.countDown();
+                        //code runs once the io processes are done
+                        CodeCompiler codeCompiler = new CodeCompiler();
+                        Vector<Output> cpuResultsForGivenId = new Vector<>();
+                        try{
+                            Thread.sleep(100);
+                        }catch (InterruptedException e){
 
                         }
+
+                        for(Output output : cpuResults){
+                            if(output.getProcessID() == pcb.getId()){
+                                cpuResultsForGivenId.add(output);
+                            }
+                        }
+
+                        Collections.sort(cpuResultsForGivenId);
+
+                        codeCompiler.compile(cpuResultsForGivenId, CodeCompiler.Type.arithmetic);
+
+                        cpuResultsCompiled.put(pcb.getId(), codeCompiler.getCodeResults());
+                        Controller.fileCompiling.countDown();
+
 
                     }else{
                         addIOToResultsList(pcb, ioHandlerTracker);
@@ -165,6 +169,8 @@ public class CPU extends Thread {
         }else if(pcb.getType() == PCB.Type.fileReading){
             try {
                 fileReadingSemaphore.acquire();
+                //if the current process came from: io thread --> ready queue
+                //then run the else condition of this statement
                 if (pcb.getIOOutput() == null) {
                     try {
                         Thread IO = new IO(pcb);
@@ -188,6 +194,8 @@ public class CPU extends Thread {
         }else if(pcb.getType() == PCB.Type.fileWriting){
             try {
                 fileReadingSemaphore.acquire();
+                //if the current process came from: io thread --> ready queue
+                //then run the else condition of this statement
                 if(pcb.getIOOutput() == null) {
                     try {
                         Thread IO = new IO(pcb, pcb.toWrite());

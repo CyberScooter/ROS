@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: test.java.mmu.TestMMU
+Test set: test.java.process_scheduler.threads.TestProcessSchedulingPriority
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.363 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.411 sec

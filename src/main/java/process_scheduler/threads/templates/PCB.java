@@ -53,7 +53,6 @@ public class PCB {
         this.type = type;
         this.output = output;
     }
-
     public static enum State {
         ready, running, terminated
     }

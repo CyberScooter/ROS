@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="test.java.process_scheduler.threads.TestPCBScheduling" time="8.38" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="test.java.process_scheduler.threads.TestProcessSchedulingPriority" time="3.252" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_231\jre\bin"/>
@@ -65,10 +65,6 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testCompileCodeFilesFCFSExecutionOrder" time="2.348"/>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testTerminalProcess" time="0.497"/>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testCompileCodeFilesPriorityOutput" time="1.774"/>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testCompileCodeFilesPriorityExecutionOrder" time="1.779"/>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testCodeFileReadProcess" time="0.208"/>
-  <testcase classname="test.java.process_scheduler.threads.TestPCBScheduling" name="testCompileAllCodeFilesInFCFSOutput" time="1.774"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessSchedulingPriority" name="testCompileCodeFilesPriorityOutput" time="1.943"/>
+  <testcase classname="test.java.process_scheduler.threads.TestProcessSchedulingPriority" name="testCompileCodeFilesPriorityExecutionOrder" time="1.309"/>
 </testsuite>

@@ -1,2 +1,4 @@
-C:\Users\hrith\Desktop\ROS\src\test\java\process_scheduler\threads\TestProcessScheduling.java
-C:\Users\hrith\Desktop\ROS\src\test\java\mmu\TestMMU.java
+C:\Users\hrith\IdeaProjects\ROS\src\test\java\process_scheduler\threads\TestProcessSchedulingPriority.java
+C:\Users\hrith\IdeaProjects\ROS\src\test\java\mmu\TestMMU.java
+C:\Users\hrith\IdeaProjects\ROS\src\test\java\process_scheduler\threads\TestSingleTaskProcess.java
+C:\Users\hrith\IdeaProjects\ROS\src\test\java\process_scheduler\threads\TestProcessSchedulingFCFS.java

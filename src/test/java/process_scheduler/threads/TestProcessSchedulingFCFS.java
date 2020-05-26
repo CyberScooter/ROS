@@ -9,6 +9,8 @@ import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 import main.java.views.Controller;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -20,10 +22,11 @@ import java.util.concurrent.CountDownLatch;
 
 //These Tests do not test functionality of GUI, this can only be tested by the end user itself by opening the JAR file in out folder
 //these test cases test the functionality of the multi-threaded system
-public class TestProcessScheduling {
+public class TestProcessSchedulingFCFS {
 
     private Kernel kernel;
     private LinkedList<PCB> processesToExecute;
+
 
     @Test
     public void testCodeFileReadProcess(){
@@ -48,66 +51,11 @@ public class TestProcessScheduling {
         Assert.assertEquals("var x = 5;\nvar z = x + 4;\nvar m = 5 + z;\nprint x;\nexit;\n", results.get(0));
 
     }
-    //THE TWO METHODS BELOW TEST THE EXECUTION ORDER OF THE FCFS AND PRIORITY SCHEDULING ALGORITHMS
-    //=====================================================================================================================
-    @Test
-    public void testCompileCodeFilesPriorityExecutionOrder(){
-        kernel = new Kernel(ReadyQueueComparator.queueType.priority);
-        processesToExecute = new LinkedList<>();
-        //file are meant to be read sequentially
-        //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
-        for(int x = 0; x < 3; x++){
-            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
-            Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(pcb);
-            Kernel.runCodeFileProcesses(processesToExecute);
-            try {
-                Controller.fileReading.await();
-            }catch (InterruptedException e){
-                System.out.println(e);
-            }
-            processesToExecute.clear();
-        }
-
-        Dispatcher.orderOfExecutionTest.clear();
-
-        Vector<String> results = new Vector<>();
-        PCB pcb = new PCB(4, 7, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        PCB pcb2 = new PCB(5, 2, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        PCB pcb3 = new PCB(6, 5, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(pcb);
-        processesToExecute.add(pcb2);
-        processesToExecute.add(pcb3);
-
-        Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
-        Kernel.runCodeFileProcesses(processesToExecute);
-        try{
-            Controller.fileCompiling.await();
-        }catch (InterruptedException e){
-            System.out.println(e);
-        }
-
-        StringBuffer stringBuffer = new StringBuffer();
-
-
-        //the first element added to the 'processOrderOfExecutionTest' list is the first one
-        //removed from this list and added to the string
-        int count = 1;
-        while(!Dispatcher.orderOfExecutionTest.isEmpty()){
-            stringBuffer.append(count + ") PROCESS OF ID: " + + Dispatcher.orderOfExecutionTest.poll().getId()).append(" RAN").append("\n");
-            count++;
-        }
-
-        CPU.cpuResultsCompiled.clear();
-
-        //output should be the id of the processes that are executed in priority order:
-        // id:4 -> id:6 -> id:5
-        Assert.assertEquals("1) PROCESS OF ID: 4 RAN\n2) PROCESS OF ID: 5 RAN\n3) PROCESS OF ID: 6 RAN\n", stringBuffer.toString());
-    }
 
     @Test
     public void testCompileCodeFilesFCFSExecutionOrder(){
         kernel = new Kernel(ReadyQueueComparator.queueType.FCFS_process);
+        Dispatcher.orderOfExecutionTest.clear();
         processesToExecute = new LinkedList<>();
         //file are meant to be read sequentially
         //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
@@ -158,64 +106,6 @@ public class TestProcessScheduling {
         //output should be the id of the processes that are executed in FCFS order:
         // id:4 -> id:5 -> id:6
         Assert.assertEquals("1) PROCESS OF ID: 4 RAN\n2) PROCESS OF ID: 5 RAN\n3) PROCESS OF ID: 6 RAN\n", stringBuffer.toString());
-    }
-
-
-    //THE TWO METHODS BELOW CHECK WHETHER AN OUTPUT IS PRODUCED FROM CPU
-    //=============================================================================
-    //To test this I pulled values from a static variable in the CPU thread that contains the results of each code file that has bee compiled
-    @Test
-    public void testCompileCodeFilesPriorityOutput(){
-        kernel = new Kernel(ReadyQueueComparator.queueType.priority);
-        processesToExecute = new LinkedList<>();
-        //file are meant to be read sequentially
-        //files are read so that the CPU static variable contains the data for the code files so that the compiling process can use that variable
-        for(int x = 0; x < 3; x++){
-            PCB pcb = new PCB(x+1, 99, PCB.Type.fileReading, new File("JUnitTestProgram" + (x+1) + ".txt"));
-            Controller.fileReading = new CountDownLatch(1);
-            processesToExecute.add(pcb);
-            Kernel.runCodeFileProcesses(processesToExecute);
-            try {
-                Controller.fileReading.await();
-            }catch (InterruptedException e){
-                System.out.println(e);
-            }
-            processesToExecute.clear();
-        }
-
-        Vector<String> results = new Vector<>();
-        PCB pcb = new PCB(4, 7, PCB.Type.fileCompiling, new File("JUnitTestProgram1.txt"));
-        PCB pcb2 = new PCB(5, 2, PCB.Type.fileCompiling, new File("JUnitTestProgram2.txt"));
-        PCB pcb3 = new PCB(6, 5, PCB.Type.fileCompiling, new File("JUnitTestProgram3.txt"));
-        processesToExecute.add(pcb);
-        processesToExecute.add(pcb2);
-        processesToExecute.add(pcb3);
-
-        Controller.fileCompiling = new CountDownLatch(processesToExecute.size());
-        Kernel.runCodeFileProcesses(processesToExecute);
-        try{
-            Controller.fileCompiling.await();
-        }catch (InterruptedException e){
-            System.out.println(e);
-        }
-
-        StringBuffer stringBuffer = new StringBuffer();
-
-        Set<Integer> setKeys = CPU.cpuResultsCompiled.keySet();
-        List<Integer> listKeys = new ArrayList<>(setKeys);
-        ListIterator<Integer> iterator = listKeys.listIterator( listKeys.size() );
-        while(iterator.hasPrevious()){
-            Integer previousID = iterator.previous();
-            for(String item : CPU.cpuResultsCompiled.get(previousID)){
-                stringBuffer.append("PROCESS ID: " + previousID + " RESULT: ").append(item).append("\n");
-            }
-        }
-
-        CPU.cpuResultsCompiled.clear();
-
-        //file compiles in order of id:1 --> id:3 --> id:5
-        Assert.assertNotNull(stringBuffer.toString());
-
     }
 
     @Test
@@ -269,24 +159,6 @@ public class TestProcessScheduling {
         Assert.assertNotNull(stringBuffer.toString());
     }
 
-
-    @Test
-    public void testTerminalProcess(){
-        //in theory a single task operation is FCFS
-        kernel = new Kernel(ReadyQueueComparator.queueType.FCFS_process);
-        if(Terminal.cdir == null) Terminal.cdir = System.getProperty("user.dir");
-        Terminal.terminalLatch = new CountDownLatch(1);
-        Kernel.runTerminalProcess(new PCB(1, PCB.Type.commandLine, new CommandLine("dir")));
-
-        try{
-            Terminal.terminalLatch.await();
-        }catch (InterruptedException e){
-            System.out.println(e);
-        }
-
-        Assert.assertNotNull(CPU.junitTestOutput);
-
-    }
 
 
 

@@ -1,2 +1,4 @@
 test\java\mmu\TestMMU.class
-test\java\process_scheduler\threads\TestProcessScheduling.class
+test\java\process_scheduler\threads\TestProcessSchedulingPriority.class
+test\java\process_scheduler\threads\TestSingleTaskProcess.class
+test\java\process_scheduler\threads\TestProcessSchedulingFCFS.class

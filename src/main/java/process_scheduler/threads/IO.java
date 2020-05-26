@@ -109,8 +109,6 @@ public class IO extends Thread {
             bufferedReader.close();
 
             Kernel.addProcess(new PCB(output.getProcessID(), PCB.Type.fileReading, new IOOutput(stringBuffer.toString(), output.getFilename())));
-            Kernel.processCreation.interrupt();
-
 
         }catch (IOException e){
             System.out.println(e);
@@ -128,7 +126,6 @@ public class IO extends Thread {
 
             reader.close();
             Kernel.addProcess(new PCB(output.getProcessHandling().getId(), PCB.Type.fileReading, new IOOutput(data.toString(), output.getProcessHandling().getFile().getName())));
-            Kernel.processCreation.interrupt();
 
         }catch (IOException e){
 
@@ -143,7 +140,6 @@ public class IO extends Thread {
         pcb.setHandledByIO(true);
 
         Kernel.addProcess(pcb);
-        Kernel.processCreation.interrupt();
 
     }
 
@@ -160,7 +156,6 @@ public class IO extends Thread {
         }else {
             Kernel.addProcess(new PCB(result.getProcessID(), PCB.Type.fileCompiling, result.getLineNumber(), new IOOutput(output, true, result.getLineNumber(), true)));
         }
-        Kernel.processCreation.interrupt();
 
     }
 

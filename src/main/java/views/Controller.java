@@ -15,6 +15,7 @@ import main.java.mmu.PageReplacementAlgorithm.FIFO;
 import main.java.mmu.PageReplacementAlgorithm.LRU;
 import main.java.process_scheduler.threads.CPU;
 import main.java.Kernel;
+import main.java.process_scheduler.threads.ProcessCreation;
 import main.java.process_scheduler.threads.templates.PCB;
 import main.java.process_scheduler.threads.templates.ReadyQueueComparator;
 
@@ -30,10 +31,11 @@ public class Controller {
     public static CountDownLatch fileWriting;
     public static CountDownLatch fileCompiling;
 
-    private int processID = 1;
     private LinkedList<PCB> processesToExecute;
     private HashMap<Integer, String> processBelongingToProgram;
     private static ArrayList<String> archivedResults;
+
+    private static int processID = 1;
 
     public Controller(){
         //BOOTING OS, INITIALISING SUBMODULES IN KERNEL
@@ -141,7 +143,7 @@ public class Controller {
                 if (processes.getFile().equals(new File(fileName + ".txt"))) found = true;
             }
             if (!found) {
-                int id = this.getProcessID();
+                int id =getProcessID();
                 if (this.pss.getQueueType() == ReadyQueueComparator.queueType.FCFS_process) {
                     pcb = new PCB(id, 1, PCB.Type.fileCompiling, new File(fileName + ".txt"));
                 } else if (this.pss.getQueueType() == ReadyQueueComparator.queueType.priority) {
@@ -193,7 +195,8 @@ public class Controller {
         });
 
         fileReading = new CountDownLatch(1);
-        PCB pcb = new PCB(1, 99, PCB.Type.fileReading, new File(fileName + ".txt"));
+        int id = getProcessID();
+        PCB pcb = new PCB(id, 99, PCB.Type.fileReading, new File(fileName + ".txt"));
         processesToExecute.add(pcb);
         Kernel.runCodeFileProcesses(processesToExecute);
         try {
@@ -207,10 +210,6 @@ public class Controller {
         stage.setTitle(fileName);
         stage.setScene(scene);
         stage.show();
-    }
-
-    protected Integer getProcessID(){
-        return processID++;
     }
 
     public void openMMU(){
@@ -305,6 +304,10 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public static Integer getProcessID(){
+        return processID++;
     }
 
     public static void closeConfirmation(Stage stage){

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: test.java.process_scheduler.threads.TestProcessScheduling
+Test set: test.java.process_scheduler.threads.TestSingleTaskProcess
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.34 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.381 sec

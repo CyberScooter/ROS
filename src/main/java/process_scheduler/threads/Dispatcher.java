@@ -13,7 +13,7 @@ public class Dispatcher extends Thread {
     private static PriorityQueue<PCB> fcfsDispatcher;
     private ReadyQueueComparator.queueType type;
 
-    //used for process scheduling junit test cases to determine order in which process id dispatched
+    //used for process scheduling junit test cases to determine order in which process is dispatched to CPU
     public static LinkedList<PCB> orderOfExecutionTest;
 
     public Dispatcher(ReadyQueueComparator.queueType type) {
@@ -69,14 +69,14 @@ public class Dispatcher extends Thread {
     public synchronized void startCPUThreads(ReadyQueueComparator.queueType type){
         if(type == ReadyQueueComparator.queueType.FCFS_process){
             while(!fcfsDispatcher.isEmpty()){
-                PCB pcb = fcfsDispatcher.remove();
+                PCB pcb = fcfsDispatcher.poll();
                 //added to list that is used in junit test, shows the order in which process is sent to CPU for execution
                 orderOfExecutionTest.add(pcb);
                 new CPU(pcb).start();
             }
         } else if(type == ReadyQueueComparator.queueType.priority){
             while(!priorityDispatcher.isEmpty()){
-                PCB pcb = priorityDispatcher.remove();
+                PCB pcb = priorityDispatcher.poll();
                 //added to list that is used in junit test, shows the order in which process is sent to CPU for execution
                 orderOfExecutionTest.add(pcb);
                 new CPU(pcb).start();

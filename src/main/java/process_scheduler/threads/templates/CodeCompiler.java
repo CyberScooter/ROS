@@ -27,48 +27,48 @@ public class CodeCompiler {
 
     public void compile(Vector<Output> output, Type type ){
         if(type == Type.arithmetic){
-            for(Output output1 : output) {
+            for(Output lineCode : output) {
                 //if arithmetic is addition
                 if(calculationError){
                     break;
                 }
-                if(output1.getExit()){
+                if(lineCode.getExit()){
                     this.exitFound = true;
                     break;
-                }else if(output1.getVariable() != null){
-                    Map.Entry<String,Integer> entry = output1.getVariable().entrySet().iterator().next();
+                }else if(lineCode.getVariable() != null){
+                    Map.Entry<String,Integer> entry = lineCode.getVariable().entrySet().iterator().next();
                     variables.put(entry.getKey(), entry.getValue());
-                }else if(output1.getArithmeticCalculation() != null && output1.getCalculationType() == Output.Type.addition){
-                    if(calculateResult(output1, output1.getLine())){
+                }else if(lineCode.getArithmeticCalculation() != null && lineCode.getCalculationType() == Output.Type.addition){
+                    if(calculateResult(lineCode, lineCode.getLine())){
                         calculationError = true;
-                        calculationErrorLine = output1.getLine();
+                        calculationErrorLine = lineCode.getLine();
                     }
 
-                }else if(output1.getIOOutput() != null){
-                    if(output1.getIOOutput().isError()){
-                        codeResults.add("Syntax error at line: " + output1.getIOOutput().getLineNumber());
+                }else if(lineCode.getIOOutput() != null){
+                    if(lineCode.getIOOutput().isError()){
+                        codeResults.add("Syntax error at line: " + lineCode.getIOOutput().getLineNumber());
                         syntaxError = true;
                         break;
-                    }else if(!output1.getIOOutput().isVariable()){
+                    }else if(!lineCode.getIOOutput().isVariable()){
 //                        output1.getIOOutput().getOutput().indexOf("'") != -1)
-                        if(output1.getIOOutput().getOutput().matches(RegexExpressions.STRING_REGEX)){
-                            codeResults.add(output1.getIOOutput().getOutput().substring(1, output1.getIOOutput().getOutput().length() - 1));
+                        if(lineCode.getIOOutput().getOutput().matches(RegexExpressions.STRING_REGEX)){
+                            codeResults.add(lineCode.getIOOutput().getOutput().substring(1, lineCode.getIOOutput().getOutput().length() - 1));
                         }else{
-                            codeResults.add(output1.getIOOutput().getOutput());
+                            codeResults.add(lineCode.getIOOutput().getOutput());
                         }
 
-                    }else if(output1.getIOOutput().isVariable()){
+                    }else if(lineCode.getIOOutput().isVariable()){
                         //variables can only be assigned once and cannot be reassigned
                         boolean found = false;
                         for (Map.Entry<String, Integer> entry : calculationResults.entrySet()) {
-                            if (entry.getKey().equals("var " + output1.getIOOutput().getOutput())) {
+                            if (entry.getKey().equals("var " + lineCode.getIOOutput().getOutput())) {
                                 codeResults.add(String.valueOf(entry.getValue()));
                                 found = true;
                             }
                         }
                         if(!found){
                             for(Map.Entry<String, Integer> entry2 : variables.entrySet()){
-                                if(entry2.getKey().equals("var " + output1.getIOOutput().getOutput())){
+                                if(entry2.getKey().equals("var " + lineCode.getIOOutput().getOutput())){
                                     codeResults.add(String.valueOf(entry2.getValue()));
                                 }
                             }
@@ -76,8 +76,8 @@ public class CodeCompiler {
 
                     }
 
-                }if(output1.isError()){
-                    codeResults.add("Syntax error at line: " + output1.getLine());
+                }if(lineCode.isError()){
+                    codeResults.add("Syntax error at line: " + lineCode.getLine());
                     syntaxError = true;
                     break;
                 }
@@ -104,6 +104,7 @@ public class CodeCompiler {
 
     }
 
+    //calculates result of arithmetic
     private boolean calculateResult(Output output, int line){ ;
         Map.Entry<String,String> entry = output.getArithmeticCalculation().entrySet().iterator().next();
         String value = entry.getValue();

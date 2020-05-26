@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: test.java.process_scheduler.threads.TestPCBScheduling
+Test set: test.java.process_scheduler.threads.TestProcessSchedulingFCFS
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.381 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.592 sec
