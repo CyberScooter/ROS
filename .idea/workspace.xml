@@ -50,41 +50,25 @@
       <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/views/ROS.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ros/main/java/views/ros-gui.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/mmu/TestMMU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestProcessScheduling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestProcessSchedulingFCFS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestProcessSchedulingPriority.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ros/test/java/process_scheduler/threads/TestSingleTaskProcess.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Kernel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mmu/MMU.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/CPU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/CPU.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/Dispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/IO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/IO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/ProcessCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/ProcessCreation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/CodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/CodeCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process_scheduler/threads/templates/PCB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/views/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/views/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/views/ROS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/views/ROS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/process_scheduler/threads/TestProcessScheduling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/process_scheduler/threads/TestProcessSchedulingFCFS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/Kernel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/Kernel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/mmu/MMU.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/CPU.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/CPU.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/Dispatcher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/IO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/IO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/ProcessCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/ProcessCreation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/CodeCompiler$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/CodeCompiler$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/CodeCompiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/CodeCompiler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB$State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/process_scheduler/threads/templates/PCB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/views/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/java/views/ROS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/java/views/ROS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.mmu.TestMMU.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestPCBScheduling.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessScheduling.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessSchedulingFCFS.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessSchedulingFCFS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessSchedulingPriority.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestProcessSchedulingPriority.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestSingleTaskProcess.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-test.java.process_scheduler.threads.TestSingleTaskProcess.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.mmu.TestMMU.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestPCBScheduling.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessScheduling.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/test/java/process_scheduler/threads/TestProcessScheduling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessSchedulingFCFS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessSchedulingFCFS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessSchedulingPriority.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestProcessSchedulingPriority.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestSingleTaskProcess.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/test.java.process_scheduler.threads.TestSingleTaskProcess.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -433,11 +417,11 @@
       <item itemvalue="Application.VirtualMemory" />
       <item itemvalue="Application.VM2" />
       <item itemvalue="Application.ROS" />
+      <item itemvalue="Application.Terminal" />
       <item itemvalue="JUnit.TestProcessSchedulingFCFS" />
       <item itemvalue="JUnit.TestProcessSchedulingPriorityOrder" />
       <item itemvalue="JUnit.TestProcessSchedulingPriorityOrder.testCompileCodeFilesPriorityExecutionOrder" />
       <item itemvalue="JUnit.TestProcessSchedulingFCFS.testCompileCodeFilesPriorityOutput" />
-      <item itemvalue="Application.Terminal" />
     </list>
     <recent_temporary>
       <list>
@@ -543,7 +527,8 @@
       <workItem from="1590411988704" duration="2686000" />
       <workItem from="1590414722070" duration="7836000" />
       <workItem from="1590442245962" duration="665000" />
-      <workItem from="1590490627786" duration="28571000" />
+      <workItem from="1590490627786" duration="29080000" />
+      <workItem from="1590582834214" duration="1492000" />
     </task>
     <servers />
   </component>

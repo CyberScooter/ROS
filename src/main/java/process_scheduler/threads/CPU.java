@@ -34,6 +34,7 @@ public class CPU extends Thread {
     private Semaphore fileCompilingSemaphore = new Semaphore(1);
     private Semaphore terminalSemaphore = new Semaphore(1);
     private Semaphore fileReadingSemaphore = new Semaphore(1);
+    private Semaphore fileWritingSemaphore = new Semaphore(1);
 
     //contains io threads need to be run for a given process
     private Vector<Thread> ioProcesses = new Vector<>();
@@ -128,6 +129,8 @@ public class CPU extends Thread {
 
 
                     }else{
+                        //if the current process came from: io thread --> ready queue
+                        //then run this statement
                         addIOToResultsList(pcb, ioHandlerTracker);
                     }
             }catch (InterruptedException e){
@@ -193,7 +196,7 @@ public class CPU extends Thread {
 
         }else if(pcb.getType() == PCB.Type.fileWriting){
             try {
-                fileReadingSemaphore.acquire();
+                fileWritingSemaphore.acquire();
                 //if the current process came from: io thread --> ready queue
                 //then run the else condition of this statement
                 if(pcb.getIOOutput() == null) {
@@ -213,7 +216,7 @@ public class CPU extends Thread {
                 System.out.println(e);
             }finally {
                 pcb.setState(PCB.State.terminated);
-                fileReadingSemaphore.release();
+                fileWritingSemaphore.release();
             }
         }
 
@@ -223,7 +226,9 @@ public class CPU extends Thread {
         CountDownLatch latch = new CountDownLatch(ioProcesses.size());
         ioHandlerTracker.put(pcb.getId(), latch);
         for(Thread thread : ioProcesses){
-            //synchnorise threads so they dont use same resource at the same time
+            //synchronised threads so they dont use same resource at the same time
+            //also used this method to avoid thread starvation, if all io threads were started at the same time
+            //then there is a possibility that one thread will starve just by waiting for a resource
             thread.start();
             thread.join();
         }

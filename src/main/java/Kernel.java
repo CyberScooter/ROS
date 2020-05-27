@@ -15,7 +15,6 @@ public class Kernel {
     public static ProcessCreation processCreation;
     public static Dispatcher dispatcher;
     public static CountDownLatch processCreationLatch;
-    private static CountDownLatch addingProcessesLatch;
     ReadyQueueComparator.queueType queueType;
     private MMU mmu;
 
@@ -80,15 +79,7 @@ public class Kernel {
         return mmu;
     }
 
-    public static ProcessCreation getProcessCreation(){
-        return processCreation;
-    }
-
     public void setQueueType(ReadyQueueComparator.queueType queueType) {
         this.queueType = queueType;
-    }
-
-    public static ConcurrentLinkedQueue<PCB> getProcesses() {
-        return processes;
     }
 }

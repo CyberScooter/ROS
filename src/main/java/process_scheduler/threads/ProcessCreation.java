@@ -2,9 +2,6 @@ package main.java.process_scheduler.threads;
 
 import main.java.Kernel;
 import main.java.process_scheduler.threads.templates.PCB;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 //keep thread running and will read processes from Kernel class

@@ -29,12 +29,6 @@ public class MMU {
 
     }
 
-    public static void main(String[] args) throws IOException{
-        MMU mmu = new MMU(new LRU(4));
-        mmu.allocateMemory(new File("InputFile4.txt"));
-    }
-
-
     //multiple virtual addresses
     public boolean allocateMemory(File file) throws IOException{
         BufferedReader reader = null;
