@@ -187,7 +187,7 @@ public class VirtualMemory
 	/**
 	 * Returns the signed byte value at the specified physical address.
 	 */
-	public byte getValue(int physicalAddress) throws IOException {
+	public byte getValue(int physicalAddress) {
 		return physicalMemory[((physicalAddress & 0x0000ff00) >> 8)].readWord(physicalAddress & 0x000000ff);
 	}
 
@@ -205,35 +205,9 @@ public class VirtualMemory
 		return stringBuffer.toString();
 	}
 
-	public void testing() {
-		//testing
-		System.out.println("Frame in which virtual address 515 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(515)));
-		System.out.println("Frame in which virtual address 16916 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(16916)));
-		System.out.println("Frame in which virtual address 62493 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(62493)));
-		System.out.println("Frame in which virtual address 30198 is in: " + replacementAlgorithm.findFrameNumber(getPageNumber(30198)));
-		System.out.println("===============================================================================================================");
-		System.out.println("Frame number in which address 60746 is in frame: " + replacementAlgorithm.findFrameNumber(getPageNumber(60746)));
-		System.out.println("Frame number in which address 18145 is in frame: " + replacementAlgorithm.findFrameNumber(getPageNumber(18145)));
-
-		System.out.println("515 in tlb: " + TLB[0].checkPageNumber(515 / 256));
-		System.out.println("16916 in tlb: " + TLB[1].checkPageNumber(16916 / 256));
-
-
-		//output 0 for LRU
-		//output -1 for FIFO
-		System.out.println("515 in PT: " + pageTable[515 / 256].getFrameNumber());
-		//output 1 for LRU
-		//output -1 for FIFO
-		System.out.println("16916 in PT: " + pageTable[16916 / 256].getFrameNumber());
-	}
-
 
 	public PageTableEntry[] getPageTable() {
 		return pageTable;
-	}
-
-	public TLBEntry[] getTLB() {
-		return TLB;
 	}
 
 	public static int getNumberOfFrames() {
